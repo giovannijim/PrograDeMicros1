@@ -88,11 +88,11 @@ SETUP:
 	SBI DDRD, PD2	;Definiendo PD2 como salida
 	CBI PORTD, PD2 ; Colocar 0 en PD2
 
-	SBI DDRD, PD0	;Definiendo PD0 como salida
-	CBI PORTD, PD0 ; Colocar 0 en PD0
+	SBI DDRC, PC6	;Definiendo PC6 como salida
+	CBI PORTD, PC6 ; Colocar 0 en PC6
 
-	SBI DDRD, PD1	;Definiendo PD1 como salida
-	CBI PORTD, PD1 ; Colocar 0 en PD1
+	SBI DDRB, PB5	;Definiendo PB5 como salida
+	CBI PORTB, PB5 ; Colocar 0 en PB5
 
 	LDI R31, 0xFF
 //****************************************************
@@ -103,7 +103,7 @@ LOOP:
 	SBRS R16, PC0 ; Salta si el bit PC0 se encuentra en 1
 	RJMP AumentoNibbleA
 	IN R16, PINC ; Se obtiene la info de PINC en R16
-	SBRS R16, PC1 ; Salta si el bit PC0 se encuentra en 1
+	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
 	RJMP DecrementoNibbleA
 
 	
@@ -248,50 +248,50 @@ AumentoNibbleA:
 
 	; Lee nuevamente el estado del boton despues de antirrebote
 
-	SBIS PINC, PC1 ; Salta si el bit de PC0 esta en 1
+	SBIS PINC, PC5 ; Salta si el bit de PC5 esta en 1
 	RJMP DecrementoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
 
 	; Realiza un aumento en el contador R30
 	DEC R30 ; Aumenta R30 R30<-R30-1
 
 	; SE INICIA UN SWITCH AND CASE
-	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x00 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA1 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA2 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA3 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA4 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA5 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA6 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA7 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA8 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA9 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA10 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA11 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA12 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA13 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA14 ; Si detecta bandera Z en 1 saltar hacia destino
-	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
 	BREQ DecrementoA15 ; Si detecta bandera Z en 1 saltar hacia destino
 
 	DEFAULT1:
 		LDI R30, 0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
-		SBI PINB, PB2 ; Toggle PB2 -> 0
-		SBI PINB, PB3 ; Toggle PB3 -> 0
-		SBI PINB, PB4 ; Toggle PB4 -> 0
+		CBI PINB, PB1 ; Dont Toggle PB1 
+		CBI PINB, PB2 ; Dont Toggle PB2 
+		CBI PINB, PB3 ; Dont Toggle PB3 
+		CBI PINB, PB4 ; Dont Toggle PB4
 		RJMP DONE1
 	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
 		SBI PINB, PB1 ; Toggle PB1 -> 0

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Mon Jan 29 23:45:18 2024
+AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Tue Jan 30 09:37:48 2024
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1119,11 +1119,11 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 000029 9a52                      	SBI DDRD, PD2	;Definiendo PD2 como salida
 00002a 985a                      	CBI PORTD, PD2 ; Colocar 0 en PD2
                                  
-00002b 9a50                      	SBI DDRD, PD0	;Definiendo PD0 como salida
-00002c 9858                      	CBI PORTD, PD0 ; Colocar 0 en PD0
+00002b 9a3e                      	SBI DDRC, PC6	;Definiendo PC6 como salida
+00002c 985e                      	CBI PORTD, PC6 ; Colocar 0 en PC6
                                  
-00002d 9a51                      	SBI DDRD, PD1	;Definiendo PD1 como salida
-00002e 9859                      	CBI PORTD, PD1 ; Colocar 0 en PD1
+00002d 9a25                      	SBI DDRB, PB5	;Definiendo PB5 como salida
+00002e 982d                      	CBI PORTB, PB5 ; Colocar 0 en PB5
                                  
 00002f efff                      	LDI R31, 0xFF
                                  //****************************************************
@@ -1134,7 +1134,7 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 000031 ff00                      	SBRS R16, PC0 ; Salta si el bit PC0 se encuentra en 1
 000032 c004                      	RJMP AumentoNibbleA
 000033 b106                      	IN R16, PINC ; Se obtiene la info de PINC en R16
-000034 ff01                      	SBRS R16, PC1 ; Salta si el bit PC0 se encuentra en 1
+000034 ff05                      	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
 000035 c055                      	RJMP DecrementoNibbleA
                                  
                                  	
@@ -1279,50 +1279,50 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-00008e 9b31                      	SBIS PINC, PC1 ; Salta si el bit de PC0 esta en 1
+00008e 9b35                      	SBIS PINC, PC5 ; Salta si el bit de PC5 esta en 1
 00008f cffb                      	RJMP DecrementoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
                                  	; Realiza un aumento en el contador R30
 000090 95ea                      	DEC R30 ; Aumenta R30 R30<-R30-1
                                  
                                  	; SE INICIA UN SWITCH AND CASE
-000091 30e1                      	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+000091 30e0                      	CPI R30, 0x00 ; Si son iguales activar la bandera Z se coloca en 1
 000092 f111                      	BREQ DecrementoA1 ; Si detecta bandera Z en 1 saltar hacia destino
-000093 30e2                      	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+000093 30e1                      	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
 000094 f111                      	BREQ DecrementoA2 ; Si detecta bandera Z en 1 saltar hacia destino
-000095 30e3                      	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+000095 30e2                      	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
 000096 f119                      	BREQ DecrementoA3 ; Si detecta bandera Z en 1 saltar hacia destino
-000097 30e4                      	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+000097 30e3                      	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
 000098 f119                      	BREQ DecrementoA4 ; Si detecta bandera Z en 1 saltar hacia destino
-000099 30e5                      	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+000099 30e4                      	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
 00009a f129                      	BREQ DecrementoA5 ; Si detecta bandera Z en 1 saltar hacia destino
-00009b 30e6                      	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+00009b 30e5                      	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
 00009c f131                      	BREQ DecrementoA6 ; Si detecta bandera Z en 1 saltar hacia destino
-00009d 30e7                      	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+00009d 30e6                      	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
 00009e f139                      	BREQ DecrementoA7 ; Si detecta bandera Z en 1 saltar hacia destino
-00009f 30e8                      	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+00009f 30e7                      	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
 0000a0 f139                      	BREQ DecrementoA8 ; Si detecta bandera Z en 1 saltar hacia destino
-0000a1 30e9                      	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+0000a1 30e8                      	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
 0000a2 f151                      	BREQ DecrementoA9 ; Si detecta bandera Z en 1 saltar hacia destino
-0000a3 30ea                      	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+0000a3 30e9                      	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
 0000a4 f151                      	BREQ DecrementoA10 ; Si detecta bandera Z en 1 saltar hacia destino
-0000a5 30eb                      	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+0000a5 30ea                      	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
 0000a6 f159                      	BREQ DecrementoA11 ; Si detecta bandera Z en 1 saltar hacia destino
-0000a7 30ec                      	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+0000a7 30eb                      	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
 0000a8 f159                      	BREQ DecrementoA12 ; Si detecta bandera Z en 1 saltar hacia destino
-0000a9 30ed                      	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+0000a9 30ec                      	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
 0000aa f169                      	BREQ DecrementoA13 ; Si detecta bandera Z en 1 saltar hacia destino
-0000ab 30ee                      	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+0000ab 30ed                      	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
 0000ac f169                      	BREQ DecrementoA14 ; Si detecta bandera Z en 1 saltar hacia destino
-0000ad 30ef                      	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+0000ad 30ee                      	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
 0000ae f171                      	BREQ DecrementoA15 ; Si detecta bandera Z en 1 saltar hacia destino
                                  
                                  	DEFAULT1:
 0000af e0e0                      		LDI R30, 0
-0000b0 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
-0000b1 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
-0000b2 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
-0000b3 9a1c                      		SBI PINB, PB4 ; Toggle PB4 -> 0
+0000b0 9819                      		CBI PINB, PB1 ; Dont Toggle PB1 
+0000b1 981a                      		CBI PINB, PB2 ; Dont Toggle PB2 
+0000b2 981b                      		CBI PINB, PB3 ; Dont Toggle PB3 
+0000b3 981c                      		CBI PINB, PB4 ; Dont Toggle PB4
 0000b4 c02a                      		RJMP DONE1
                                  	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
 0000b5 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
@@ -1414,7 +1414,7 @@ andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0
 brcc  :   0 brcs  :   0 break :   0 breq  :  30 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  18 cbr   :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  22 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :  30 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
@@ -1423,7 +1423,7 @@ ld    :   0 ldd   :   0 ldi   :  10 lds   :   0 lpm   :   0 lsl   :   0
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 pop   :   0 
 push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :  39 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :  79 sbic  :   0 sbis  :   2 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :  75 sbic  :   0 sbis  :   2 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
