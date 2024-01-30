@@ -34,24 +34,24 @@ SETUP:
 	LDI R16, 0b0000_0011
 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
 
-	LDI R16, (1 << PC0) ; Configura el pin PC0 como entrada con pullup
-	OUT PORTC, R16 ; Habilita el pullup en el pin PC0
+	;LDI R16, (1 << PC0) ; Configura el pin PC0 como entrada con pullup
+	SBI PORTC, PC0 ; Habilita el pullup en el pin PC0
 	CBI DDRC, PC0 ; Configuracion PC0 como entrada
 
-	LDI R16, (1 << PC1) ; Configura el pin PC1 como entrada con pullup
-	OUT PORTC, R16 ; Habilita el pullup en el pin PC1
+	;LDI R16, (1 << PC1) ; Configura el pin PC1 como entrada con pullup
+	SBI PORTC, PC1 ; Habilita el pullup en el pin PC1
 	CBI DDRC, PC1 ; Configuracion PC1 como entrada
 
-	LDI R16, (1 << PC5) ; Configura el pin PC5 como entrada con pullup
-	OUT PORTC, R16 ; Habilita el pullup en el pin PC5
+	;LDI R16, (1 << PC5) ; Configura el pin PC5 como entrada con pullup
+	SBI PORTC, PC5 ; Habilita el pullup en el pin PC5
 	CBI DDRC, PC5 ; Configuracion PC5 como entrada
 
-	LDI R16, (1 << PC3) ; Configura el pin PC3 como entrada con pullup
-	OUT PORTC, R16 ; Habilita el pullup en el pin PC3
+	;LDI R16, (1 << PC3) ; Configura el pin PC3 como entrada con pullup
+	SBI PORTC, PC3 ; Habilita el pullup en el pin PC3
 	CBI DDRC, PC3 ; Configuracion PC3como entrada
 
-	LDI R16, (1 << PC4) ; Configura el pin PC4 como entrada con pullup
-	OUT PORTC, R16 ; Habilita el pullup en el pin PC4
+	;LDI R16, (1 << PC4) ; Configura el pin PC4 como entrada con pullup
+	SBI PORTC, PC4 ; Habilita el pullup en el pin PC4
 	CBI DDRC, PC4 ; Configuracion PC4 como entrada
 
 
@@ -94,23 +94,27 @@ SETUP:
 	SBI DDRD, PD1	;Definiendo PD1 como salida
 	CBI PORTD, PD1 ; Colocar 0 en PD1
 
-
+	LDI R31, 0xFF
 //****************************************************
 //Configuración LOOP
 //****************************************************
 LOOP: 
-	IN R16, PIND
-	SBRS R16, PD2 ; Salta si el bit PD2 se encuentra en 1
+	IN R16, PINC
+	SBRS R16, PC0
+	RJMP DelayBounce
 
-	RJMP DelayBounce ; Realiza la verificacion de antirrebote
+	
+	;IN R16, PIND
+	;SBRS R16, PD2 ; Salta si el bit PD2 se encuentra en 1
 
-	SBI PORTB, PB4
+	;RJMP DelayBounce ; Realiza la verificacion de antirrebote
+
+	;SBI PORTB, PB4
 
 	/*SBI PORTB, PB5
 	CALL DELAY
 	CBI PORTB, PB5
 	CALL DELAY*/
-
 
 	RJMP LOOP
 //****************************************************
@@ -125,11 +129,11 @@ DelayBounce:
 
 	; Lee nuevamente el estado del boton despues de antirrebote
 
-	SBIS PIND, PD2 ; Salta si el bit de PD2 esta en 1
+	SBIS PINC, PC0 ; Salta si el bit de PD2 esta en 1
 	RJMP DelayBounce ; Repite la verificacion de antirrebote si el boton esta aun en 0
 
 	; Realiza el toggle del puerto B5 (led)
-	SBI PINB, PB5
+	SBI PINB, PB4
 
 	RJMP LOOP
 
