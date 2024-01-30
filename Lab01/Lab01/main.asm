@@ -99,9 +99,12 @@ SETUP:
 //Configuración LOOP
 //****************************************************
 LOOP: 
-	IN R16, PINC
-	SBRS R16, PC0
-	RJMP DelayBounce
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC0 ; Salta si el bit PC0 se encuentra en 1
+	RJMP AumentoNibbleA
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC1 ; Salta si el bit PC0 se encuentra en 1
+	RJMP DecrementoNibbleA
 
 	
 	;IN R16, PIND
@@ -120,28 +123,233 @@ LOOP:
 //****************************************************
 //Subrutina 
 //****************************************************
-DelayBounce:
+AumentoNibbleA:
 	; Espera un tiempo breve para el antirrebote
-	LDI R16, 100
+	LDI R16, 255
 	delay:
 		DEC R16
 		BRNE delay
 
 	; Lee nuevamente el estado del boton despues de antirrebote
 
-	SBIS PINC, PC0 ; Salta si el bit de PD2 esta en 1
-	RJMP DelayBounce ; Repite la verificacion de antirrebote si el boton esta aun en 0
+	SBIS PINC, PC0 ; Salta si el bit de PC0 esta en 1
+	RJMP AumentoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
 
 	; Realiza el toggle del puerto B5 (led)
-	SBI PINB, PB4
+	; SBI PINB, PB1
+	
+	; Realiza un aumento en el contador R30
+	INC R30 ; Aumenta R30 R30<-R30+1
+	
+	; SE INICIA UN SWITCH AND CASE
+	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA1 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA2 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA3 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA4 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA5 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA6 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA7 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA8 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA9 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA10 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA11 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA12 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA13 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA14 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ ContadorA15 ; Si detecta bandera Z en 1 saltar hacia destino
 
-	RJMP LOOP
+	DEFAULT:
+		LDI R30, 0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PINB, PB3 ; Toggle PB3 -> 0
+		SBI PINB, PB4 ; Toggle PB4 -> 0
+		RJMP DONE
+	ContadorA1: ; PB4=0; PB3=0; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA2: ; PB4=0; PB3=0; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1  -> 0
+		SBI PINB, PB2 ; Toggle PB2  -> 1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA3: ; PB4=0; PB3=0; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 ->1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA4: ; PB4=0; PB3=1; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PINB, PB3 ; Toggle PB3 -> 1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA5: ; PB4=0; PB3=1; PB2=0 PB1=1
+		SBI PINB, PB1  ; Toggle PB1 -> 1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA6: ; PB4=0; PB3=1; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		RJMP DONE ; Salta a la instruccion Done
+	ContadorA7: ; PB4=0; PB3=1; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		RJMP DONE
+	ContadorA8: ; PB4=1; PB3=0; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PINB, PB3 ; Toggle PB3 -> 0
+		SBI PINB, PB4 ; Toggle PB4 -> 1
+		RJMP DONE
+	ContadorA9: ; PB4=1; PB3=0; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		RJMP DONE
+	ContadorA10: ; PB4=1; PB3=0; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		RJMP DONE
+	ContadorA11: ; PB4=1; PB3=0; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		RJMP DONE
+	ContadorA12: ; PB4=1; PB3=1; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PINB, PB3 ; Toggle PB3 -> 1
+		RJMP DONE
+	ContadorA13: ; PB4=1; PB3=1; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		RJMP DONE
+	ContadorA14: ; PB4=1; PB3=1; PB2=1 PB1-0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		RJMP DONE
+	ContadorA15: ; PB4=1; PB3=1; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB4 -> 1
+		RJMP DONE
+	DONE:
+		RJMP LOOP
 
-/*Delay: 
-	LDI R18, 0
-INCR18: 
-	INC R18
-	CPI R18, 100
-	BRNE INCR18
-	Ret*/
-//****************************************************
+	DecrementoNibbleA:
+	; Espera un tiempo breve para el antirrebote
+	LDI R16, 255
+	delay1:
+		DEC R16
+		BRNE delay1
+
+	; Lee nuevamente el estado del boton despues de antirrebote
+
+	SBIS PINC, PC1 ; Salta si el bit de PC0 esta en 1
+	RJMP DecrementoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
+
+	; Realiza un aumento en el contador R30
+	DEC R30 ; Aumenta R30 R30<-R30-1
+
+	; SE INICIA UN SWITCH AND CASE
+	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA1 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA2 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA3 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA4 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA5 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA6 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA7 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA8 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA9 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA10 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA11 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA12 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA13 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA14 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoA15 ; Si detecta bandera Z en 1 saltar hacia destino
+
+	DEFAULT1:
+		LDI R30, 0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PINB, PB3 ; Toggle PB3 -> 0
+		SBI PINB, PB4 ; Toggle PB4 -> 0
+		RJMP DONE1
+	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		RJMP DONE1 ; Salta a la instruccion Done
+	DecrementoA2: ; PB4=0; PB3=0; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1  -> 1
+		SBI PINB, PB2 ; Toggle PB2  -> 0
+		RJMP DONE1 ; Salta a la instruccion Done
+	DecrementoA3: ; PB4=0; PB3=0; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 ->0
+		RJMP DONE1 ; Salta a la instruccion Done
+	DecrementoA4: ; PB4=0; PB3=0; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		SBI PINB, PB3 ; Toggle PB3 -> 0
+		RJMP DONE1 ; Salta a la instruccion Done
+	DecrementoA5: ; PB4=0; PB3=1; PB2=0 PB1=0
+		SBI PINB, PB1  ; Toggle PB1 -> 0
+		SBI PINB, PB2  ; Toggle PB2 -> 0
+		RJMP DONE1 ; Salta a la instruccion Done
+	DecrementoA6: ; PB4=0; PB3=1; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		RJMP DONE ; Salta a la instruccion Done
+	DecrementoA7: ; PB4=0; PB3=1; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		RJMP DONE1
+	DecrementoA8: ; PB4=0; PB3=1; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		SBI PINB, PB3 ; Toggle PB3 -> 1
+		SBI PINB, PB4 ; Toggle PB4 -> 0
+		RJMP DONE1
+	DecrementoA9: ; PB4=1; PB3=0; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		RJMP DONE1
+	DecrementoA10: ; PB4=1; PB3=0; PB2=0 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		RJMP DONE1
+	DecrementoA11: ; PB4=1; PB3=0; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		RJMP DONE1
+	DecrementoA12: ; PB4=1; PB3=0; PB2=1 PB1=1
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 1
+		SBI PINB, PB3 ; Toggle PB3 -> 0
+		RJMP DONE1
+	DecrementoA13: ; PB4=1; PB3=1; PB2=0 PB1=0
+		SBI PINB, PB1 ; Toggle PB1 -> 0
+		RJMP DONE1
+	DecrementoA14: ; PB4=1; PB3=1; PB2=0 PB1-01
+		SBI PINB, PB1 ; Toggle PB1 -> 1
+		SBI PINB, PB2 ; Toggle PB2 -> 0
+		RJMP DONE1
+	DecrementoA15: ; PB4=1; PB3=1; PB2=1 PB1=0
+		SBI PINB, PB1 ; Toggle PB4 -> 0
+		RJMP DONE1
+	DONE1:
+		RJMP LOOP
+

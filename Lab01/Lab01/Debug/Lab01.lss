@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Mon Jan 29 19:12:20 2024
+AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Mon Jan 29 23:45:18 2024
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1130,9 +1130,12 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
                                  //Configuración LOOP
                                  //****************************************************
                                  LOOP: 
-000030 b106                      	IN R16, PINC
-000031 ff00                      	SBRS R16, PC0
-000032 c001                      	RJMP DelayBounce
+000030 b106                      	IN R16, PINC ; Se obtiene la info de PINC en R16
+000031 ff00                      	SBRS R16, PC0 ; Salta si el bit PC0 se encuentra en 1
+000032 c004                      	RJMP AumentoNibbleA
+000033 b106                      	IN R16, PINC ; Se obtiene la info de PINC en R16
+000034 ff01                      	SBRS R16, PC1 ; Salta si el bit PC0 se encuentra en 1
+000035 c055                      	RJMP DecrementoNibbleA
                                  
                                  	
                                  	;IN R16, PIND
@@ -1147,34 +1150,240 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
                                  	CBI PORTB, PB5
                                  	CALL DELAY*/
                                  
-000033 cffc                      	RJMP LOOP
+000036 cff9                      	RJMP LOOP
                                  //****************************************************
                                  //Subrutina 
                                  //****************************************************
-                                 DelayBounce:
+                                 AumentoNibbleA:
                                  	; Espera un tiempo breve para el antirrebote
-000034 e604                      	LDI R16, 100
+000037 ef0f                      	LDI R16, 255
                                  	delay:
-000035 950a                      		DEC R16
-000036 f7f1                      		BRNE delay
+000038 950a                      		DEC R16
+000039 f7f1                      		BRNE delay
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-000037 9b30                      	SBIS PINC, PC0 ; Salta si el bit de PD2 esta en 1
-000038 cffb                      	RJMP DelayBounce ; Repite la verificacion de antirrebote si el boton esta aun en 0
+00003a 9b30                      	SBIS PINC, PC0 ; Salta si el bit de PC0 esta en 1
+00003b cffb                      	RJMP AumentoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
                                  	; Realiza el toggle del puerto B5 (led)
-000039 9a1c                      	SBI PINB, PB4
+                                 	; SBI PINB, PB1
+                                 	
+                                 	; Realiza un aumento en el contador R30
+00003c 95e3                      	INC R30 ; Aumenta R30 R30<-R30+1
+                                 	
+                                 	; SE INICIA UN SWITCH AND CASE
+00003d 30e1                      	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+00003e f111                      	BREQ ContadorA1 ; Si detecta bandera Z en 1 saltar hacia destino
+00003f 30e2                      	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+000040 f111                      	BREQ ContadorA2 ; Si detecta bandera Z en 1 saltar hacia destino
+000041 30e3                      	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+000042 f119                      	BREQ ContadorA3 ; Si detecta bandera Z en 1 saltar hacia destino
+000043 30e4                      	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+000044 f119                      	BREQ ContadorA4 ; Si detecta bandera Z en 1 saltar hacia destino
+000045 30e5                      	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+000046 f129                      	BREQ ContadorA5 ; Si detecta bandera Z en 1 saltar hacia destino
+000047 30e6                      	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+000048 f129                      	BREQ ContadorA6 ; Si detecta bandera Z en 1 saltar hacia destino
+000049 30e7                      	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+00004a f131                      	BREQ ContadorA7 ; Si detecta bandera Z en 1 saltar hacia destino
+00004b 30e8                      	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+00004c f131                      	BREQ ContadorA8 ; Si detecta bandera Z en 1 saltar hacia destino
+00004d 30e9                      	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+00004e f149                      	BREQ ContadorA9 ; Si detecta bandera Z en 1 saltar hacia destino
+00004f 30ea                      	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+000050 f149                      	BREQ ContadorA10 ; Si detecta bandera Z en 1 saltar hacia destino
+000051 30eb                      	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+000052 f151                      	BREQ ContadorA11 ; Si detecta bandera Z en 1 saltar hacia destino
+000053 30ec                      	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+000054 f151                      	BREQ ContadorA12 ; Si detecta bandera Z en 1 saltar hacia destino
+000055 30ed                      	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+000056 f161                      	BREQ ContadorA13 ; Si detecta bandera Z en 1 saltar hacia destino
+000057 30ee                      	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+000058 f161                      	BREQ ContadorA14 ; Si detecta bandera Z en 1 saltar hacia destino
+000059 30ef                      	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+00005a f169                      	BREQ ContadorA15 ; Si detecta bandera Z en 1 saltar hacia destino
                                  
-00003a cff5                      	RJMP LOOP
+                                 	DEFAULT:
+00005b e0e0                      		LDI R30, 0
+00005c 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+00005d 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+00005e 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
+00005f 9a1c                      		SBI PINB, PB4 ; Toggle PB4 -> 0
+000060 c029                      		RJMP DONE
+                                 	ContadorA1: ; PB4=0; PB3=0; PB2=0 PB1=1
+000061 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+000062 c027                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA2: ; PB4=0; PB3=0; PB2=1 PB1=0
+000063 9a19                      		SBI PINB, PB1 ; Toggle PB1  -> 0
+000064 9a1a                      		SBI PINB, PB2 ; Toggle PB2  -> 1
+000065 c024                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA3: ; PB4=0; PB3=0; PB2=1 PB1=1
+000066 9a19                      		SBI PINB, PB1 ; Toggle PB1 ->1
+000067 c022                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA4: ; PB4=0; PB3=1; PB2=0 PB1=0
+000068 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+000069 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+00006a 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 1
+00006b c01e                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA5: ; PB4=0; PB3=1; PB2=0 PB1=1
+00006c 9a19                      		SBI PINB, PB1  ; Toggle PB1 -> 1
+00006d c01c                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA6: ; PB4=0; PB3=1; PB2=1 PB1=0
+00006e 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+00006f 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+000070 c019                      		RJMP DONE ; Salta a la instruccion Done
+                                 	ContadorA7: ; PB4=0; PB3=1; PB2=1 PB1=1
+000071 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+000072 c017                      		RJMP DONE
+                                 	ContadorA8: ; PB4=1; PB3=0; PB2=0 PB1=0
+000073 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+000074 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+000075 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
+000076 9a1c                      		SBI PINB, PB4 ; Toggle PB4 -> 1
+000077 c012                      		RJMP DONE
+                                 	ContadorA9: ; PB4=1; PB3=0; PB2=0 PB1=1
+000078 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+000079 c010                      		RJMP DONE
+                                 	ContadorA10: ; PB4=1; PB3=0; PB2=1 PB1=0
+00007a 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+00007b 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+00007c c00d                      		RJMP DONE
+                                 	ContadorA11: ; PB4=1; PB3=0; PB2=1 PB1=1
+00007d 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+00007e c00b                      		RJMP DONE
+                                 	ContadorA12: ; PB4=1; PB3=1; PB2=0 PB1=0
+00007f 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+000080 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+000081 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 1
+000082 c007                      		RJMP DONE
+                                 	ContadorA13: ; PB4=1; PB3=1; PB2=0 PB1=1
+000083 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+000084 c005                      		RJMP DONE
+                                 	ContadorA14: ; PB4=1; PB3=1; PB2=1 PB1-0
+000085 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+000086 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+000087 c002                      		RJMP DONE
+                                 	ContadorA15: ; PB4=1; PB3=1; PB2=1 PB1=1
+000088 9a19                      		SBI PINB, PB1 ; Toggle PB4 -> 1
+000089 c000                      		RJMP DONE
+                                 	DONE:
+00008a cfa5                      		RJMP LOOP
                                  
-                                 /*Delay: 
-                                 	LDI R18, 0
-                                 INCR18: 
-                                 	INC R18
-                                 	CPI R18, 100
-                                 	BRNE INCR18
-                                 	Ret*/
+                                 	DecrementoNibbleA:
+                                 	; Espera un tiempo breve para el antirrebote
+00008b ef0f                      	LDI R16, 255
+                                 	delay1:
+00008c 950a                      		DEC R16
+00008d f7f1                      		BRNE delay1
+                                 
+                                 	; Lee nuevamente el estado del boton despues de antirrebote
+                                 
+00008e 9b31                      	SBIS PINC, PC1 ; Salta si el bit de PC0 esta en 1
+00008f cffb                      	RJMP DecrementoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
+                                 
+                                 	; Realiza un aumento en el contador R30
+000090 95ea                      	DEC R30 ; Aumenta R30 R30<-R30-1
+                                 
+                                 	; SE INICIA UN SWITCH AND CASE
+000091 30e1                      	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+000092 f111                      	BREQ DecrementoA1 ; Si detecta bandera Z en 1 saltar hacia destino
+000093 30e2                      	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+000094 f111                      	BREQ DecrementoA2 ; Si detecta bandera Z en 1 saltar hacia destino
+000095 30e3                      	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+000096 f119                      	BREQ DecrementoA3 ; Si detecta bandera Z en 1 saltar hacia destino
+000097 30e4                      	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+000098 f119                      	BREQ DecrementoA4 ; Si detecta bandera Z en 1 saltar hacia destino
+000099 30e5                      	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+00009a f129                      	BREQ DecrementoA5 ; Si detecta bandera Z en 1 saltar hacia destino
+00009b 30e6                      	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+00009c f131                      	BREQ DecrementoA6 ; Si detecta bandera Z en 1 saltar hacia destino
+00009d 30e7                      	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+00009e f139                      	BREQ DecrementoA7 ; Si detecta bandera Z en 1 saltar hacia destino
+00009f 30e8                      	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+0000a0 f139                      	BREQ DecrementoA8 ; Si detecta bandera Z en 1 saltar hacia destino
+0000a1 30e9                      	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+0000a2 f151                      	BREQ DecrementoA9 ; Si detecta bandera Z en 1 saltar hacia destino
+0000a3 30ea                      	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+0000a4 f151                      	BREQ DecrementoA10 ; Si detecta bandera Z en 1 saltar hacia destino
+0000a5 30eb                      	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+0000a6 f159                      	BREQ DecrementoA11 ; Si detecta bandera Z en 1 saltar hacia destino
+0000a7 30ec                      	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+0000a8 f159                      	BREQ DecrementoA12 ; Si detecta bandera Z en 1 saltar hacia destino
+0000a9 30ed                      	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+0000aa f169                      	BREQ DecrementoA13 ; Si detecta bandera Z en 1 saltar hacia destino
+0000ab 30ee                      	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+0000ac f169                      	BREQ DecrementoA14 ; Si detecta bandera Z en 1 saltar hacia destino
+0000ad 30ef                      	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+0000ae f171                      	BREQ DecrementoA15 ; Si detecta bandera Z en 1 saltar hacia destino
+                                 
+                                 	DEFAULT1:
+0000af e0e0                      		LDI R30, 0
+0000b0 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000b1 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+0000b2 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
+0000b3 9a1c                      		SBI PINB, PB4 ; Toggle PB4 -> 0
+0000b4 c02a                      		RJMP DONE1
+                                 	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
+0000b5 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000b6 c028                      		RJMP DONE1 ; Salta a la instruccion Done
+                                 	DecrementoA2: ; PB4=0; PB3=0; PB2=0 PB1=1
+0000b7 9a19                      		SBI PINB, PB1 ; Toggle PB1  -> 1
+0000b8 9a1a                      		SBI PINB, PB2 ; Toggle PB2  -> 0
+0000b9 c025                      		RJMP DONE1 ; Salta a la instruccion Done
+                                 	DecrementoA3: ; PB4=0; PB3=0; PB2=1 PB1=0
+0000ba 9a19                      		SBI PINB, PB1 ; Toggle PB1 ->0
+0000bb c023                      		RJMP DONE1 ; Salta a la instruccion Done
+                                 	DecrementoA4: ; PB4=0; PB3=0; PB2=1 PB1=1
+0000bc 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000bd 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+0000be 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
+0000bf c01f                      		RJMP DONE1 ; Salta a la instruccion Done
+                                 	DecrementoA5: ; PB4=0; PB3=1; PB2=0 PB1=0
+0000c0 9a19                      		SBI PINB, PB1  ; Toggle PB1 -> 0
+0000c1 9a1a                      		SBI PINB, PB2  ; Toggle PB2 -> 0
+0000c2 c01c                      		RJMP DONE1 ; Salta a la instruccion Done
+                                 	DecrementoA6: ; PB4=0; PB3=1; PB2=0 PB1=1
+0000c3 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000c4 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+0000c5 cfc4                      		RJMP DONE ; Salta a la instruccion Done
+                                 	DecrementoA7: ; PB4=0; PB3=1; PB2=1 PB1=0
+0000c6 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000c7 c017                      		RJMP DONE1
+                                 	DecrementoA8: ; PB4=0; PB3=1; PB2=1 PB1=1
+0000c8 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000c9 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+0000ca 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 1
+0000cb 9a1c                      		SBI PINB, PB4 ; Toggle PB4 -> 0
+0000cc c012                      		RJMP DONE1
+                                 	DecrementoA9: ; PB4=1; PB3=0; PB2=0 PB1=0
+0000cd 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000ce c010                      		RJMP DONE1
+                                 	DecrementoA10: ; PB4=1; PB3=0; PB2=0 PB1=1
+0000cf 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000d0 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+0000d1 c00d                      		RJMP DONE1
+                                 	DecrementoA11: ; PB4=1; PB3=0; PB2=1 PB1=0
+0000d2 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000d3 c00b                      		RJMP DONE1
+                                 	DecrementoA12: ; PB4=1; PB3=0; PB2=1 PB1=1
+0000d4 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000d5 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 1
+0000d6 9a1b                      		SBI PINB, PB3 ; Toggle PB3 -> 0
+0000d7 c007                      		RJMP DONE1
+                                 	DecrementoA13: ; PB4=1; PB3=1; PB2=0 PB1=0
+0000d8 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 0
+0000d9 c005                      		RJMP DONE1
+                                 	DecrementoA14: ; PB4=1; PB3=1; PB2=0 PB1-01
+0000da 9a19                      		SBI PINB, PB1 ; Toggle PB1 -> 1
+0000db 9a1a                      		SBI PINB, PB2 ; Toggle PB2 -> 0
+0000dc c002                      		RJMP DONE1
+                                 	DecrementoA15: ; PB4=1; PB3=1; PB2=1 PB1=0
+0000dd 9a19                      		SBI PINB, PB1 ; Toggle PB4 -> 0
+0000de c000                      		RJMP DONE1
+                                 	DONE1:
+0000df cf50                      		RJMP LOOP
+                                 
 
 
 RESOURCE USE INFORMATION
@@ -1194,37 +1403,37 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  11 r17:   2 r18:   0 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  15 r17:   2 r18:   0 r19:   0 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   0 r31:   1 
-Registers used: 3 out of 35 (8.6%)
+r29:   0 r30:  34 r31:   1 
+Registers used: 4 out of 35 (11.4%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  30 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  18 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   0 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :   7 lds   :   0 lpm   :   0 lsl   :   0 
+cpi   :  30 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   1 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :  10 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   2 pop   :   0 
-push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   4 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :  19 sbic  :   0 sbis  :   1 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   1 sec   :   0 seh   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :  39 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :  79 sbic  :   0 sbis  :   2 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 11 out of 113 (9.7%)
+Instructions used: 14 out of 113 (12.4%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000076    118      0    118   32768   0.4%
+[.cseg] 0x000000 0x0001c0    448      0    448   32768   1.4%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

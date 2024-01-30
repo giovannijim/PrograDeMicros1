@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Mon Jan 29 19:12:20 2024
+AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Mon Jan 29 23:45:18 2024
 
 
 EQU  SIGNATURE_000 0000001e
@@ -697,5 +697,41 @@ EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
 CSEG SETUP        00000004
 CSEG LOOP         00000030
-CSEG DelayBounce  00000034
-CSEG delay        00000035
+CSEG AumentoNibbleA 00000037
+CSEG DecrementoNibbleA 0000008b
+CSEG delay        00000038
+CSEG ContadorA1   00000061
+CSEG ContadorA2   00000063
+CSEG ContadorA3   00000066
+CSEG ContadorA4   00000068
+CSEG ContadorA5   0000006c
+CSEG ContadorA6   0000006e
+CSEG ContadorA7   00000071
+CSEG ContadorA8   00000073
+CSEG ContadorA9   00000078
+CSEG ContadorA10  0000007a
+CSEG ContadorA11  0000007d
+CSEG ContadorA12  0000007f
+CSEG ContadorA13  00000083
+CSEG ContadorA14  00000085
+CSEG ContadorA15  00000088
+CSEG DEFAULT      0000005b
+CSEG DONE         0000008a
+CSEG delay1       0000008c
+CSEG DecrementoA1 000000b5
+CSEG DecrementoA2 000000b7
+CSEG DecrementoA3 000000ba
+CSEG DecrementoA4 000000bc
+CSEG DecrementoA5 000000c0
+CSEG DecrementoA6 000000c3
+CSEG DecrementoA7 000000c6
+CSEG DecrementoA8 000000c8
+CSEG DecrementoA9 000000cd
+CSEG DecrementoA10 000000cf
+CSEG DecrementoA11 000000d2
+CSEG DecrementoA12 000000d4
+CSEG DecrementoA13 000000d8
+CSEG DecrementoA14 000000da
+CSEG DecrementoA15 000000dd
+CSEG DEFAULT1     000000af
+CSEG DONE1        000000df
