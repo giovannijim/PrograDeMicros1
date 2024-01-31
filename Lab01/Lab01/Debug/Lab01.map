@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Tue Jan 30 09:37:48 2024
+AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Tue Jan 30 23:32:27 2024
 
 
 EQU  SIGNATURE_000 0000001e
@@ -719,19 +719,19 @@ CSEG DEFAULT      0000005b
 CSEG DONE         0000008a
 CSEG delay1       0000008c
 CSEG DecrementoA1 000000b5
-CSEG DecrementoA2 000000b7
-CSEG DecrementoA3 000000ba
-CSEG DecrementoA4 000000bc
-CSEG DecrementoA5 000000c0
-CSEG DecrementoA6 000000c3
-CSEG DecrementoA7 000000c6
-CSEG DecrementoA8 000000c8
+CSEG DecrementoA2 000000b8
+CSEG DecrementoA3 000000bb
+CSEG DecrementoA4 000000be
+CSEG DecrementoA5 000000c1
+CSEG DecrementoA6 000000c4
+CSEG DecrementoA7 000000c7
+CSEG DecrementoA8 000000ca
 CSEG DecrementoA9 000000cd
-CSEG DecrementoA10 000000cf
-CSEG DecrementoA11 000000d2
-CSEG DecrementoA12 000000d4
-CSEG DecrementoA13 000000d8
-CSEG DecrementoA14 000000da
-CSEG DecrementoA15 000000dd
+CSEG DecrementoA10 000000d0
+CSEG DecrementoA11 000000d3
+CSEG DecrementoA12 000000d6
+CSEG DecrementoA13 000000d9
+CSEG DecrementoA14 000000dc
+CSEG DecrementoA15 000000df
 CSEG DEFAULT1     000000af
-CSEG DONE1        000000df
+CSEG DONE1        000000e2

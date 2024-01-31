@@ -294,61 +294,91 @@ AumentoNibbleA:
 		CBI PINB, PB4 ; Dont Toggle PB4
 		RJMP DONE1
 	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
+		LDI R16, 0b0000_0000
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA2: ; PB4=0; PB3=0; PB2=0 PB1=1
-		SBI PINB, PB1 ; Toggle PB1  -> 1
-		SBI PINB, PB2 ; Toggle PB2  -> 0
+		LDI R16, 0b0000_0010
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1  -> 1
+		;SBI PINB, PB2 ; Toggle PB2  -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA3: ; PB4=0; PB3=0; PB2=1 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 ->0
+		LDI R16, 0b0000_0100
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 ->0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA4: ; PB4=0; PB3=0; PB2=1 PB1=1
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 1
-		SBI PINB, PB3 ; Toggle PB3 -> 0
+		LDI R16, 0b0000_0110
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 1
+		;SBI PINB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA5: ; PB4=0; PB3=1; PB2=0 PB1=0
-		SBI PINB, PB1  ; Toggle PB1 -> 0
-		SBI PINB, PB2  ; Toggle PB2 -> 0
+		LDI R16, 0b0000_1000
+		OUT PORTB, R16
+		;SBI PINB, PB1  ; Toggle PB1 -> 0
+		;SBI PINB, PB2  ; Toggle PB2 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA6: ; PB4=0; PB3=1; PB2=0 PB1=1
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 0
+		LDI R16, 0b0000_1010
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 0
 		RJMP DONE ; Salta a la instruccion Done
 	DecrementoA7: ; PB4=0; PB3=1; PB2=1 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
+		LDI R16, 0b0000_1100
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1
 	DecrementoA8: ; PB4=0; PB3=1; PB2=1 PB1=1
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 1
-		SBI PINB, PB3 ; Toggle PB3 -> 1
-		SBI PINB, PB4 ; Toggle PB4 -> 0
+		LDI R16, 0b0000_1110
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 1
+		;SBI PINB, PB3 ; Toggle PB3 -> 1
+		;SBI PINB, PB4 ; Toggle PB4 -> 0
 		RJMP DONE1
 	DecrementoA9: ; PB4=1; PB3=0; PB2=0 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
+		LDI R16, 0b0001_0000
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1
 	DecrementoA10: ; PB4=1; PB3=0; PB2=0 PB1=1
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 0
+		LDI R16, 0b0001_0010
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 0
 		RJMP DONE1
 	DecrementoA11: ; PB4=1; PB3=0; PB2=1 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
+		LDI R16, 0b0001_0100
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1
 	DecrementoA12: ; PB4=1; PB3=0; PB2=1 PB1=1
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 1
-		SBI PINB, PB3 ; Toggle PB3 -> 0
+		LDI R16, 0b0001_0110
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 1
+		;SBI PINB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1
 	DecrementoA13: ; PB4=1; PB3=1; PB2=0 PB1=0
-		SBI PINB, PB1 ; Toggle PB1 -> 0
+		LDI R16, 0b0001_1000
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1
 	DecrementoA14: ; PB4=1; PB3=1; PB2=0 PB1-01
-		SBI PINB, PB1 ; Toggle PB1 -> 1
-		SBI PINB, PB2 ; Toggle PB2 -> 0
+		LDI R16, 0b0001_1010
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB1 -> 1
+		;SBI PINB, PB2 ; Toggle PB2 -> 0
 		RJMP DONE1
 	DecrementoA15: ; PB4=1; PB3=1; PB2=1 PB1=0
-		SBI PINB, PB1 ; Toggle PB4 -> 0
+		LDI R16, 0b0001_1100
+		OUT PORTB, R16
+		;SBI PINB, PB1 ; Toggle PB4 -> 0
 		RJMP DONE1
 	DONE1:
 		RJMP LOOP
