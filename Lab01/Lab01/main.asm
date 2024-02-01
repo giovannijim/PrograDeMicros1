@@ -32,7 +32,7 @@ SETUP:
 	STS CLKPR, R16 ; Se habilita el prescaler
 
 	LDI R16, 0b0000_0011
-	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
+	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 1MHz
 
 	;LDI R16, (1 << PC0) ; Configura el pin PC0 como entrada con pullup
 	SBI PORTC, PC0 ; Habilita el pullup en el pin PC0
@@ -88,13 +88,12 @@ SETUP:
 	SBI DDRD, PD2	;Definiendo PD2 como salida
 	CBI PORTD, PD2 ; Colocar 0 en PD2
 
-	SBI DDRC, PC6	;Definiendo PC6 como salida
-	CBI PORTD, PC6 ; Colocar 0 en PC6
-
 	SBI DDRB, PB5	;Definiendo PB5 como salida
 	CBI PORTB, PB5 ; Colocar 0 en PB5
 
-	LDI R31, 0xFF
+	SBI DDRC, PC2	;Definiendo PC2 como salida
+	CBI PORTC, PC2 ; Colocar 0 en PC2
+
 //****************************************************
 //Configuración LOOP
 //****************************************************
@@ -123,18 +122,7 @@ LOOP:
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC3 ; Salta si el bit PC3 se encuentra en 1
 	RJMP SUMA
-	
-	;IN R16, PIND
-	;SBRS R16, PD2 ; Salta si el bit PD2 se encuentra en 1
 
-	;RJMP DelayBounce ; Realiza la verificacion de antirrebote
-
-	;SBI PORTB, PB4
-
-	/*SBI PORTB, PB5
-	CALL DELAY
-	CBI PORTB, PB5
-	CALL DELAY*/
 
 	RJMP LOOP
 //****************************************************
@@ -151,9 +139,6 @@ AumentoNibbleA:
 
 	SBIS PINC, PC0 ; Salta si el bit de PC0 esta en 1
 	RJMP AumentoNibbleA ; Repite la verificacion de antirrebote si el boton esta aun en 0
-
-	; Realiza el toggle del puerto B5 (led)
-	; SBI PINB, PB1
 	
 	; Realiza un aumento en el contador R30
 	INC R30 ; Aumenta R30 R30<-R30+1
@@ -396,7 +381,7 @@ AumentoNibbleA:
 	SBIS PINC, PC1 ; Salta si el bit de PC1 esta en 1
 	RJMP IncrementoNibbleB ; Repite la verificacion de antirrebote si el boton esta aun en 0
 	
-	; Realiza un aumento en el contador R30
+	; Realiza un aumento en el contador R24
 	INC R24 ; Aumenta R24 R24<-R24+1
 	
 	; SE INICIA UN SWITCH AND CASE
@@ -525,7 +510,7 @@ AumentoNibbleA:
 	SBIS PINC, PC4 ; Salta si el bit de PC1 esta en 1
 	RJMP DecrementoNibbleB ; Repite la verificacion de antirrebote si el boton esta aun en 0
 	
-	; Realiza un aumento en el contador R30
+	; Realiza un aumento en el contador R24
 	DEC R24 ; Aumenta R24 R24<-R24+1
 	
 	; SE INICIA UN SWITCH AND CASE
@@ -657,8 +642,8 @@ AumentoNibbleA:
 	RJMP SUMA ; Repite la verificacion de antirrebote si el boton esta aun en 0
 	
 	MOV R23, R24
-	ADD R23, R30
-	;BRCS PrenderCarry
+	ADC R23, R30
+	BRCS PrenderCarry
 	
 	; SE INICIA UN SWITCH AND CASE
 	CPI R23, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
@@ -694,78 +679,87 @@ AumentoNibbleA:
 	
 	DEFAULT4:
 		;LDI R23, 0 ;Coloca el contador R24 en 0
-		CBI PORTC, PC6 ;Coloca 0 en PB0 en PORTC
-		CBI PORTD, PD4 ; Coloca 0 en posicion PD4 a PORTD
-		CBI PORTD, PD3 ; Coloca 0 en posicion PD3 a PORTD
-		CBI PORTD, PD2 ; Coloca 0 en posicion PD2 a PORTD
+		SBI PORTC, PC2 ;Coloca 0 en PC2 en PORTC
+		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2)
+		OUT PORTD, R16
 		RJMP DONE4
-	;PrenderCarry:
-		;SBI PORTB, PB5
-		;RJMP DONE4
-	MostrarRes1: ; PD4=0; PD3=0; PD2=0 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
-		CBI PORTD, PD2 ; Coloca 0 en posicion PD2 a PORTD
-		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
-		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+	PrenderCarry:
+		SBI PORTB, PB5
+		RJMP DEFAULT4
+	MostrarRes1: ; PD4=0; PD3=0; PD2=0 PC2=1
+		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (0<<PD3)|(0<<PD2) ; carga 0 en todo PORTD
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes2: ; PD4=0; PD3=0; PD2=1 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
-		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
-		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+	MostrarRes2: ; PD4=0; PD3=0; PD2=1 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (0<<PD3)| (1<<PD2) ;carga 1 en PD2 
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes3: ; PD4=0; PD3=0; PD2=1 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
-		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
-		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
-		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+	MostrarRes3: ; PD4=0; PD3=0; PD2=1 PC2=1
+		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (0<<PD3)| (1<<PD2) ;carga 1 en PD2 
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes4: ; PD4=0 PD3=1 PD2=0 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		CBI PORTD, PD2  ; Coloca 0 en posicion PD2 a PORTD
-		SBI PORTD, PD3  ; Coloca 1 en posicion PD3 a PORTD
-		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+	MostrarRes4: ; PD4=0 PD3=1 PD2=0 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (1<<PD3)| (0<<PD2) ;carga 1 en PD3
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes5: ; PD4=0 PD3=1 PD2=0 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+	MostrarRes5: ; PD4=0 PD3=1 PD2=0 PC2=1
+		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (1<<PD3)| (0<<PD2) ;carga 1 en PD3
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes6: ; PD4=0 PD3=1 PD2=1 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
+	MostrarRes6: ; PD4=0 PD3=1 PD2=1 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (1<<PD3)| (1<<PD2) ;carga 1 en PD2 y PD3 
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes7: ; PD4=0 PD3=1 PD2=1 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+	MostrarRes7: ; PD4=0 PD3=1 PD2=1 PC2=1
+		SBI PORTC, PC2 ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (0<<PD4)| (1<<PD3)| (1<<PD2) ;carga 1 en PD2 Y PD3
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes8: ; PD4=1 PD3=0 PD2=0 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		CBI PORTD, PD2  ; Coloca 0 en posicion PD2 a PORTD
-		CBI PORTD, PD3  ; Coloca 0 en posicion PD3 a PORTD
-		SBI PORTD, PD4  ; Coloca 1 en posicion PD4 a PORTD
+	MostrarRes8: ; PD4=1 PD3=0 PD2=0 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (1<<PD4)| (0<<PD3)| (0<<PD2) ;carga 1 en PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes9: ; PD4=1 PD3=0 PD2=0 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+	MostrarRes9: ; PD4=1 PD3=0 PD2=0 PC2=1
+		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (1<<PD4)| (0<<PD3)| (0<<PD2) ;carga 1 en PD4 
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes10: ;  PD4=1 PD3=0 PD2=1 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		SBI PORTD, PD2 ; Coloca 1 en posicion PD2 a PORTD
+	MostrarRes10: ;  PD4=1 PD3=0 PD2=1 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (1<<PD4)| (0<<PD3)| (1<<PD2) ;carga 1 en PD2 Y PD4 
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE2 ; Salta a la instruccion Done
-	MostrarRes11: ; PD4=1 PD3=0 PD2=1 PC6=1
-		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+	MostrarRes11: ; PD4=1 PD3=0 PD2=1 PC2=1
+		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
+		LDI R16, (1<<PD4)| (0<<PD3)| (1<<PD2) ;carga 1 en PD2 Y PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes12: ; PD4=1 PD3=1 PD2=0 PC6=0
-		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
-		CBI PORTD, PD2 ; Coloca 1 en posicion PD2 a PORTD
-		SBI PORTD, PD3 ; Coloca 1 en posicion PD3 a PORTD
+	MostrarRes12: ; PD4=1 PD3=1 PD2=0 PC2=0
+		CBI PORTC, PC2  ; Coloca 0 en posicion PC2 a PORTC
+		LDI R16, (1<<PD4)| (1<<PD3)| (0<<PD2) ;carga 1 en PD3 Y PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes13:  ; PD4=1 PD3=1 PD2=0 PC6=1
-		SBI PORTC, PC6 ; COLOCA EN 1 EN POSICION PC6 EN PORTC
+	MostrarRes13:  ; PD4=1 PD3=1 PD2=0 PC2=1
+		SBI PORTC, PC2 ; COLOCA EN 1 EN POSICION PC2 EN PORTC
+		LDI R16, (1<<PD4)| (1<<PD3)| (0<<PD2) ;carga 1 en PD3 Y PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes14: ; PD4=1 PD3=1 PD2=1 PC6=0
-		CBI PORTC, PC6 ; COLOCA EN 0 EN POSICION PC6 EN PORTC
-		SBI PORTD, PD2 ; Coloca en 1 en posicion PD2 EN PORTD
+	MostrarRes14: ; PD4=1 PD3=1 PD2=1 PC2=0
+		CBI PORTC, PC2 ; COLOCA EN 0 EN POSICION PC2 EN PORTC
+		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2) ;carga 1 en PD2 , PD3 Y PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
-	MostrarRes15: ;PD4=1 PD3=1 PD2=1 PC6=1
-		SBI PORTC, PC6 ; COLOCA EN 1 EN POSICION PC6 EN PORTC
+	MostrarRes15: ;PD4=1 PD3=1 PD2=1 PC2=1
+		SBI PORTC, PC2 ; COLOCA EN 1 EN POSICION PC2 EN PORTC
+		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2) ;carga 1 en PD2 , PD3 Y PD4
+		OUT PORTD, R16 ; Carga R16 en PORTD
 		RJMP DONE4 ; Salta a la instruccion Done
 	DONE4:
 		RJMP LOOP
