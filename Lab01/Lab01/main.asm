@@ -99,13 +99,30 @@ SETUP:
 //Configuración LOOP
 //****************************************************
 LOOP: 
+	;Se llama para hacer incremento en el nibble A
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC0 ; Salta si el bit PC0 se encuentra en 1
 	RJMP AumentoNibbleA
+
+	;Se llama para hacer decremento en el nibble A
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
 	RJMP DecrementoNibbleA
 
+	;Se llama para hacer incremento en el nibble B
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC1 ; Salta si el bit PC0 se encuentra en 1
+	RJMP IncrementoNibbleB
+
+	;Se llama para hacer decremento en el nibble B
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC4 ; Salta si el bit PC4 se encuentra en 1
+	RJMP DecrementoNibbleB
+
+	;Se llama la subrutina para sumar
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC3 ; Salta si el bit PC3 se encuentra en 1
+	RJMP SUMA
 	
 	;IN R16, PIND
 	;SBRS R16, PD2 ; Salta si el bit PD2 se encuentra en 1
@@ -294,92 +311,462 @@ AumentoNibbleA:
 		CBI PINB, PB4 ; Dont Toggle PB4
 		RJMP DONE1
 	DecrementoA1: ; PB4=0; PB3=0; PB2=0 PB1=0
-		LDI R16, 0b0000_0000
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA2: ; PB4=0; PB3=0; PB2=0 PB1=1
-		LDI R16, 0b0000_0010
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1  -> 1
-		;SBI PINB, PB2 ; Toggle PB2  -> 0
+		SBI PORTB, PB1 ; Toggle PB1  -> 1
+		CBI PORTB, PB2 ; Toggle PB2  -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA3: ; PB4=0; PB3=0; PB2=1 PB1=0
-		LDI R16, 0b0000_0100
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 ->0
+		CBI PORTB, PB1 ; Toggle PB1 ->0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA4: ; PB4=0; PB3=0; PB2=1 PB1=1
-		LDI R16, 0b0000_0110
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 1
-		;SBI PINB, PB3 ; Toggle PB3 -> 0
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		SBI PORTB, PB2 ; Toggle PB2 -> 1
+		CBI PORTB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA5: ; PB4=0; PB3=1; PB2=0 PB1=0
-		LDI R16, 0b0000_1000
-		OUT PORTB, R16
-		;SBI PINB, PB1  ; Toggle PB1 -> 0
-		;SBI PINB, PB2  ; Toggle PB2 -> 0
+		CBI PORTB, PB1  ; Toggle PB1 -> 0
+		CBI PORTB, PB2  ; Toggle PB2 -> 0
+		SBI PORTB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1 ; Salta a la instruccion Done
 	DecrementoA6: ; PB4=0; PB3=1; PB2=0 PB1=1
-		LDI R16, 0b0000_1010
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PORTB, PB3 ; Toggle PB3 -> 1
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		CBI PORTB, PB2 ; Toggle PB2 -> 0
 		RJMP DONE ; Salta a la instruccion Done
 	DecrementoA7: ; PB4=0; PB3=1; PB2=1 PB1=0
-		LDI R16, 0b0000_1100
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
+		SBI PORTB, PB2 ; Toggle PB1 -> 1
+		SBI PORTB, PB3 ; Toggle PB1 -> 1
 		RJMP DONE1
 	DecrementoA8: ; PB4=0; PB3=1; PB2=1 PB1=1
-		LDI R16, 0b0000_1110
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 1
-		;SBI PINB, PB3 ; Toggle PB3 -> 1
-		;SBI PINB, PB4 ; Toggle PB4 -> 0
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		SBI PORTB, PB2 ; Toggle PB2 -> 1
+		SBI PORTB, PB3 ; Toggle PB3 -> 1
+		CBI PORTB, PB4 ; Toggle PB4 -> 0
 		RJMP DONE1
 	DecrementoA9: ; PB4=1; PB3=0; PB2=0 PB1=0
-		LDI R16, 0b0001_0000
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB2 ; Toggle PB2 -> 0
+		CBI PORTB, PB3 ; Toggle PB3 -> 0
+		SBI PORTB, PB4 ; Toggle PB4 -> 1
 		RJMP DONE1
 	DecrementoA10: ; PB4=1; PB3=0; PB2=0 PB1=1
-		LDI R16, 0b0001_0010
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		CBI PORTB, PB2 ; Toggle PB2 -> 0
+		CBI PORTB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1
 	DecrementoA11: ; PB4=1; PB3=0; PB2=1 PB1=0
-		LDI R16, 0b0001_0100
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
+		SBI PORTB, PB2 ; Toggle PB2 -> 1
+		CBI PORTB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1
 	DecrementoA12: ; PB4=1; PB3=0; PB2=1 PB1=1
-		LDI R16, 0b0001_0110
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 1
-		;SBI PINB, PB3 ; Toggle PB3 -> 0
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		SBI PORTB, PB2 ; Toggle PB2 -> 1
+		CBI PORTB, PB3 ; Toggle PB3 -> 0
 		RJMP DONE1
 	DecrementoA13: ; PB4=1; PB3=1; PB2=0 PB1=0
-		LDI R16, 0b0001_1000
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
+		CBI PORTB, PB2 ; Toggle PB2 -> 0
+		SBI PORTB, PB3 ; Toggle PB3 -> 1
+		SBI PORTB, PB4 ; Toggle PB4 -> 1
 		RJMP DONE1
 	DecrementoA14: ; PB4=1; PB3=1; PB2=0 PB1-01
-		LDI R16, 0b0001_1010
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB1 -> 1
-		;SBI PINB, PB2 ; Toggle PB2 -> 0
+		SBI PORTB, PB1 ; Toggle PB1 -> 1
+		CBI PORTB, PB2 ; Toggle PB2 -> 0
 		RJMP DONE1
 	DecrementoA15: ; PB4=1; PB3=1; PB2=1 PB1=0
-		LDI R16, 0b0001_1100
-		OUT PORTB, R16
-		;SBI PINB, PB1 ; Toggle PB4 -> 0
+		CBI PORTB, PB1 ; Toggle PB1 -> 0
+		SBI PORTB, PB2 ; Toggle PB2 -> 1
 		RJMP DONE1
 	DONE1:
+		RJMP LOOP
+
+	IncrementoNibbleB:
+	; Espera un tiempo breve para el antirrebote
+	LDI R16, 255
+	delay2:
+		DEC R16
+		BRNE delay2
+
+	; Lee nuevamente el estado del boton despues de antirrebote
+
+	SBIS PINC, PC1 ; Salta si el bit de PC1 esta en 1
+	RJMP IncrementoNibbleB ; Repite la verificacion de antirrebote si el boton esta aun en 0
+	
+	; Realiza un aumento en el contador R30
+	INC R24 ; Aumenta R24 R24<-R24+1
+	
+	; SE INICIA UN SWITCH AND CASE
+	CPI R24, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB1 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB2 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB3 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB4 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB5 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB6 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB7 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB8 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB9 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB10 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB11 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB12 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB13 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB14 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ IncrementoB15 ; Si detecta bandera Z en 1 saltar hacia destino 
+
+	DEFAULT2:
+		LDI R24, 0 ;Coloca el contador R24 en 0
+		CBI PORTB, PB0 ;Coloca 0 en PB0 en PORTB
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE2
+	IncrementoB1: ; PB0=0; PD7=0; PD6=0 PD5=1
+		SBI PORTD, PD5  ; Coloca 1 en posicion PD5 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB2: ; PB0=0; PD7=0; PD6=1 PD5=0
+		CBI PORTD, PD5  ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6  ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB3: ; PB0=0; PD7=0; PD6=1 PD5=1
+		SBI PORTD, PD5  ; Pone 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6  ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB4: ; PB0=0; PD7=1; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB5: ; PB0=0; PD7=1; PD6=0 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB6: ; PB0=0; PD7=1; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB7: ; PB0=0; PD7=1; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB8: ; PB0=1; PD7=0; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB9: ; PB0=1; PD7=0; PD6=0 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB10: ; PB0=1; PD7=0; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB11: ; PB0=1; PD7=0; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB12: ; PB0=1; PD7=1; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB13: ; PB0=1; PD7=1; PD6=0 PD5=0
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB14: ; PB0=1; PD7=1; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	IncrementoB15: ; PB0=1; PD7=1; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	DONE2:
+		RJMP LOOP
+
+	DecrementoNibbleB:
+	; Espera un tiempo breve para el antirrebote
+	LDI R16, 255
+	delay3:
+		DEC R16
+		BRNE delay3
+
+	; Lee nuevamente el estado del boton despues de antirrebote
+
+	SBIS PINC, PC4 ; Salta si el bit de PC1 esta en 1
+	RJMP DecrementoNibbleB ; Repite la verificacion de antirrebote si el boton esta aun en 0
+	
+	; Realiza un aumento en el contador R30
+	DEC R24 ; Aumenta R24 R24<-R24+1
+	
+	; SE INICIA UN SWITCH AND CASE
+	CPI R24, 0x00 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB1 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB2 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB3 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB4 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB5 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB6 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB7 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB8 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB9 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB10 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB11 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB12 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB13 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB14 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R24, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ DecrementoB15 ; Si detecta bandera Z en 1 saltar hacia destino 
+
+	DEFAULT3:
+		LDI R24, 0
+		CBI PORTB, PB0
+		CBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE3
+	DecrementoB1: ; PB0=0; PD7=0; PD6=0 PD5=0
+		CBI PORTD, PD5  ; Coloca 0 en posicion PD5 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB2: ; PB0=0; PD7=0; PD6=0 PD5=1
+		SBI PORTD, PD5  ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6  ; Coloca 0 en posicion PD6 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB3: ; PB0=0; PD7=0; PD6=1 PD5=0
+		CBI PORTD, PD5  ; Pone 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6  ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB4: ; PB0=0; PD7=0; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB5: ; PB0=0; PD7=1; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB6: ; PB0=0; PD7=1; PD6=0 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a portD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB7: ; PB0=0; PD7=1; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB8: ; PB0=0; PD7=1; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		CBI PORTB, PB0 ; Coloca 0 en posicion PB0 a PORTB
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB9: ; PB0=1; PD7=0; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicio PB0 a PORTB
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB10: ; PB0=1; PD7=0; PD6=0 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB11: ; PB0=1; PD7=0; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB12: ; PB0=1; PD7=0; PD6=1 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		CBI PORTD, PD7 ; Coloca 0 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB13: ; PB0=1; PD7=1; PD6=0 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB14: ; PB0=1; PD7=1; PD6=0 PD5=1
+		SBI PORTD, PD5 ; Coloca 1 en posicion PD5 a PORTD
+		CBI PORTD, PD6 ; Coloca 0 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE3 ; Salta a la instruccion Done
+	DecrementoB15: ; PB0=1; PD7=1; PD6=1 PD5=0
+		CBI PORTD, PD5 ; Coloca 0 en posicion PD5 a PORTD
+		SBI PORTD, PD6 ; Coloca 1 en posicion PD6 a PORTD
+		SBI PORTD, PD7 ; Coloca 1 en posicion PD7 a PORTD
+		SBI PORTB, PB0 ; Coloca 1 en posicion PB0 a PORTB
+		RJMP DONE3 ; Salta a la instruccion Done 
+	DONE3:
+		RJMP LOOP
+		
+	SUMA:
+	; Espera un tiempo breve para el antirrebote
+	LDI R16, 255
+	delay4:
+		DEC R16
+		BRNE delay4
+
+	; Lee nuevamente el estado del boton despues de antirrebote
+
+	SBIS PINC, PC3 ; Salta si el bit de PC1 esta en 1
+	RJMP SUMA ; Repite la verificacion de antirrebote si el boton esta aun en 0
+	
+	MOV R23, R24
+	ADD R23, R30
+	;BRCS PrenderCarry
+	
+	; SE INICIA UN SWITCH AND CASE
+	CPI R23, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes1 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes2 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes3 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes4 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes5 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes6 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes7 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes8 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes9 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes10 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes11 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes12 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes13 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes14 ; Si detecta bandera Z en 1 saltar hacia destino
+	CPI R23, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
+	BREQ MostrarRes15 ; Si detecta bandera Z en 1 saltar hacia destino 
+	
+	DEFAULT4:
+		;LDI R23, 0 ;Coloca el contador R24 en 0
+		CBI PORTC, PC6 ;Coloca 0 en PB0 en PORTC
+		CBI PORTD, PD4 ; Coloca 0 en posicion PD4 a PORTD
+		CBI PORTD, PD3 ; Coloca 0 en posicion PD3 a PORTD
+		CBI PORTD, PD2 ; Coloca 0 en posicion PD2 a PORTD
+		RJMP DONE4
+	;PrenderCarry:
+		;SBI PORTB, PB5
+		;RJMP DONE4
+	MostrarRes1: ; PD4=0; PD3=0; PD2=0 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		CBI PORTD, PD2 ; Coloca 0 en posicion PD2 a PORTD
+		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
+		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes2: ; PD4=0; PD3=0; PD2=1 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
+		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
+		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes3: ; PD4=0; PD3=0; PD2=1 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
+		CBI PORTD, PD3 ; Coloca 0 en posicion PD2 a PORTD
+		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes4: ; PD4=0 PD3=1 PD2=0 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		CBI PORTD, PD2  ; Coloca 0 en posicion PD2 a PORTD
+		SBI PORTD, PD3  ; Coloca 1 en posicion PD3 a PORTD
+		CBI PORTD, PD4 ; Coloca 0 en posicion PD2 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes5: ; PD4=0 PD3=1 PD2=0 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes6: ; PD4=0 PD3=1 PD2=1 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		SBI PORTD, PD2  ; Coloca 1 en posicion PD2 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes7: ; PD4=0 PD3=1 PD2=1 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes8: ; PD4=1 PD3=0 PD2=0 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		CBI PORTD, PD2  ; Coloca 0 en posicion PD2 a PORTD
+		CBI PORTD, PD3  ; Coloca 0 en posicion PD3 a PORTD
+		SBI PORTD, PD4  ; Coloca 1 en posicion PD4 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes9: ; PD4=1 PD3=0 PD2=0 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes10: ;  PD4=1 PD3=0 PD2=1 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		SBI PORTD, PD2 ; Coloca 1 en posicion PD2 a PORTD
+		RJMP DONE2 ; Salta a la instruccion Done
+	MostrarRes11: ; PD4=1 PD3=0 PD2=1 PC6=1
+		SBI PORTC, PC6  ; Coloca 1 en posicion PC6 a PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes12: ; PD4=1 PD3=1 PD2=0 PC6=0
+		CBI PORTC, PC6  ; Coloca 0 en posicion PC6 a PORTC
+		CBI PORTD, PD2 ; Coloca 1 en posicion PD2 a PORTD
+		SBI PORTD, PD3 ; Coloca 1 en posicion PD3 a PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes13:  ; PD4=1 PD3=1 PD2=0 PC6=1
+		SBI PORTC, PC6 ; COLOCA EN 1 EN POSICION PC6 EN PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes14: ; PD4=1 PD3=1 PD2=1 PC6=0
+		CBI PORTC, PC6 ; COLOCA EN 0 EN POSICION PC6 EN PORTC
+		SBI PORTD, PD2 ; Coloca en 1 en posicion PD2 EN PORTD
+		RJMP DONE4 ; Salta a la instruccion Done
+	MostrarRes15: ;PD4=1 PD3=1 PD2=1 PC6=1
+		SBI PORTC, PC6 ; COLOCA EN 1 EN POSICION PC6 EN PORTC
+		RJMP DONE4 ; Salta a la instruccion Done
+	DONE4:
 		RJMP LOOP
 
