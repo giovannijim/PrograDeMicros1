@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm Thu Feb 01 11:50:22 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm Thu Feb 01 12:02:27 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1674,7 +1674,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D
                                  	
 0001c5 2f78                      	MOV R23, R24
 0001c6 1f7e                      	ADC R23, R30
-0001c7 f110                      	BRCS PrenderCarry
+0001c7 f510                      	BRCC PrenderCarry
                                  	
                                  	; SE INICIA UN SWITCH AND CASE
 0001c8 3071                      	CPI R23, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
@@ -1822,7 +1822,7 @@ Registers used: 5 out of 35 (14.3%)
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   1 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   1 break :   0 breq  :  75 brge  :   0 brhc  :   0 
+brcc  :   1 brcs  :   0 break :   0 breq  :  75 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  95 cbr   :   0 

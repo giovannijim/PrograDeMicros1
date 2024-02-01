@@ -643,7 +643,7 @@ AumentoNibbleA:
 	
 	MOV R23, R24
 	ADC R23, R30
-	BRCS PrenderCarry
+	BRCC PrenderCarry
 	
 	; SE INICIA UN SWITCH AND CASE
 	CPI R23, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
