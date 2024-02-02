@@ -1,0 +1,31 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\Debug\PreLab02.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>PreLab02.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>PreLab02.map</FILE>
+  <FILE>PreLab02.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <SETUP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\main.asm</FILE><LINE>30</LINE></SETUP>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\main.asm</FILE><LINE>89</LINE></Init_T0>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\main.asm</FILE><LINE>63</LINE></LOOP>
+  <AUMENTONIBBLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\PreLab02\PreLab02\main.asm</FILE><LINE>105</LINE></AUMENTONIBBLE>
+ </LABELS>
+</ASSEMBLER_INFO>

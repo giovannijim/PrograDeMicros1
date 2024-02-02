@@ -32,7 +32,7 @@ SETUP:
 	STS CLKPR, R16 ; Se habilita el prescaler
 
 	LDI R16, 0b0000_0011
-	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 1MHz
+	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
 
 	;LDI R16, (1 << PC0) ; Configura el pin PC0 como entrada con pullup
 	SBI PORTC, PC0 ; Habilita el pullup en el pin PC0
