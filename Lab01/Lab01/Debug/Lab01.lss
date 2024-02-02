@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm Thu Feb 01 16:30:25 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm Fri Feb 02 08:11:37 2024
 
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+[builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+[builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ;******************************************************************************
                                  
@@ -1157,8 +1157,9 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
                                  
 00003e cff0                      	RJMP LOOP
                                  //****************************************************
-                                 //Subrutina 
+                                 //Subrutinas
                                  //****************************************************
+                                 /*SUBRUTINA PARA INCREMENTO DE NIBBLE A---------------------------------------------------*/
                                  AumentoNibbleA:
                                  	; Espera un tiempo breve para el antirrebote
 00003f ef0f                      	LDI R16, 255
@@ -1271,6 +1272,8 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 000091 c000                      		RJMP DONE
                                  	DONE:
 000092 cf9c                      		RJMP LOOP
+                                 
+                                 	/*SUBRUTINA PARA DECREMENTO DE NIBBLE A---------------------------------------------------*/
                                  
                                  	DecrementoNibbleA:
                                  	; Espera un tiempo breve para el antirrebote
@@ -1399,6 +1402,8 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 0000f4 c000                      		RJMP DONE1
                                  	DONE1:
 0000f5 cf39                      		RJMP LOOP
+                                 
+                                 	/*SUBRUTINA PARA INCREMENTO DE NIBBLE B---------------------------------------------------*/
                                  
                                  	IncrementoNibbleB:
                                  	; Espera un tiempo breve para el antirrebote
@@ -1529,6 +1534,7 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
                                  	DONE2:
 000159 ced5                      		RJMP LOOP
                                  
+                                 	/*SUBRUTINA PARA DECREMENTO DE NIBBLE B---------------------------------------------------*/
                                  	DecrementoNibbleB:
                                  	; Espera un tiempo breve para el antirrebote
 00015a ef0f                      	LDI R16, 255
@@ -1659,7 +1665,8 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 0001be c000                      		RJMP DONE3 ; Salta a la instruccion Done 
                                  	DONE3:
 0001bf ce6f                      		RJMP LOOP
-                                 		
+                                 	
+                                 	/*SUBRUTINA PARA LA SUMA---------------------------------------------------*/	
                                  	SUMA:
                                  	; Espera un tiempo breve para el antirrebote
 0001c0 ef0f                      	LDI R16, 255
@@ -1672,17 +1679,17 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 0001c3 9b33                      	SBIS PINC, PC3 ; Salta si el bit de PC1 esta en 1
 0001c4 cffb                      	RJMP SUMA ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  	
-0001c5 982d                      	CBI PORTB, PB5
-0001c6 2f78                      	MOV R23, R24
-0001c7 1f7e                      	ADC R23, R30
-0001c8 2f67                      	MOV R22, R23
-0001c9 e150                      	LDI R21, 0b0001_0000
-0001ca 2365                      	AND R22, R21
-0001cb 2f27                      	MOV R18, R23
-0001cc e03f                      	LDI R19, 0b0000_1111
-0001cd 2323                      	AND R18, R19
-0001ce 3160                      	CPI R22, 0x10
-0001cf f119                      	BREQ PrenderCarry
+0001c5 982d                      	CBI PORTB, PB5 ; Limpia lo que haya en PB5
+0001c6 2f78                      	MOV R23, R24 ; Copia el registro R24  a R23
+0001c7 1f7e                      	ADC R23, R30 ; Suma el registro R23 y R30, y se almacena en R23
+0001c8 2f67                      	MOV R22, R23 ; Copia el registro R23 en R22
+0001c9 e150                      	LDI R21, 0b0001_0000 ;Carga el byte 0x10
+0001ca 2365                      	AND R22, R21 ; Apaga todos los bits excepto el bit 4 en R22
+0001cb 2f27                      	MOV R18, R23 ; Copia R23 en R18
+0001cc e03f                      	LDI R19, 0b0000_1111 ; Carga el byte 0x0F
+0001cd 2323                      	AND R18, R19 ; Apaga el bit 4 en el registro R18
+0001ce 3160                      	CPI R22, 0x10 ; Compara si el bit 4 en R22 esta prendido, si esta prendido prende la banera flag
+0001cf f119                      	BREQ PrenderCarry ; Se dirige a la sub rutina prender carry
                                  	
                                  	
                                  	; SE INICIA UN SWITCH AND CASE
@@ -1718,48 +1725,16 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm(13)
 0001ec 302f                      	CPI R18, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
 0001ed f1f9                      	BREQ MostrarRes15 ; Si detecta bandera Z en 1 saltar hacia destino 
 0001ee 3120                      	CPI R18, 0x10 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	/*
-                                 	BREQ MostrarRes16 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x11 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes17 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x12 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes18 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x13 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes19 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x14 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes20 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x15 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes21 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x16 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes22 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x17 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes23 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x18 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes24 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x19 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes25 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1A ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes26 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1B ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes27 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1C ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes28 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1D ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes29 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1E ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes30 ; Si detecta bandera Z en 1 saltar hacia destino 
-                                 	CPI R23, 0x1F ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ MostrarRes31 ; Si detecta bandera Z en 1 saltar hacia destino */
                                  	
                                  	DEFAULT4:
                                  		;LDI R23, 0 ;Coloca el contador R24 en 0
 0001ef 9a42                      		SBI PORTC, PC2 ;Coloca 0 en PC2 en PORTC
-0001f0 e10c                      		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2)
-0001f1 b90b                      		OUT PORTD, R16
+0001f0 e10c                      		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2) ; Carga 1 en PD4, PD3 Y PD2
+0001f1 b90b                      		OUT PORTD, R16 ; Carga R16 a PortD
 0001f2 c07e                      		RJMP DONE4
                                  	PrenderCarry:
-0001f3 9a2d                      		SBI PORTB, PB5
-0001f4 cfdb                      		RJMP Comparacion
+0001f3 9a2d                      		SBI PORTB, PB5 ; Prende el bit PB5 en el registro PORTB
+0001f4 cfdb                      		RJMP Comparacion ; Regresa a la subrutina Comparacion
                                  	MostrarRes1: ; PD4=0; PD3=0; PD2=0 PC2=1
 0001f5 9a42                      		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
 0001f6 e000                      		LDI R16, (0<<PD4)| (0<<PD3)|(0<<PD2) ; carga 0 en todo PORTD

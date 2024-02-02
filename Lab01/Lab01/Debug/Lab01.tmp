@@ -1,19 +1,19 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.8</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\Debug</WORKING_DIR>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\Debug</WORKING_DIR>
  <INCLUDE_PATH>
-  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
-  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
-  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
-  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\Debug\Lab01.obj</FILE>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\Debug\Lab01.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>Lab01.hex</FILE>
@@ -23,120 +23,120 @@
   <FILE>Lab01.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <SETUP><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>29</LINE></SETUP>
-  <LOOP><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>100</LINE></LOOP>
-  <AumentoNibbleA><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>131</LINE></AumentoNibbleA>
-  <DecrementoNibbleA><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>244</LINE></DecrementoNibbleA>
-  <IncrementoNibbleB><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>372</LINE></IncrementoNibbleB>
-  <DecrementoNibbleB><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>501</LINE></DecrementoNibbleB>
-  <SUMA><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>632</LINE></SUMA>
-  <delay><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>134</LINE></delay>
-  <ContadorA1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>185</LINE></ContadorA1>
-  <ContadorA2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>188</LINE></ContadorA2>
-  <ContadorA3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>192</LINE></ContadorA3>
-  <ContadorA4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>195</LINE></ContadorA4>
-  <ContadorA5><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>200</LINE></ContadorA5>
-  <ContadorA6><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>203</LINE></ContadorA6>
-  <ContadorA7><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>207</LINE></ContadorA7>
-  <ContadorA8><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>210</LINE></ContadorA8>
-  <ContadorA9><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>216</LINE></ContadorA9>
-  <ContadorA10><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>219</LINE></ContadorA10>
-  <ContadorA11><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>223</LINE></ContadorA11>
-  <ContadorA12><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>226</LINE></ContadorA12>
-  <ContadorA13><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>231</LINE></ContadorA13>
-  <ContadorA14><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>234</LINE></ContadorA14>
-  <ContadorA15><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>238</LINE></ContadorA15>
-  <DEFAULT><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>178</LINE></DEFAULT>
-  <DONE><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>241</LINE></DONE>
-  <delay1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>247</LINE></delay1>
-  <DecrementoA1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>298</LINE></DecrementoA1>
-  <DecrementoA2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>301</LINE></DecrementoA2>
-  <DecrementoA3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>305</LINE></DecrementoA3>
-  <DecrementoA4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>308</LINE></DecrementoA4>
-  <DecrementoA5><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>313</LINE></DecrementoA5>
-  <DecrementoA6><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>318</LINE></DecrementoA6>
-  <DecrementoA7><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>323</LINE></DecrementoA7>
-  <DecrementoA8><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>328</LINE></DecrementoA8>
-  <DecrementoA9><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>334</LINE></DecrementoA9>
-  <DecrementoA10><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>340</LINE></DecrementoA10>
-  <DecrementoA11><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>345</LINE></DecrementoA11>
-  <DecrementoA12><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>350</LINE></DecrementoA12>
-  <DecrementoA13><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>355</LINE></DecrementoA13>
-  <DecrementoA14><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>361</LINE></DecrementoA14>
-  <DecrementoA15><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>365</LINE></DecrementoA15>
-  <DEFAULT1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>291</LINE></DEFAULT1>
-  <DONE1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>369</LINE></DONE1>
-  <delay2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>375</LINE></delay2>
-  <IncrementoB1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>426</LINE></IncrementoB1>
-  <IncrementoB2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>429</LINE></IncrementoB2>
-  <IncrementoB3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>433</LINE></IncrementoB3>
-  <IncrementoB4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>437</LINE></IncrementoB4>
-  <IncrementoB5><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>442</LINE></IncrementoB5>
-  <IncrementoB6><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>446</LINE></IncrementoB6>
-  <IncrementoB7><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>451</LINE></IncrementoB7>
-  <IncrementoB8><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>456</LINE></IncrementoB8>
-  <IncrementoB9><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>462</LINE></IncrementoB9>
-  <IncrementoB10><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>468</LINE></IncrementoB10>
-  <IncrementoB11><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>474</LINE></IncrementoB11>
-  <IncrementoB12><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>480</LINE></IncrementoB12>
-  <IncrementoB13><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>486</LINE></IncrementoB13>
-  <IncrementoB14><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>490</LINE></IncrementoB14>
-  <IncrementoB15><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>494</LINE></IncrementoB15>
-  <DEFAULT2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>419</LINE></DEFAULT2>
-  <DONE2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>498</LINE></DONE2>
-  <delay3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>504</LINE></delay3>
-  <DecrementoB1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>555</LINE></DecrementoB1>
-  <DecrementoB2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>558</LINE></DecrementoB2>
-  <DecrementoB3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>562</LINE></DecrementoB3>
-  <DecrementoB4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>566</LINE></DecrementoB4>
-  <DecrementoB5><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>571</LINE></DecrementoB5>
-  <DecrementoB6><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>576</LINE></DecrementoB6>
-  <DecrementoB7><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>581</LINE></DecrementoB7>
-  <DecrementoB8><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>585</LINE></DecrementoB8>
-  <DecrementoB9><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>591</LINE></DecrementoB9>
-  <DecrementoB10><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>597</LINE></DecrementoB10>
-  <DecrementoB11><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>602</LINE></DecrementoB11>
-  <DecrementoB12><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>607</LINE></DecrementoB12>
-  <DecrementoB13><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>612</LINE></DecrementoB13>
-  <DecrementoB14><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>617</LINE></DecrementoB14>
-  <DecrementoB15><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>623</LINE></DecrementoB15>
-  <DEFAULT3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>548</LINE></DEFAULT3>
-  <DONE3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>629</LINE></DONE3>
-  <delay4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>635</LINE></delay4>
-  <PrenderCarry><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>729</LINE></PrenderCarry>
-  <Comparacion><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>658</LINE></Comparacion>
-  <MostrarRes1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>732</LINE></MostrarRes1>
-  <MostrarRes2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>737</LINE></MostrarRes2>
-  <MostrarRes3><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>742</LINE></MostrarRes3>
-  <MostrarRes4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>747</LINE></MostrarRes4>
-  <MostrarRes5><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>752</LINE></MostrarRes5>
-  <MostrarRes6><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>757</LINE></MostrarRes6>
-  <MostrarRes7><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>762</LINE></MostrarRes7>
-  <MostrarRes8><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>767</LINE></MostrarRes8>
-  <MostrarRes9><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>772</LINE></MostrarRes9>
-  <MostrarRes10><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>777</LINE></MostrarRes10>
-  <MostrarRes11><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>782</LINE></MostrarRes11>
-  <MostrarRes12><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>787</LINE></MostrarRes12>
-  <MostrarRes13><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>792</LINE></MostrarRes13>
-  <MostrarRes14><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>797</LINE></MostrarRes14>
-  <MostrarRes15><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>802</LINE></MostrarRes15>
-  <DEFAULT4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>723</LINE></DEFAULT4>
-  <DONE4><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>887</LINE></DONE4>
-  <MostrarRes16><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>807</LINE></MostrarRes16>
-  <MostrarRes17><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>812</LINE></MostrarRes17>
-  <MostrarRes18><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>817</LINE></MostrarRes18>
-  <MostrarRes19><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>822</LINE></MostrarRes19>
-  <MostrarRes20><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>827</LINE></MostrarRes20>
-  <MostrarRes21><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>832</LINE></MostrarRes21>
-  <MostrarRes22><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>837</LINE></MostrarRes22>
-  <MostrarRes23><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>842</LINE></MostrarRes23>
-  <MostrarRes24><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>847</LINE></MostrarRes24>
-  <MostrarRes25><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>852</LINE></MostrarRes25>
-  <MostrarRes26><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>857</LINE></MostrarRes26>
-  <MostrarRes27><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>862</LINE></MostrarRes27>
-  <MostrarRes28><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>867</LINE></MostrarRes28>
-  <MostrarRes29><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>872</LINE></MostrarRes29>
-  <MostrarRes30><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>877</LINE></MostrarRes30>
-  <MostrarRes31><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>882</LINE></MostrarRes31>
+  <SETUP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>29</LINE></SETUP>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>100</LINE></LOOP>
+  <AumentoNibbleA><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>132</LINE></AumentoNibbleA>
+  <DecrementoNibbleA><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>247</LINE></DecrementoNibbleA>
+  <IncrementoNibbleB><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>377</LINE></IncrementoNibbleB>
+  <DecrementoNibbleB><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>507</LINE></DecrementoNibbleB>
+  <SUMA><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>639</LINE></SUMA>
+  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>135</LINE></delay>
+  <ContadorA1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>186</LINE></ContadorA1>
+  <ContadorA2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>189</LINE></ContadorA2>
+  <ContadorA3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>193</LINE></ContadorA3>
+  <ContadorA4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>196</LINE></ContadorA4>
+  <ContadorA5><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>201</LINE></ContadorA5>
+  <ContadorA6><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>204</LINE></ContadorA6>
+  <ContadorA7><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>208</LINE></ContadorA7>
+  <ContadorA8><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>211</LINE></ContadorA8>
+  <ContadorA9><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>217</LINE></ContadorA9>
+  <ContadorA10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>220</LINE></ContadorA10>
+  <ContadorA11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>224</LINE></ContadorA11>
+  <ContadorA12><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>227</LINE></ContadorA12>
+  <ContadorA13><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>232</LINE></ContadorA13>
+  <ContadorA14><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>235</LINE></ContadorA14>
+  <ContadorA15><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>239</LINE></ContadorA15>
+  <DEFAULT><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>179</LINE></DEFAULT>
+  <DONE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>242</LINE></DONE>
+  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>250</LINE></delay1>
+  <DecrementoA1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>301</LINE></DecrementoA1>
+  <DecrementoA2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>304</LINE></DecrementoA2>
+  <DecrementoA3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>308</LINE></DecrementoA3>
+  <DecrementoA4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>311</LINE></DecrementoA4>
+  <DecrementoA5><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>316</LINE></DecrementoA5>
+  <DecrementoA6><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>321</LINE></DecrementoA6>
+  <DecrementoA7><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>326</LINE></DecrementoA7>
+  <DecrementoA8><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>331</LINE></DecrementoA8>
+  <DecrementoA9><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>337</LINE></DecrementoA9>
+  <DecrementoA10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>343</LINE></DecrementoA10>
+  <DecrementoA11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>348</LINE></DecrementoA11>
+  <DecrementoA12><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>353</LINE></DecrementoA12>
+  <DecrementoA13><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>358</LINE></DecrementoA13>
+  <DecrementoA14><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>364</LINE></DecrementoA14>
+  <DecrementoA15><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>368</LINE></DecrementoA15>
+  <DEFAULT1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>294</LINE></DEFAULT1>
+  <DONE1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>372</LINE></DONE1>
+  <delay2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>380</LINE></delay2>
+  <IncrementoB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>431</LINE></IncrementoB1>
+  <IncrementoB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>434</LINE></IncrementoB2>
+  <IncrementoB3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>438</LINE></IncrementoB3>
+  <IncrementoB4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>442</LINE></IncrementoB4>
+  <IncrementoB5><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>447</LINE></IncrementoB5>
+  <IncrementoB6><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>451</LINE></IncrementoB6>
+  <IncrementoB7><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>456</LINE></IncrementoB7>
+  <IncrementoB8><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>461</LINE></IncrementoB8>
+  <IncrementoB9><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>467</LINE></IncrementoB9>
+  <IncrementoB10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>473</LINE></IncrementoB10>
+  <IncrementoB11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>479</LINE></IncrementoB11>
+  <IncrementoB12><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>485</LINE></IncrementoB12>
+  <IncrementoB13><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>491</LINE></IncrementoB13>
+  <IncrementoB14><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>495</LINE></IncrementoB14>
+  <IncrementoB15><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>499</LINE></IncrementoB15>
+  <DEFAULT2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>424</LINE></DEFAULT2>
+  <DONE2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>503</LINE></DONE2>
+  <delay3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>510</LINE></delay3>
+  <DecrementoB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>561</LINE></DecrementoB1>
+  <DecrementoB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>564</LINE></DecrementoB2>
+  <DecrementoB3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>568</LINE></DecrementoB3>
+  <DecrementoB4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>572</LINE></DecrementoB4>
+  <DecrementoB5><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>577</LINE></DecrementoB5>
+  <DecrementoB6><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>582</LINE></DecrementoB6>
+  <DecrementoB7><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>587</LINE></DecrementoB7>
+  <DecrementoB8><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>591</LINE></DecrementoB8>
+  <DecrementoB9><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>597</LINE></DecrementoB9>
+  <DecrementoB10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>603</LINE></DecrementoB10>
+  <DecrementoB11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>608</LINE></DecrementoB11>
+  <DecrementoB12><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>613</LINE></DecrementoB12>
+  <DecrementoB13><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>618</LINE></DecrementoB13>
+  <DecrementoB14><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>623</LINE></DecrementoB14>
+  <DecrementoB15><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>629</LINE></DecrementoB15>
+  <DEFAULT3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>554</LINE></DEFAULT3>
+  <DONE3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>635</LINE></DONE3>
+  <delay4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>642</LINE></delay4>
+  <PrenderCarry><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>704</LINE></PrenderCarry>
+  <Comparacion><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>665</LINE></Comparacion>
+  <MostrarRes1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>707</LINE></MostrarRes1>
+  <MostrarRes2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>712</LINE></MostrarRes2>
+  <MostrarRes3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>717</LINE></MostrarRes3>
+  <MostrarRes4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>722</LINE></MostrarRes4>
+  <MostrarRes5><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>727</LINE></MostrarRes5>
+  <MostrarRes6><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>732</LINE></MostrarRes6>
+  <MostrarRes7><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>737</LINE></MostrarRes7>
+  <MostrarRes8><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>742</LINE></MostrarRes8>
+  <MostrarRes9><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>747</LINE></MostrarRes9>
+  <MostrarRes10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>752</LINE></MostrarRes10>
+  <MostrarRes11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>757</LINE></MostrarRes11>
+  <MostrarRes12><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>762</LINE></MostrarRes12>
+  <MostrarRes13><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>767</LINE></MostrarRes13>
+  <MostrarRes14><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>772</LINE></MostrarRes14>
+  <MostrarRes15><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>777</LINE></MostrarRes15>
+  <DEFAULT4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>698</LINE></DEFAULT4>
+  <DONE4><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>862</LINE></DONE4>
+  <MostrarRes16><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>782</LINE></MostrarRes16>
+  <MostrarRes17><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>787</LINE></MostrarRes17>
+  <MostrarRes18><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>792</LINE></MostrarRes18>
+  <MostrarRes19><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>797</LINE></MostrarRes19>
+  <MostrarRes20><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>802</LINE></MostrarRes20>
+  <MostrarRes21><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>807</LINE></MostrarRes21>
+  <MostrarRes22><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>812</LINE></MostrarRes22>
+  <MostrarRes23><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>817</LINE></MostrarRes23>
+  <MostrarRes24><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>822</LINE></MostrarRes24>
+  <MostrarRes25><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>827</LINE></MostrarRes25>
+  <MostrarRes26><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>832</LINE></MostrarRes26>
+  <MostrarRes27><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>837</LINE></MostrarRes27>
+  <MostrarRes28><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>842</LINE></MostrarRes28>
+  <MostrarRes29><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>847</LINE></MostrarRes29>
+  <MostrarRes30><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>852</LINE></MostrarRes30>
+  <MostrarRes31><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm</FILE><LINE>857</LINE></MostrarRes31>
  </LABELS>
 </ASSEMBLER_INFO>

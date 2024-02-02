@@ -126,8 +126,9 @@ LOOP:
 
 	RJMP LOOP
 //****************************************************
-//Subrutina 
+//Subrutinas
 //****************************************************
+/*SUBRUTINA PARA INCREMENTO DE NIBBLE A---------------------------------------------------*/
 AumentoNibbleA:
 	; Espera un tiempo breve para el antirrebote
 	LDI R16, 255
@@ -240,6 +241,8 @@ AumentoNibbleA:
 		RJMP DONE
 	DONE:
 		RJMP LOOP
+
+	/*SUBRUTINA PARA DECREMENTO DE NIBBLE A---------------------------------------------------*/
 
 	DecrementoNibbleA:
 	; Espera un tiempo breve para el antirrebote
@@ -368,6 +371,8 @@ AumentoNibbleA:
 		RJMP DONE1
 	DONE1:
 		RJMP LOOP
+
+	/*SUBRUTINA PARA INCREMENTO DE NIBBLE B---------------------------------------------------*/
 
 	IncrementoNibbleB:
 	; Espera un tiempo breve para el antirrebote
@@ -498,6 +503,7 @@ AumentoNibbleA:
 	DONE2:
 		RJMP LOOP
 
+	/*SUBRUTINA PARA DECREMENTO DE NIBBLE B---------------------------------------------------*/
 	DecrementoNibbleB:
 	; Espera un tiempo breve para el antirrebote
 	LDI R16, 255
@@ -628,7 +634,8 @@ AumentoNibbleA:
 		RJMP DONE3 ; Salta a la instruccion Done 
 	DONE3:
 		RJMP LOOP
-		
+	
+	/*SUBRUTINA PARA LA SUMA---------------------------------------------------*/	
 	SUMA:
 	; Espera un tiempo breve para el antirrebote
 	LDI R16, 255
@@ -641,17 +648,17 @@ AumentoNibbleA:
 	SBIS PINC, PC3 ; Salta si el bit de PC1 esta en 1
 	RJMP SUMA ; Repite la verificacion de antirrebote si el boton esta aun en 0
 	
-	CBI PORTB, PB5
-	MOV R23, R24
-	ADC R23, R30
-	MOV R22, R23
-	LDI R21, 0b0001_0000
-	AND R22, R21
-	MOV R18, R23
-	LDI R19, 0b0000_1111
-	AND R18, R19
-	CPI R22, 0x10
-	BREQ PrenderCarry
+	CBI PORTB, PB5 ; Limpia lo que haya en PB5
+	MOV R23, R24 ; Copia el registro R24  a R23
+	ADC R23, R30 ; Suma el registro R23 y R30, y se almacena en R23
+	MOV R22, R23 ; Copia el registro R23 en R22
+	LDI R21, 0b0001_0000 ;Carga el byte 0x10
+	AND R22, R21 ; Apaga todos los bits excepto el bit 4 en R22
+	MOV R18, R23 ; Copia R23 en R18
+	LDI R19, 0b0000_1111 ; Carga el byte 0x0F
+	AND R18, R19 ; Apaga el bit 4 en el registro R18
+	CPI R22, 0x10 ; Compara si el bit 4 en R22 esta prendido, si esta prendido prende la banera flag
+	BREQ PrenderCarry ; Se dirige a la sub rutina prender carry
 	
 	
 	; SE INICIA UN SWITCH AND CASE
@@ -691,12 +698,12 @@ AumentoNibbleA:
 	DEFAULT4:
 		;LDI R23, 0 ;Coloca el contador R24 en 0
 		SBI PORTC, PC2 ;Coloca 0 en PC2 en PORTC
-		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2)
-		OUT PORTD, R16
+		LDI R16, (1<<PD4)| (1<<PD3)| (1<<PD2) ; Carga 1 en PD4, PD3 Y PD2
+		OUT PORTD, R16 ; Carga R16 a PortD
 		RJMP DONE4
 	PrenderCarry:
-		SBI PORTB, PB5
-		RJMP Comparacion
+		SBI PORTB, PB5 ; Prende el bit PB5 en el registro PORTB
+		RJMP Comparacion ; Regresa a la subrutina Comparacion
 	MostrarRes1: ; PD4=0; PD3=0; PD2=0 PC2=1
 		SBI PORTC, PC2  ; Coloca 1 en posicion PC2 a PORTC
 		LDI R16, (0<<PD4)| (0<<PD3)|(0<<PD2) ; carga 0 en todo PORTD
