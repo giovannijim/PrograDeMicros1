@@ -25,7 +25,7 @@
 //******************************************************************************
 //Tabla de valores
 //******************************************************************************
-Tabla7Seg: .DB 0x3F, 0x03, 0x76, 0x57, 0x4B, 0x57, 0x7D, 0x47, 0x7F, 0x4F, 0x6F, 0x79, 0x3C, 0x73, 0x7C, 0x6C
+Tabla: .DB "0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36"
 //******************************************************************************
 
 //******************************************************************************
@@ -73,28 +73,22 @@ SETUP:
 //******************************************************************************
 
 //******************************************************************************
-// LOOP PRINCIPAL
+// CONFIGURACION
 //******************************************************************************
 
 MAIN:
-	LDI R16, 0x01
-	LDI ZL, LOW(Tabla7Seg<<1)
-	LDI ZH, HIGH(Tabla7Seg<<1)
-LOAD:
-	LDI R16, 1
-	ADD ZL, R16
-	LPM R16, Z
-	OUT PORTD, R16
-	RJMP LOOP_CONTADOR
-
+	LDI ZL, LOW(Tabla<<2)
+	LDI ZH, HIGH(Tabla<<2)
 //******************************************************************************
+
 
 //******************************************************************************
 // LOOP PRINCIPAL
 //******************************************************************************
 LOOP_CONTADOR:
-	;Se llama para hacer incremento en el nibble A
-	/*IN R16, PINC ; Se obtiene la info de PINC en R16
+	
+	/*;Se llama para hacer incremento en el nibble A
+	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC3 ; Salta si el bit PC0 se encuentra en 1
 	RJMP AumentoSevSeg
 
@@ -116,12 +110,16 @@ LOOP_CONTADOR:
 	CPI R20, 100 ; Compara si ya llego a los 100 ms
 	BRNE LOOP_CONTADOR ;Sino ha llegado se reincia el LOOP
 
-	CLR R20 ; Se limpia el registro r20 0x00
+	
 
-	RJMP AUMENTONIBBLE ; Salta a la subrutina para aumentar 
-	;LDI R16, 0XFF
-	;OUT PORTD, R16
-	;RJMP LOAD
+	CLR R20 ; Se limpia el registro r20 0x00
+	
+	//LDI R16, 0xC0
+	
+	//OUT PIND, R16
+	//RJMP AUMENTONIBBLE ; Salta a la subrutina para aumentar 
+
+	RJMP LOAD
 
 	RJMP LOOP_CONTADOR
 
@@ -139,13 +137,8 @@ Init_T0:
 	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
 
 	RET
-//******************************************************************************
+//*****************************************************************************
 
-//******************************************************************************
-// SUBRUTINA PARA INCREMENTAR EL CONTADOR BIANRIO
-//******************************************************************************
-
-; FORMA 1 PARA AUMENTAR EL CONTADOR*********************************************
 AumentoNibble:
 	INC R25 ; Incrementa R25
 	MOV R24, R25 ; Copia el registro R25 a R24
@@ -177,17 +170,27 @@ DecrementoSevSeg:
 		DEC R16
 		BRNE delay1
 
-	LDI R16, 1
-	SUB ZL, R16
-	LPM R16, Z
-	OUT PORTD, R16
-
 	; Lee nuevamente el estado del boton despues de antirrebote
 
 	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
 	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
 
+	LDI R16, 1
+	SUB ZL, R16
+	LPM R16, Z
+	OUT PORTD, R16
 
+LOAD:
+	LPM R16, Z
+	OUT PORTD, R16
+	RJMP LOOP_CONTADOR
+
+
+//******************************************************************************
+// SUBRUTINA PARA INCREMENTAR EL CONTADOR BIANRIO
+//******************************************************************************
+
+; FORMA 1 PARA AUMENTAR EL CONTADOR*********************************************
 
 ; FORMA 2 PARA AUMENTAR EL CONTADOR BINARIO**************************************
 

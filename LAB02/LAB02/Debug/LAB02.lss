@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\LAB02\LAB02\main.asm Fri Feb 02 18:48:01 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm Fri Feb 02 22:25:19 2024
 
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+[builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+[builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ;
                                  
@@ -1056,112 +1056,141 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\LAB02\LAB02\main.asm(11)
                                  //******************************************************************************
                                  //Tabla de valores
                                  //******************************************************************************
-000004 033f
-000005 5776
-000006 574b
-000007 477d
-000008 4f7f
-000009 796f
-00000a 733c
-00000b 6c7c                      Tabla7Seg: .DB 0x3F, 0x03, 0x76, 0x57, 0x4B, 0x57, 0x7D, 0x47, 0x7F, 0x4F, 0x6F, 0x79, 0x3C, 0x73, 0x7C, 0x6C
+000004 7830
+000005 4346
+000006 202c
+000007 7830
+000008 3043
+000009 202c
+00000a 7830
+00000b 4536
+00000c 202c
+00000d 7830
+00000e 4145
+00000f 202c
+000010 7830
+000011 3244
+000012 202c
+000013 7830
+000014 4142
+000015 202c
+000016 7830
+000017 4542
+000018 202c
+000019 7830
+00001a 3245
+00001b 202c
+00001c 7830
+00001d 4546
+00001e 202c
+00001f 7830
+000020 3246
+000021 202c
+000022 7830
+000023 3646
+000024 202c
+000025 7830
+000026 4539
+000027 202c
+000028 7830
+000029 4333
+00002a 202c
+00002b 7830
+00002c 4543
+00002d 202c
+00002e 7830
+00002f 4533
+000030 202c
+000031 7830
+000032 3633                      Tabla: .DB "0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36"
                                  //******************************************************************************
                                  
                                  //******************************************************************************
                                  //Configuración MCU
                                  //******************************************************************************
                                  SETUP:
-00000c e800                      	LDI R16, (1 << CLKPCE) ; Se coloca un uno en el bit de CLKPCE
-00000d 9300 0061                 	STS CLKPR, R16 ; Se habilita el prescaler
+000033 e800                      	LDI R16, (1 << CLKPCE) ; Se coloca un uno en el bit de CLKPCE
+000034 9300 0061                 	STS CLKPR, R16 ; Se habilita el prescaler
                                  
-00000f e003                      	LDI R16, 0b0000_0011
-000010 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
+000036 e003                      	LDI R16, 0b0000_0011
+000037 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
                                  
-000012 e000                      	LDI R16, 0X00
-000013 bd04                      	OUT TCCR0A, R16 ;Se indica al Timer que opere de manera normal
+000039 e000                      	LDI R16, 0X00
+00003a bd04                      	OUT TCCR0A, R16 ;Se indica al Timer que opere de manera normal
                                  
-000014 940e 003d                 	CALL Init_T0 ; Inicializar Timer 0
+00003b 940e 005e                 	CALL Init_T0 ; Inicializar Timer 0
                                  
-000016 e040                      	LDI R20, 0
-000017 e0e0                      	LDI R30, 0
+00003d e040                      	LDI R20, 0
+00003e e0e0                      	LDI R30, 0
                                  
-000018 9a38                      	SBI DDRC, PC0	;Definiendo PC0 como salida
-000019 9840                      	CBI PORTC, PC0	; Colocar 0 en PC0
+00003f 9a38                      	SBI DDRC, PC0	;Definiendo PC0 como salida
+000040 9840                      	CBI PORTC, PC0	; Colocar 0 en PC0
                                  
-00001a 9a39                      	SBI DDRC, PC1	;Definiendo PC1 como salida
-00001b 9841                      	CBI PORTC, PC1	; Colocar 0 en PC1
+000041 9a39                      	SBI DDRC, PC1	;Definiendo PC1 como salida
+000042 9841                      	CBI PORTC, PC1	; Colocar 0 en PC1
                                  
-00001c 9a3a                      	SBI DDRC, PC2	;Definiendo PC2 como salida
-00001d 9842                      	CBI PORTC, PC2	; Colocar 0 en PC2
+000043 9a3a                      	SBI DDRC, PC2	;Definiendo PC2 como salida
+000044 9842                      	CBI PORTC, PC2	; Colocar 0 en PC2
                                  
-00001e 9a3b                      	SBI DDRC, PC3	;Definiendo PC3 como salida
-00001f 9843                      	CBI PORTC, PC3	; Colocar 0 en PC3
+000045 9a3b                      	SBI DDRC, PC3	;Definiendo PC3 como salida
+000046 9843                      	CBI PORTC, PC3	; Colocar 0 en PC3
                                  	
-000020 9a44                      	SBI PORTC, PC4	; Colocar 1 en PC3 pullup
-000021 983c                      	CBI DDRC, PC4	;Definiendo PC3 como salida
+000047 9a44                      	SBI PORTC, PC4	; Colocar 1 en PC3 pullup
+000048 983c                      	CBI DDRC, PC4	;Definiendo PC3 como salida
                                  
-000022 9a45                      	SBI PORTC, PC5	; Colocar 1 en PC5 pullup
-000023 983d                      	CBI DDRC, PC5	;Definiendo PC5 como salida
+000049 9a45                      	SBI PORTC, PC5	; Colocar 1 en PC5 pullup
+00004a 983d                      	CBI DDRC, PC5	;Definiendo PC5 como salida
                                  
-000024 ef0f                      	LDI R16, 0xFF
-000025 b90a                      	OUT DDRD, R16
-000026 e000                      	LDI R16, 0x00
-000027 b90b                      	OUT PORTD, R16
+00004b ef0f                      	LDI R16, 0xFF
+00004c b90a                      	OUT DDRD, R16
+00004d e000                      	LDI R16, 0x00
+00004e b90b                      	OUT PORTD, R16
                                  
-000028 e090                      	LDI R25, 0
+00004f e090                      	LDI R25, 0
                                  //******************************************************************************
                                  
                                  //******************************************************************************
-                                 // LOOP PRINCIPAL
+                                 // CONFIGURACION
                                  //******************************************************************************
                                  
                                  MAIN:
-000029 e001                      	LDI R16, 0x01
-00002a e0e8                      	LDI ZL, LOW(Tabla7Seg<<1)
-00002b e0f0                      	LDI ZH, HIGH(Tabla7Seg<<1)
-                                 LOAD:
-00002c e001                      	LDI R16, 1
-00002d 0fe0                      	ADD ZL, R16
-00002e 9104                      	LPM R16, Z
-00002f b90b                      	OUT PORTD, R16
-000030 c000                      	RJMP LOOP_CONTADOR
-                                 
+000050 e1e0                      	LDI ZL, LOW(Tabla<<2)
+000051 e0f0                      	LDI ZH, HIGH(Tabla<<2)
                                  //******************************************************************************
+                                 
                                  
                                  //******************************************************************************
                                  // LOOP PRINCIPAL
                                  //******************************************************************************
                                  LOOP_CONTADOR:
-                                 	;Se llama para hacer incremento en el nibble A
-                                 	/*IN R16, PINC ; Se obtiene la info de PINC en R16
-                                 	SBRS R16, PC3 ; Salta si el bit PC0 se encuentra en 1
-                                 	RJMP AumentoSevSeg
-                                 
-                                 	IN R16, PINC ; Se obtiene la info de PINC en R16
-                                 	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
-                                 	RJMP DecrementoSevSeg*/
+                                 	
                                  
                                  	; REALIZAMO' UN POLLING
-000031 b305                      	IN R16, TIFR0
-000032 3001                      	CPI R16, (1<<TOV0)
-000033 f7e9                      	BRNE LOOP_CONTADOR;Si no se encuentra seteada, continuar esperando
+000052 b305                      	IN R16, TIFR0
+000053 3001                      	CPI R16, (1<<TOV0)
+000054 f7e9                      	BRNE LOOP_CONTADOR;Si no se encuentra seteada, continuar esperando
                                  
-000034 ee0c                      	LDI R16, 236 ;Cargar valor de desbordamiento
-000035 bd06                      	OUT TCNT0, R16 ; Carga el valor inicial del contador
+000055 ee0c                      	LDI R16, 236 ;Cargar valor de desbordamiento
+000056 bd06                      	OUT TCNT0, R16 ; Carga el valor inicial del contador
                                  
-000036 9aa8                      	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de oberflow del Timer0
+000057 9aa8                      	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de oberflow del Timer0
                                  
-000037 9543                      	INC R20 ; Incrementa R20 por cada 10 ms
-000038 3644                      	CPI R20, 100 ; Compara si ya llego a los 100 ms
-000039 f7b9                      	BRNE LOOP_CONTADOR ;Sino ha llegado se reincia el LOOP
+000058 9543                      	INC R20 ; Incrementa R20 por cada 10 ms
+000059 3644                      	CPI R20, 100 ; Compara si ya llego a los 100 ms
+00005a f7b9                      	BRNE LOOP_CONTADOR ;Sino ha llegado se reincia el LOOP
                                  
-00003a 2744                      	CLR R20 ; Se limpia el registro r20 0x00
+                                 	
                                  
-00003b c006                      	RJMP AUMENTONIBBLE ; Salta a la subrutina para aumentar 
-                                 	;LDI R16, 0XFF
-                                 	;OUT PORTD, R16
-                                 	;RJMP LOAD
+00005b 2744                      	CLR R20 ; Se limpia el registro r20 0x00
+                                 	
+                                 	//LDI R16, 0xC0
+                                 	
+                                 	//OUT PIND, R16
+                                 	//RJMP AUMENTONIBBLE ; Salta a la subrutina para aumentar 
                                  
-00003c cff4                      	RJMP LOOP_CONTADOR
+00005c c01c                      	RJMP LOAD
+                                 
+00005d cff4                      	RJMP LOOP_CONTADOR
                                  
                                  //******************************************************************************
                                  
@@ -1170,167 +1199,60 @@ C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\LAB02\LAB02\main.asm(11)
                                  //******************************************************************************
                                  Init_T0:
                                  	
-00003d e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
-00003e bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+00005e e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
+00005f bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
                                  
-00003f ee0c                      	LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
-000040 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
+000060 ee0c                      	LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
+000061 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
                                  
-000041 9508                      	RET
-                                 //******************************************************************************
+000062 9508                      	RET
+                                 //*****************************************************************************
                                  
-                                 //******************************************************************************
-                                 // SUBRUTINA PARA INCREMENTAR EL CONTADOR BIANRIO
-                                 //******************************************************************************
-                                 
-                                 ; FORMA 1 PARA AUMENTAR EL CONTADOR*********************************************
                                  AumentoNibble:
-000042 9593                      	INC R25 ; Incrementa R25
-000043 2f89                      	MOV R24, R25 ; Copia el registro R25 a R24
+000063 9593                      	INC R25 ; Incrementa R25
+000064 2f89                      	MOV R24, R25 ; Copia el registro R25 a R24
                                  	;LSL R29 ; Shiftea el registro R29, 1 bit hacia la izquierda
-000044 b988                      	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
-000045 cfeb                      	RJMP LOOP_CONTADOR ; Regresa al loop
+000065 b988                      	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
+000066 cfeb                      	RJMP LOOP_CONTADOR ; Regresa al loop
                                  
                                  AumentoSevSeg:
                                  	; Espera un tiempo breve para el antirrebote
-000046 ef0f                      	LDI R16, 255
+000067 ef0f                      	LDI R16, 255
                                  	delay:
-000047 950a                      		DEC R16
-000048 f7f1                      		BRNE delay
+000068 950a                      		DEC R16
+000069 f7f1                      		BRNE delay
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-000049 9b33                      	SBIS PINC, PC3 ; Salta si el bit de PC0 esta en 1
-00004a cffb                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
+00006a 9b33                      	SBIS PINC, PC3 ; Salta si el bit de PC0 esta en 1
+00006b cffb                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
-00004b e001                      	LDI R16, 1
-00004c 0fe0                      	ADD ZL, R16
-00004d 9104                      	LPM R16, Z
-00004e b90b                      	OUT PORTD, R16
+00006c e001                      	LDI R16, 1
+00006d 0fe0                      	ADD ZL, R16
+00006e 9104                      	LPM R16, Z
+00006f b90b                      	OUT PORTD, R16
                                  	
                                  DecrementoSevSeg:
                                  	; Espera un tiempo breve para el antirrebote
-00004f ef0f                      	LDI R16, 255
+000070 ef0f                      	LDI R16, 255
                                  	delay1:
-000050 950a                      		DEC R16
-000051 f7f1                      		BRNE delay1
-                                 
-000052 e001                      	LDI R16, 1
-000053 1be0                      	SUB ZL, R16
-000054 9104                      	LPM R16, Z
-000055 b90b                      	OUT PORTD, R16
+000071 950a                      		DEC R16
+000072 f7f1                      		BRNE delay1
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-000056 9b34                      	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
-000057 cfee                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
+000073 9b34                      	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
+000074 cff2                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
+000075 e001                      	LDI R16, 1
+000076 1be0                      	SUB ZL, R16
+000077 9104                      	LPM R16, Z
+000078 b90b                      	OUT PORTD, R16
                                  
-                                 
-                                 ; FORMA 2 PARA AUMENTAR EL CONTADOR BINARIO**************************************
-                                 
-                                 
-                                 ; Realiza un aumento en el contador R30
-                                 	/*INC R30 ; Aumenta R30 R30<-R30+1
-                                 	
-                                 	; SE INICIA UN SWITCH AND CASE
-                                 	CPI R30, 0x01 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA1 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x02 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA2 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x03 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA3 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x04 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA4 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x05 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA5 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x06 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA6 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x07 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA7 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x08 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA8 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x09 ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA9 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0A ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA10 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0B ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA11 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0C ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA12 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0D ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA13 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0E ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA14 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 	CPI R30, 0x0F ; Si son iguales activar la bandera Z se coloca en 1
-                                 	BREQ ContadorA15 ; Si detecta bandera Z en 1 saltar hacia destino
-                                 
-                                 	DEFAULT:
-                                 		LDI R30, 0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		CBI PORTB, PB2 ; Toggle PB2 -> 0
-                                 		CBI PORTB, PB3 ; Toggle PB3 -> 0
-                                 		CBI PORTB, PB4 ; Toggle PB4 -> 0
-                                 		RJMP DONE
-                                 	ContadorA1: ; PB4=0; PB3=0; PB2=0 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 -> 1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA2: ; PB4=0; PB3=0; PB2=1 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1  -> 0
-                                 		SBI PORTB, PB2 ; Toggle PB2  -> 1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA3: ; PB4=0; PB3=0; PB2=1 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 ->1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA4: ; PB4=0; PB3=1; PB2=0 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		CBI PORTB, PB2 ; Toggle PB2 -> 0
-                                 		SBI PORTB, PB3 ; Toggle PB3 -> 1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA5: ; PB4=0; PB3=1; PB2=0 PB1=1
-                                 		SBI PORTB, PB1  ; Toggle PB1 -> 1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA6: ; PB4=0; PB3=1; PB2=1 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		SBI PORTB, PB2 ; Toggle PB2 -> 1
-                                 		RJMP DONE ; Salta a la instruccion Done
-                                 	ContadorA7: ; PB4=0; PB3=1; PB2=1 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 -> 1
-                                 		RJMP DONE
-                                 	ContadorA8: ; PB4=1; PB3=0; PB2=0 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		CBI PORTB, PB2 ; Toggle PB2 -> 0
-                                 		CBI PORTB, PB3 ; Toggle PB3 -> 0
-                                 		SBI PORTB, PB4 ; Toggle PB4 -> 1
-                                 		RJMP DONE
-                                 	ContadorA9: ; PB4=1; PB3=0; PB2=0 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 -> 1
-                                 		RJMP DONE
-                                 	ContadorA10: ; PB4=1; PB3=0; PB2=1 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		SBI PORTB, PB2 ; Toggle PB2 -> 1
-                                 		RJMP DONE
-                                 	ContadorA11: ; PB4=1; PB3=0; PB2=1 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 -> 1
-                                 		RJMP DONE
-                                 	ContadorA12: ; PB4=1; PB3=1; PB2=0 PB1=0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		CBI PORTB, PB2 ; Toggle PB2 -> 0
-                                 		SBI PORTB, PB3 ; Toggle PB3 -> 1
-                                 		RJMP DONE
-                                 	ContadorA13: ; PB4=1; PB3=1; PB2=0 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB1 -> 1
-                                 		RJMP DONE
-                                 	ContadorA14: ; PB4=1; PB3=1; PB2=1 PB1-0
-                                 		CBI PORTB, PB1 ; Toggle PB1 -> 0
-                                 		SBI PORTB, PB2 ; Toggle PB2 -> 1
-                                 		RJMP DONE
-                                 	ContadorA15: ; PB4=1; PB3=1; PB2=1 PB1=1
-                                 		SBI PORTB, PB1 ; Toggle PB4 -> 1
-                                 		RJMP DONE
-                                 	DONE:
-                                 		RJMP LOOP*/
-                                 //******************************************************************************
+                                 LOAD:
+000079 9104                      	LPM R16, Z
+00007a b90b                      	OUT PORTD, R16
+00007b cfd6                      	RJMP LOOP_CONTADOR
 
 
 RESOURCE USE INFORMATION
@@ -1350,13 +1272,13 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   3 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  37 r17:   2 r18:   0 r19:   0 r20:   4 
+r13:   0 r14:   0 r15:   0 r16:  34 r17:   2 r18:   0 r19:   0 r20:   4 
 r21:   0 r22:   0 r23:   0 r24:   2 r25:   3 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   5 r31:   1 
+r29:   0 r30:   4 r31:   1 
 Registers used: 8 out of 35 (22.9%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   2 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   0 add   :   1 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
@@ -1366,7 +1288,7 @@ clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   2 cpse  :   0 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   2 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :  21 lds   :   0 lpm   :   6 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  19 lds   :   0 lpm   :   6 lsl   :   0 
 lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  12 pop   :   0 
 push  :   0 rcall :   0 ret   :   1 reti  :   0 rjmp  :   6 rol   :   0 
@@ -1380,7 +1302,7 @@ Instructions used: 19 out of 113 (16.8%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000b0    160     16    176   32768   0.5%
+[.cseg] 0x000000 0x0000f8    154     94    248   32768   0.8%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
