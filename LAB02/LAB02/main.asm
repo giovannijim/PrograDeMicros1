@@ -94,7 +94,7 @@ LOOP:
 	IN R16, TIFR0
 	CPI R16, (1<<TOV0)
 	BRNE LOOP;Si no se encuentra seteada, continuar esperando
-
+	/*
 	;Se llama para hacer incremento en el nibble A
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
@@ -103,28 +103,25 @@ LOOP:
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
 	CALL DecrementoSevSeg
-
+	*/
 	LDI R16, 236 ;Cargar valor de desbordamiento
 	OUT TCNT0, R16 ; Carga el valor inicial del contador
 
-	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de oberflow del Timer0
+	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de overflow del Timer0
 
-	INC R20 ; Incrementa R20 por cada 10 ms
-	CPI R20, 100 ; Compara si ya llego a los 100 ms
-	BRNE LOOP ;Sino ha llegado se reincia el LOOP
+	INC R20 ; Incrementa R20 por cada 100 ms
+	CPI R20, 10 ; Compara si ya llego a los 1000 ms
+	BRNE LOOP ; Sino ha llegado se reincia el LOOP
 
 	CLR R20 ; Se limpia el registro r20 0x00
-	
+
 	//LDI R16, 0xC0
-	
 	//OUT PIND, R16
 	//CALL LOAD
 
 	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
-	
 
 	//CALL LOAD
-	
 
 	RJMP LOOP
 
@@ -138,7 +135,7 @@ Init_T0:
 	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
 	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
 
-	LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
+	LDI R16, 60 ; CARGA VALOR DE DESBORDAMIENTO
 	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
 
 	RET

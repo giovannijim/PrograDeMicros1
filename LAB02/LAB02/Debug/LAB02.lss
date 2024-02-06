@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm Tue Feb 06 09:57:46 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm Tue Feb 06 11:29:22 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1064,7 +1064,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D
                                  //******************************************************************************
                                  
                                  MAIN:
-000004 ede2                      	LDI ZL, LOW(table << 1)
+000004 ece2                      	LDI ZL, LOW(table << 1)
 000005 e0f0                      	LDI ZH, HIGH(table << 1)
 000006 2f7e                      	MOV R23, ZL
                                  
@@ -1083,7 +1083,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D
 00000d e000                      	LDI R16, 0X00
 00000e bd04                      	OUT TCCR0A, R16 ;Se indica al Timer que opere de manera normal
                                  
-00000f 940e 003b                 	CALL Init_T0 ; Inicializar Timer 0
+00000f 940e 0033                 	CALL Init_T0 ; Inicializar Timer 0
                                  
 000011 e040                      	LDI R20, 0
                                  
@@ -1125,39 +1125,36 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D
 000026 b305                      	IN R16, TIFR0
 000027 3001                      	CPI R16, (1<<TOV0)
 000028 f7e9                      	BRNE LOOP;Si no se encuentra seteada, continuar esperando
-                                 
+                                 	/*
                                  	;Se llama para hacer incremento en el nibble A
-000029 b106                      	IN R16, PINC ; Se obtiene la info de PINC en R16
-00002a ff04                      	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
-00002b 940e 0045                 	CALL AumentoSevSeg
+                                 	IN R16, PINC ; Se obtiene la info de PINC en R16
+                                 	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
+                                 	CALL AumentoSevSeg
                                  	
-00002d b106                      	IN R16, PINC ; Se obtiene la info de PINC en R16
-00002e ff05                      	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
-00002f 940e 0050                 	CALL DecrementoSevSeg
+                                 	IN R16, PINC ; Se obtiene la info de PINC en R16
+                                 	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
+                                 	CALL DecrementoSevSeg
+                                 	*/
+000029 ee0c                      	LDI R16, 236 ;Cargar valor de desbordamiento
+00002a bd06                      	OUT TCNT0, R16 ; Carga el valor inicial del contador
                                  
-000031 ee0c                      	LDI R16, 236 ;Cargar valor de desbordamiento
-000032 bd06                      	OUT TCNT0, R16 ; Carga el valor inicial del contador
+00002b 9aa8                      	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de overflow del Timer0
                                  
-000033 9aa8                      	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de oberflow del Timer0
+00002c 9543                      	INC R20 ; Incrementa R20 por cada 100 ms
+00002d 304a                      	CPI R20, 10 ; Compara si ya llego a los 1000 ms
+00002e f7b9                      	BRNE LOOP ; Sino ha llegado se reincia el LOOP
                                  
-000034 9543                      	INC R20 ; Incrementa R20 por cada 10 ms
-000035 3644                      	CPI R20, 100 ; Compara si ya llego a los 100 ms
-000036 f779                      	BRNE LOOP ;Sino ha llegado se reincia el LOOP
+00002f 2744                      	CLR R20 ; Se limpia el registro r20 0x00
                                  
-000037 2744                      	CLR R20 ; Se limpia el registro r20 0x00
-                                 	
                                  	//LDI R16, 0xC0
-                                 	
                                  	//OUT PIND, R16
                                  	//CALL LOAD
                                  
-000038 940e 0040                 	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
-                                 	
+000030 940e 0038                 	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
                                  
                                  	//CALL LOAD
-                                 	
                                  
-00003a cfeb                      	RJMP LOOP
+000032 cff3                      	RJMP LOOP
                                  
                                  //******************************************************************************
                                  
@@ -1166,97 +1163,97 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(11): Including file 'D
                                  //******************************************************************************
                                  Init_T0:
                                  	
-00003b e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
-00003c bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+000033 e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
+000034 bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
                                  
-00003d ee0c                      	LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
-00003e bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
+000035 e30c                      	LDI R16, 60 ; CARGA VALOR DE DESBORDAMIENTO
+000036 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
                                  
-00003f 9508                      	RET
+000037 9508                      	RET
                                  //*****************************************************************************
                                  
                                  AumentoNibble:
                                  	//CLR R24
                                  	
-000040 308f                      	CPI R24, 0x0F
-000041 b988                      	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
-000042 9583                      	INC R24 ; Incrementa R25
-000043 f119                      	BREQ RESET1
+000038 308f                      	CPI R24, 0x0F
+000039 b988                      	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
+00003a 9583                      	INC R24 ; Incrementa R25
+00003b f119                      	BREQ RESET1
                                  	//MOV R24, R25 ; Copia el registro R25 a R24
                                  	;LSL R29 ; Shiftea el registro R29, 1 bit hacia la izquierda
-000044 9508                      	RET ; Regresa al loop
+00003c 9508                      	RET ; Regresa al loop
                                  
                                  AumentoSevSeg:
                                  	; Espera un tiempo breve para el antirrebote
-000045 ef0f                      	LDI R16, 255
+00003d ef0f                      	LDI R16, 255
                                  	delay:
-000046 950a                      		DEC R16
-000047 f7f1                      		BRNE delay
+00003e 950a                      		DEC R16
+00003f f7f1                      		BRNE delay
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-000048 9b34                      	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
-000049 cffb                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
+000040 9b34                      	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
+000041 cffb                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
-00004a 9a1d                      	SBI PINB, PB5
+000042 9a1d                      	SBI PINB, PB5
                                  
-00004b e001                      	LDI R16, 1
-00004c 0fe0                      	ADD ZL, R16
-00004d 9104                      	LPM R16, Z
-00004e b90b                      	OUT PORTD, R16
-00004f 9508                      	RET
+000043 e001                      	LDI R16, 1
+000044 0fe0                      	ADD ZL, R16
+000045 9104                      	LPM R16, Z
+000046 b90b                      	OUT PORTD, R16
+000047 9508                      	RET
                                  	
                                  DecrementoSevSeg:
                                  	; Espera un tiempo breve para el antirrebote
-000050 ef0f                      	LDI R16, 255
+000048 ef0f                      	LDI R16, 255
                                  	delay1:
-000051 950a                      		DEC R16
-000052 f7f1                      		BRNE delay1
+000049 950a                      		DEC R16
+00004a f7f1                      		BRNE delay1
                                  
                                  	; Lee nuevamente el estado del boton despues de antirrebote
                                  
-000053 9b35                      	SBIS PINC, PC5 ; Salta si el bit de PC0 esta en 1
-000054 cff0                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
+00004b 9b35                      	SBIS PINC, PC5 ; Salta si el bit de PC0 esta en 1
+00004c cff0                      	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
                                  
-000055 e001                      	LDI R16, 1
-000056 1be0                      	SUB ZL, R16
-000057 9104                      	LPM R16, Z
-000058 b90b                      	OUT PORTD, R16
-000059 9508                      	RET
+00004d e001                      	LDI R16, 1
+00004e 1be0                      	SUB ZL, R16
+00004f 9104                      	LPM R16, Z
+000050 b90b                      	OUT PORTD, R16
+000051 9508                      	RET
                                  
                                  LOAD:
                                  	
-00005a e001                      	LDI R16, 1
-00005b 0fe0                      	ADD ZL, R16
+000052 e001                      	LDI R16, 1
+000053 0fe0                      	ADD ZL, R16
                                  
-00005c 9523                      	INC R18
-00005d 3121                      	CPI R18, 0x11
-00005e f019                      	BREQ RESET
+000054 9523                      	INC R18
+000055 3121                      	CPI R18, 0x11
+000056 f019                      	BREQ RESET
                                  
-00005f 9104                      	LPM R16, Z
-000060 b90b                      	OUT PORTD, R16
+000057 9104                      	LPM R16, Z
+000058 b90b                      	OUT PORTD, R16
                                  	
-000061 9508                      	RET
+000059 9508                      	RET
                                  
                                  RESET:
-000062 2722                      	CLR R18
-000063 2fe7                      	MOV ZL, R23
-000064 e001                      	LDI R16, 1
-000065 1be0                      	SUB ZL, R16
-000066 cff3                      	RJMP LOAD
+00005a 2722                      	CLR R18
+00005b 2fe7                      	MOV ZL, R23
+00005c e001                      	LDI R16, 1
+00005d 1be0                      	SUB ZL, R16
+00005e cff3                      	RJMP LOAD
                                  
                                  RESET1:
-000067 2788                      	CLR R24
-000068 cfd7                      	RJMP AUMENTONIBBLE
+00005f 2788                      	CLR R24
+000060 cfd7                      	RJMP AUMENTONIBBLE
                                  
-000069 c0fc
-00006a ea6e
-00006b bad2
-00006c e2be
-00006d f2fe
-00006e 9ef6
-00006f ce3c
-000070 363e                      TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
+000061 c0fc
+000062 ea6e
+000063 bad2
+000064 e2be
+000065 f2fe
+000066 9ef6
+000067 ce3c
+000068 363e                      TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
                                  
                                  //******************************************************************************
                                  // SUBRUTINA PARA INCREMENTAR EL CONTADOR BIANRIO
@@ -1386,7 +1383,7 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   3 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  42 r17:   2 r18:   4 r19:   0 r20:   4 
+r13:   0 r14:   0 r15:   0 r16:  38 r17:   2 r18:   4 r19:   0 r20:   4 
 r21:   0 r22:   0 r23:   2 r24:   5 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   7 r31:   1 
 Registers used: 9 out of 35 (25.7%)
@@ -1397,26 +1394,26 @@ andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0
 brcc  :   0 brcs  :   0 break :   0 breq  :   2 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   4 cbi   :   7 cbr   :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   7 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   3 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   4 cpse  :   0 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   3 jmp   :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   3 jmp   :   0 
 ld    :   0 ldd   :   0 ldi   :  21 lds   :   0 lpm   :   6 lsl   :   0 
 lsr   :   0 mov   :   2 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  12 pop   :   0 
 push  :   0 rcall :   0 ret   :   5 reti  :   0 rjmp  :   5 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   9 sbic  :   0 sbis  :   2 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
 sub   :   2 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 21 out of 113 (18.6%)
+Instructions used: 20 out of 113 (17.7%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000e2    210     16    226   32768   0.7%
+[.cseg] 0x000000 0x0000d2    194     16    210   32768   0.6%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
