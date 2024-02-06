@@ -9,7 +9,7 @@
 // Encabezado 
 //******************************************************************************
 	.include "M328PDEF.inc"
-
+	
 	.cseg
 	.org 0x00
 
@@ -21,11 +21,22 @@
 	LDI R17, HIGH(RAMEND)
 	OUT SPH, R17
 //******************************************************************************
-
+	
 //******************************************************************************
 //Tabla de valores
 //******************************************************************************
-Tabla: .DB "0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36"
+	
+//******************************************************************************
+
+//******************************************************************************
+// CONFIGURACION
+//******************************************************************************
+
+MAIN:
+	LDI ZL, LOW(table << 1)
+	LDI ZH, HIGH(table << 1)
+	MOV R23, ZL
+
 //******************************************************************************
 
 //******************************************************************************
@@ -44,7 +55,6 @@ SETUP:
 	CALL Init_T0 ; Inicializar Timer 0
 
 	LDI R20, 0
-	LDI R30, 0
 
 	SBI DDRC, PC0	;Definiendo PC0 como salida
 	CBI PORTC, PC0	; Colocar 0 en PC0
@@ -57,49 +67,42 @@ SETUP:
 
 	SBI DDRC, PC3	;Definiendo PC3 como salida
 	CBI PORTC, PC3	; Colocar 0 en PC3
+
+	SBI DDRB, PB5	;Definiendo PB4 como salida
+	CBI PORTB, PB5	; Colocar 0 en PB4
 	
 	SBI PORTC, PC4	; Colocar 1 en PC3 pullup
-	CBI DDRC, PC4	;Definiendo PC3 como salida
+	CBI DDRC, PC4	;Definiendo PC3 como enntrada
 
 	SBI PORTC, PC5	; Colocar 1 en PC5 pullup
-	CBI DDRC, PC5	;Definiendo PC5 como salida
+	CBI DDRC, PC5	;Definiendo PC5 como entrada
 
 	LDI R16, 0xFF
 	OUT DDRD, R16
-	LDI R16, 0x00
+	ldi R16, 0xFC
 	OUT PORTD, R16
-
-	LDI R25, 0
+	LDI R24, 0
+	LDI R18, 0
 //******************************************************************************
-
-//******************************************************************************
-// CONFIGURACION
-//******************************************************************************
-
-MAIN:
-	LDI ZL, LOW(Tabla<<2)
-	LDI ZH, HIGH(Tabla<<2)
-//******************************************************************************
-
 
 //******************************************************************************
 // LOOP PRINCIPAL
 //******************************************************************************
-LOOP_CONTADOR:
+LOOP:
 	
-	/*;Se llama para hacer incremento en el nibble A
-	IN R16, PINC ; Se obtiene la info de PINC en R16
-	SBRS R16, PC3 ; Salta si el bit PC0 se encuentra en 1
-	RJMP AumentoSevSeg
-
-	IN R16, PINC ; Se obtiene la info de PINC en R16
-	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
-	RJMP DecrementoSevSeg*/
-
-	; REALIZAMO' UN POLLING
+	; REALIZAMOS UN POLLING
 	IN R16, TIFR0
 	CPI R16, (1<<TOV0)
-	BRNE LOOP_CONTADOR;Si no se encuentra seteada, continuar esperando
+	BRNE LOOP;Si no se encuentra seteada, continuar esperando
+
+	;Se llama para hacer incremento en el nibble A
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
+	CALL AumentoSevSeg
+	
+	IN R16, PINC ; Se obtiene la info de PINC en R16
+	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
+	CALL DecrementoSevSeg
 
 	LDI R16, 236 ;Cargar valor de desbordamiento
 	OUT TCNT0, R16 ; Carga el valor inicial del contador
@@ -108,20 +111,22 @@ LOOP_CONTADOR:
 
 	INC R20 ; Incrementa R20 por cada 10 ms
 	CPI R20, 100 ; Compara si ya llego a los 100 ms
-	BRNE LOOP_CONTADOR ;Sino ha llegado se reincia el LOOP
-
-	
+	BRNE LOOP ;Sino ha llegado se reincia el LOOP
 
 	CLR R20 ; Se limpia el registro r20 0x00
 	
 	//LDI R16, 0xC0
 	
 	//OUT PIND, R16
-	//RJMP AUMENTONIBBLE ; Salta a la subrutina para aumentar 
+	//CALL LOAD
 
-	RJMP LOAD
+	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
+	
 
-	RJMP LOOP_CONTADOR
+	//CALL LOAD
+	
+
+	RJMP LOOP
 
 //******************************************************************************
 
@@ -140,11 +145,15 @@ Init_T0:
 //*****************************************************************************
 
 AumentoNibble:
-	INC R25 ; Incrementa R25
-	MOV R24, R25 ; Copia el registro R25 a R24
-	;LSL R29 ; Shiftea el registro R29, 1 bit hacia la izquierda
+	//CLR R24
+	
+	CPI R24, 0x0F
 	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
-	RJMP LOOP_CONTADOR ; Regresa al loop
+	INC R24 ; Incrementa R25
+	BREQ RESET1
+	//MOV R24, R25 ; Copia el registro R25 a R24
+	;LSL R29 ; Shiftea el registro R29, 1 bit hacia la izquierda
+	RET ; Regresa al loop
 
 AumentoSevSeg:
 	; Espera un tiempo breve para el antirrebote
@@ -155,13 +164,16 @@ AumentoSevSeg:
 
 	; Lee nuevamente el estado del boton despues de antirrebote
 
-	SBIS PINC, PC3 ; Salta si el bit de PC0 esta en 1
+	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
 	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
+
+	SBI PINB, PB5
 
 	LDI R16, 1
 	ADD ZL, R16
 	LPM R16, Z
 	OUT PORTD, R16
+	RET
 	
 DecrementoSevSeg:
 	; Espera un tiempo breve para el antirrebote
@@ -172,19 +184,41 @@ DecrementoSevSeg:
 
 	; Lee nuevamente el estado del boton despues de antirrebote
 
-	SBIS PINC, PC4 ; Salta si el bit de PC0 esta en 1
+	SBIS PINC, PC5 ; Salta si el bit de PC0 esta en 1
 	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
 
 	LDI R16, 1
 	SUB ZL, R16
 	LPM R16, Z
 	OUT PORTD, R16
+	RET
 
 LOAD:
+	
+	LDI R16, 1
+	ADD ZL, R16
+
+	INC R18
+	CPI R18, 0x11
+	BREQ RESET
+
 	LPM R16, Z
 	OUT PORTD, R16
-	RJMP LOOP_CONTADOR
+	
+	RET
 
+RESET:
+	CLR R18
+	MOV ZL, R23
+	LDI R16, 1
+	SUB ZL, R16
+	RJMP LOAD
+
+RESET1:
+	CLR R24
+	RJMP AUMENTONIBBLE
+
+TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
 
 //******************************************************************************
 // SUBRUTINA PARA INCREMENTAR EL CONTADOR BIANRIO
