@@ -89,12 +89,6 @@ SETUP:
 // LOOP PRINCIPAL
 //******************************************************************************
 LOOP:
-	
-	; REALIZAMOS UN POLLING
-	IN R16, TIFR0
-	CPI R16, (1<<TOV0)
-	BRNE LOOP;Si no se encuentra seteada, continuar esperando
-	/*
 	;Se llama para hacer incremento en el nibble A
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC4 ; Salta si el bit PC0 se encuentra en 1
@@ -103,8 +97,14 @@ LOOP:
 	IN R16, PINC ; Se obtiene la info de PINC en R16
 	SBRS R16, PC5 ; Salta si el bit PC0 se encuentra en 1
 	CALL DecrementoSevSeg
-	*/
-	LDI R16, 236 ;Cargar valor de desbordamiento
+	
+	; REALIZAMOS UN POLLING
+	IN R16, TIFR0
+	CPI R16, (1<<TOV0)
+	BRNE LOOP;Si no se encuentra seteada, continuar esperando
+	
+	
+	LDI R16, 60 ;Cargar valor de desbordamiento
 	OUT TCNT0, R16 ; Carga el valor inicial del contador
 
 	SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de overflow del Timer0
@@ -119,7 +119,7 @@ LOOP:
 	//OUT PIND, R16
 	//CALL LOAD
 
-	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
+	CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar */
 
 	//CALL LOAD
 
