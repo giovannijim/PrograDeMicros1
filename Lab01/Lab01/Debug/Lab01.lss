@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm Fri Feb 02 08:11:37 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm Wed Feb 07 09:13:23 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1063,7 +1063,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab01\Lab01\main.asm(13): Including file 'D
 000006 9300 0061                 	STS CLKPR, R16 ; Se habilita el prescaler
                                  
 000008 e003                      	LDI R16, 0b0000_0011
-000009 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 1MHz
+000009 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
                                  
                                  	;LDI R16, (1 << PC0) ; Configura el pin PC0 como entrada con pullup
 00000b 9a40                      	SBI PORTC, PC0 ; Habilita el pullup en el pin PC0
