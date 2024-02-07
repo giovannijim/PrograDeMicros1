@@ -1,18 +1,13 @@
-;
 ; LAB02.asm
-;
 ; Created: 2/2/2024 5:29:14 PM
 ; Author : Giovanni Jimenez
 ;
-
 //******************************************************************************
 // Encabezado 
 //******************************************************************************
 	.include "M328PDEF.inc"
-	
 	.cseg
 	.org 0x00
-
 //******************************************************************************
 //Configuración de la Pila STACK POINTER
 //******************************************************************************
@@ -21,24 +16,15 @@
 	LDI R17, HIGH(RAMEND)
 	OUT SPH, R17
 //******************************************************************************
-	
-//******************************************************************************
-//Tabla de valores
-//******************************************************************************
-	
-//******************************************************************************
-
 //******************************************************************************
 // CONFIGURACION
 //******************************************************************************
-
 MAIN:
 	LDI ZL, LOW(table << 1) // Se obtiene la dirección menos significativa del registro Z
 	LDI ZH, HIGH(table << 1) // Se obtiene la dirección más significativa del registro Z
 	MOV R23, ZL // Se hace una copia del valor en el registro ZL al registro R23
 
 //******************************************************************************
-
 //******************************************************************************
 //Configuración MCU
 //******************************************************************************
@@ -84,7 +70,6 @@ SETUP:
 	LDI R24, 0x00 // Carga cero en el registro R24, contador del nibble
 	LDI R18, 0x00 // Carga cero en el registro R18, contador del sevseg
 //******************************************************************************
-
 //******************************************************************************
 // LOOP PRINCIPAL
 //******************************************************************************
@@ -103,8 +88,6 @@ LOOP:
 		CPI R20, 10 ; Compara si ya llego a los 1000 ms
 		BRNE CheckB1 ; Sino ha lelgado enviar a Check b1
 		CLR R20 ; Se limpia el registro r20 0x00
-		//LDI R16, 0xC0
-		//OUT PIND, R16
 		CALL AUMENTONIBBLE ; Salta a la subrutina para aumentar
 
 	CheckB1:
@@ -121,27 +104,24 @@ LOOP:
 		CALL DecrementoSevSeg
 RJMP LOOP ; regresar al loop para continuar verificando
 //******************************************************************************
-
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
 //******************************************************************************
 Init_T0:
-	
 	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
 	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
-
-	LDI R16, 60 ; CARGA VALOR DE DESBORDAMIENTO
+    LDI R16, 60 ; CARGA VALOR DE DESBORDAMIENTO
 	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
-
 	RET
 //*****************************************************************************
 AumentoNibble:
-
-	CP R18, R24
+	CBI PORTB, PB5 ; Limpie el pin PB5 en port B
+	//CP R18, R24 //Compara el contador del sevseg y el contador del nibble
+	//BREQ ResetWithLimit // Si son iguales saltar a la subrutina de reseteo del contador
 	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
 	INC R24 ; Incrementa R24
-	CPI R24, 0x11
-	BREQ RESET1
+	CPI R24, 0x11 ; Compara el registro 24 con el byte 0x11
+	BREQ RESET1 ; Si son iguales saltar al reset1
 	RET ; Regresa al loop
 //Subrutina para DecrementoSevSeg ***********************************************	
 AumentoSevSeg:
@@ -153,15 +133,14 @@ AumentoSevSeg:
 	; Lee nuevamente el estado del boton despues de antirrebote
 	SBIS PINB, PB4 ; Salta si el bit de PB4 esta en 1
 	RJMP AumentoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
-	SBI PINB, PB5
-	CPI R18, 0x0F
-	BREQ RESET
-	INC R18
-	MOV ZL, R23
-	ADD ZL, R18
-	LPM R16, Z
-	OUT PORTD, R16
-	RET
+	CPI R18, 0x0F // Compara si el contador es 15 = F
+	BREQ RESET // Si el contador es cero salta a Reset
+	INC R18 // Incrementa R18
+	MOV ZL, R23 // Copia R23 en ZL
+	ADD ZL, R18 // Suma ZL y R18
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	RET //Regresa al punto donde lo llamaron
 //Subrutina para DecrementoSevSeg ***********************************************	
 DecrementoSevSeg:
 	; Espera un tiempo breve para el antirrebote
@@ -172,26 +151,34 @@ DecrementoSevSeg:
 	; Lee nuevamente el estado del boton despues de antirrebote
 	SBIS PINB, PB3 ; Salta si el bit de PB3 esta en 1
 	RJMP DecrementoSevSeg ; Repite la verificacion de antirrebote si el boton esta aun en 0
-	CPI R18, 0x00
-	BREQ RESET2
-	DEC R18
-	MOV ZL, R23
-	ADD ZL, R18
-	LPM R16, Z
-	OUT PORTD, R16
-	RET
+	CPI R18, 0x00 // Compara si el contador es 0
+	BREQ RESET2 // Si el contador es cero salta a Reset 2
+	DEC R18 // Decrementa R18
+	MOV ZL, R23 // Copia R23 en ZL
+	ADD ZL, R18 // Suma ZL y R18
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	RET //Regresa al punto donde lo llamaron
 // Reset para el AumentoSevSeg ***********************************************
 RESET:
-	LDI R18, 0x0e
-	RJMP AumentoSevSeg
+	LDI R18, 0x0e // Carga el byte 0x0E en R18
+	RJMP AumentoSevSeg // Salta de regreso a la rutina de aumento
 // Reset para el DecrementoSevSeg ***********************************************
 RESET2:
-	LDI R18, 0x01
-	RJMP DecrementoSevSeg
+	LDI R18, 0x01 // Carga el byte 0x01 en R18
+	RJMP DecrementoSevSeg // Salta de regreso a la rutina de decremento
 // Reset para el Aumento Niblle ***********************************************
 RESET1:
 	CLR R24 ; Limpia el registro R24
 	RJMP AUMENTONIBBLE ; Saltar a AumentoNibble de vuelta
-; Se carga una tabla con los valores en hexadecimal para el contador de sevsegdis ***********************
-TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36 
-// ******************************************************************************************************
+// Subrutina de Reset cuando ha alcanzado el limite ****************************
+ResetWithLimit:
+	CLR R24 ; limpia el registro R24
+	SBI PORTB, PB5 ; Setea el pin PB5 en port B
+	RJMP AUMENTONIBBLE // Saltar a AumentoNibble de vuelta
+//******************************************************************************
+//******************************************************************************
+//Tabla de valores
+//******************************************************************************
+	TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36 
+//******************************************************************************
