@@ -24,21 +24,21 @@
  </OUTPUT_FILES>
  <LABELS>
   <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>22</LINE></MAIN>
-  <table><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>182</LINE></table>
+  <table><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>205</LINE></table>
   <SETUP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>31</LINE></SETUP>
-  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>112</LINE></Init_T0>
-  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>76</LINE></LOOP>
-  <CheckB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>95</LINE></CheckB1>
-  <Timer><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>83</LINE></Timer>
-  <AUMENTONIBBLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>119</LINE></AUMENTONIBBLE>
-  <AumentoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>128</LINE></AumentoSevSeg>
-  <CheckB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>102</LINE></CheckB2>
-  <DecrementoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>146</LINE></DecrementoSevSeg>
-  <RESET1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>172</LINE></RESET1>
-  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>131</LINE></delay>
-  <RESET><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>164</LINE></RESET>
-  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>149</LINE></delay1>
-  <RESET2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>168</LINE></RESET2>
-  <ResetWithLimit><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>176</LINE></ResetWithLimit>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>125</LINE></Init_T0>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>89</LINE></LOOP>
+  <CheckB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>106</LINE></CheckB1>
+  <Timer><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>96</LINE></Timer>
+  <AUMENTONIBBLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>132</LINE></AUMENTONIBBLE>
+  <AumentoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>144</LINE></AumentoSevSeg>
+  <CheckB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>113</LINE></CheckB2>
+  <DecrementoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>164</LINE></DecrementoSevSeg>
+  <ResetWithLimit><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>197</LINE></ResetWithLimit>
+  <RESET1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>192</LINE></RESET1>
+  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>149</LINE></delay>
+  <RESET><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>184</LINE></RESET>
+  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>169</LINE></delay1>
+  <RESET2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>188</LINE></RESET2>
  </LABELS>
 </ASSEMBLER_INFO>

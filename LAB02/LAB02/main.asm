@@ -42,7 +42,12 @@ SETUP:
 
 	LDI R20, 0x00 // Carga cero en el registro R20
 
-	SBI DDRC, PC0	;Definiendo PC0 como salida
+	LDI R16, (1<<PC0)|(1<<PC1)|(1<<PC2)|(1<<PC3) // Se definen dichos bits como salidas 
+	OUT DDRC, R16 // se cargan los bits seteado para establecerlos como salidas
+	CLR R16 // Limpia el registro R16
+	OUT PORTC, R16 // Carga el registro vación en portc, para establecerlos en 0
+	
+	/*SBI DDRC, PC0	;Definiendo PC0 como salida
 	CBI PORTC, PC0	; Colocar 0 en PC0
 
 	SBI DDRC, PC1	;Definiendo PC1 como salida
@@ -52,16 +57,23 @@ SETUP:
 	CBI PORTC, PC2	; Colocar 0 en PC2
 
 	SBI DDRC, PC3	;Definiendo PC3 como salida
-	CBI PORTC, PC3	; Colocar 0 en PC3
+	CBI PORTC, PC3	; Colocar 0 en PC3*/
 
-	SBI DDRB, PB5	;Definiendo PB4 como salida
-	CBI PORTB, PB5	; Colocar 0 en PB4
+	LDI R16, (0<<PB4)|(0<<PB3) // Se definen dichos bits como entradas 
+	OUT DDRB, R16 // se cargan los bits en 0 para establecerlos como entradas
+	LDI R16, (1<<PB4)|(1<<PB3) // Se definen dichos bits con pullups 
+	OUT PORTB, R16 // se cargan los bits en 1 para establecerlos con pullups
+
+	SBI DDRB, PB5	;Definiendo PB5 como salida
+	CBI PORTB, PB5	; Colocar 0 en PB5
+
+	/*
 	
 	SBI PORTB, PB4	; Colocar 1 en PB4 pullup
 	CBI DDRB, PB4	;Definiendo PB4 como enntrada
 
 	SBI PORTB, PB3	; Colocar 1 en PB3 pullup
-	CBI DDRB, PB3	;Definiendo PB3 como entrada
+	CBI DDRB, PB3	;Definiendo PB3 como entrada */
 
 	LDI R16, 0xFF // Carga un byte seteado, en el registro R16
 	OUT DDRD, R16 // Carga el registro R16 en DDRD, para que estos sean salidas
@@ -69,6 +81,7 @@ SETUP:
 	OUT PORTD, R16 // Carga el valor en R16 al puerto D
 	LDI R24, 0x00 // Carga cero en el registro R24, contador del nibble
 	LDI R18, 0x00 // Carga cero en el registro R18, contador del sevseg
+	STS UCSR0B, R18 //Desactiva los puertos TX y RX
 //******************************************************************************
 //******************************************************************************
 // LOOP PRINCIPAL
@@ -94,14 +107,16 @@ LOOP:
 		;Se llama para hacer incremento
 		IN R16, PINB ; Se obtiene la info de PINB en R16
 		SBRS R16, PB4 ; Salta si el bit PB4 se encuentra en 1
-		CALL AumentoSevSeg 
-		; RJMP CheckB2 ; ir a Check B2 si el bit PB4 se encuentra en 1
-	
+		CALL AumentoSevSeg // Se hace un llamado a dicha subrutina
+		LDI R16, (1<<CS02)|(1<<CS00) // Carga 1 en los bits CS02 y CS00
+		OUT TCCR0B, R16 // Se activa de nuevo una señal fuente de reloj con prescaler de 1024
 	CheckB2:
 		;Se llama para hacer decremento
 		IN R16, PINB ; Se obtiene la info de PINB en R16
 		SBRS R16, PB3 ; Salta si el bit PB3 se encuentra en 1
-		CALL DecrementoSevSeg
+		CALL DecrementoSevSeg // Se hace un llamado a dicha subrutina
+		LDI R16, (1<<CS02)|(1<<CS00) // Carga 1 en los bits CS02 y CS00
+		OUT TCCR0B, R16 // Se activa de nuevo una señal fuente de reloj con prescaler de 1024
 RJMP LOOP ; regresar al loop para continuar verificando
 //******************************************************************************
 //******************************************************************************
@@ -115,16 +130,20 @@ Init_T0:
 	RET
 //*****************************************************************************
 AumentoNibble:
-	CBI PORTB, PB5 ; Limpie el pin PB5 en port B
-	//CP R18, R24 //Compara el contador del sevseg y el contador del nibble
-	//BREQ ResetWithLimit // Si son iguales saltar a la subrutina de reseteo del contador
+	MOV R21, R24 // Copia el contador R24 dentro del registro R21
+	LDI R16, 0x01 // Carga un 1 en el registro R16
+	SUB R21, R16 // Se le resta 1 al registro R21, para igual los contadores
 	OUT PORTC, R24  ; Carga el registro R29 al puerto PortB
+	CP R18, R21 //Compara el contador del sevseg y el contador del nibble
+	BREQ ResetWithLimit // Si son iguales saltar a la subrutina de reseteo del contador	
 	INC R24 ; Incrementa R24
 	CPI R24, 0x11 ; Compara el registro 24 con el byte 0x11
 	BREQ RESET1 ; Si son iguales saltar al reset1
 	RET ; Regresa al loop
 //Subrutina para DecrementoSevSeg ***********************************************	
 AumentoSevSeg:
+	LDI R16, (0<<CS02)|(0<<CS01)|(0<<CS00)
+	OUT TCCR0B, R16 // Se desactiva una señal fuente de reloj en el registro TCCR0B
 	; Espera un tiempo breve para el antirrebote
 	LDI R16, 255
 	delay:
@@ -143,6 +162,8 @@ AumentoSevSeg:
 	RET //Regresa al punto donde lo llamaron
 //Subrutina para DecrementoSevSeg ***********************************************	
 DecrementoSevSeg:
+	LDI R16, (0<<CS02)|(0<<CS01)|(0<<CS00) 
+	OUT TCCR0B, R16 // Se desactiva una señal fuente de reloj en el registro TCCR0B
 	; Espera un tiempo breve para el antirrebote
 	LDI R16, 255
 	delay1:
@@ -170,11 +191,12 @@ RESET2:
 // Reset para el Aumento Niblle ***********************************************
 RESET1:
 	CLR R24 ; Limpia el registro R24
+	SBI PINB, PB5 ; toggle en el pin PB5 en port B
 	RJMP AUMENTONIBBLE ; Saltar a AumentoNibble de vuelta
 // Subrutina de Reset cuando ha alcanzado el limite ****************************
 ResetWithLimit:
 	CLR R24 ; limpia el registro R24
-	SBI PORTB, PB5 ; Setea el pin PB5 en port B
+	SBI PINB, PB5 ; toggle en el pin PB5 en port B
 	RJMP AUMENTONIBBLE // Saltar a AumentoNibble de vuelta
 //******************************************************************************
 //******************************************************************************
