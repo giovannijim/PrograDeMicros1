@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm Thu Feb 08 09:06:40 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm Thu Feb 08 09:10:24 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(7): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(7): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ; LAB02.asm
                                  
@@ -989,7 +989,6 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:
                                  
                                  ; Created: 2/2/2024 5:29:14 PM
                                  ; Author : Giovanni Jimenez
-                                 ;
                                  //******************************************************************************
                                  // Encabezado 
                                  //******************************************************************************
@@ -1054,7 +1053,6 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:
 000004 eee8                      	LDI ZL, LOW(table << 1) // Se obtiene la dirección menos significativa del registro Z
 000005 e0f0                      	LDI ZH, HIGH(table << 1) // Se obtiene la dirección más significativa del registro Z
 000006 2f7e                      	MOV R23, ZL // Se hace una copia del valor en el registro ZL al registro R23
-                                 
                                  //******************************************************************************
                                  //******************************************************************************
                                  //Configuración MCU
@@ -1077,18 +1075,6 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:
 000013 b907                      	OUT DDRC, R16 // se cargan los bits seteado para establecerlos como salidas
 000014 2700                      	CLR R16 // Limpia el registro R16
 000015 b908                      	OUT PORTC, R16 // Carga el registro vación en portc, para establecerlos en 0
-                                 	
-                                 	/*SBI DDRC, PC0	;Definiendo PC0 como salida
-                                 	CBI PORTC, PC0	; Colocar 0 en PC0
-                                 
-                                 	SBI DDRC, PC1	;Definiendo PC1 como salida
-                                 	CBI PORTC, PC1	; Colocar 0 en PC1
-                                 
-                                 	SBI DDRC, PC2	;Definiendo PC2 como salida
-                                 	CBI PORTC, PC2	; Colocar 0 en PC2
-                                 
-                                 	SBI DDRC, PC3	;Definiendo PC3 como salida
-                                 	CBI PORTC, PC3	; Colocar 0 en PC3*/
                                  
 000016 e000                      	LDI R16, (0<<PB4)|(0<<PB3) // Se definen dichos bits como entradas 
 000017 b904                      	OUT DDRB, R16 // se cargan los bits en 0 para establecerlos como entradas
@@ -1097,14 +1083,6 @@ D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm(8): Including file 'D:
                                  
 00001a 9a25                      	SBI DDRB, PB5	;Definiendo PB5 como salida
 00001b 982d                      	CBI PORTB, PB5	; Colocar 0 en PB5
-                                 
-                                 	/*
-                                 	
-                                 	SBI PORTB, PB4	; Colocar 1 en PB4 pullup
-                                 	CBI DDRB, PB4	;Definiendo PB4 como enntrada
-                                 
-                                 	SBI PORTB, PB3	; Colocar 1 en PB3 pullup
-                                 	CBI DDRB, PB3	;Definiendo PB3 como entrada */
                                  
 00001c ef0f                      	LDI R16, 0xFF // Carga un byte seteado, en el registro R16
 00001d b90a                      	OUT DDRD, R16 // Carga el registro R16 en DDRD, para que estos sean salidas

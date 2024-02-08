@@ -1,7 +1,6 @@
 ; LAB02.asm
 ; Created: 2/2/2024 5:29:14 PM
 ; Author : Giovanni Jimenez
-;
 //******************************************************************************
 // Encabezado 
 //******************************************************************************
@@ -23,7 +22,6 @@ MAIN:
 	LDI ZL, LOW(table << 1) // Se obtiene la dirección menos significativa del registro Z
 	LDI ZH, HIGH(table << 1) // Se obtiene la dirección más significativa del registro Z
 	MOV R23, ZL // Se hace una copia del valor en el registro ZL al registro R23
-
 //******************************************************************************
 //******************************************************************************
 //Configuración MCU
@@ -46,18 +44,6 @@ SETUP:
 	OUT DDRC, R16 // se cargan los bits seteado para establecerlos como salidas
 	CLR R16 // Limpia el registro R16
 	OUT PORTC, R16 // Carga el registro vación en portc, para establecerlos en 0
-	
-	/*SBI DDRC, PC0	;Definiendo PC0 como salida
-	CBI PORTC, PC0	; Colocar 0 en PC0
-
-	SBI DDRC, PC1	;Definiendo PC1 como salida
-	CBI PORTC, PC1	; Colocar 0 en PC1
-
-	SBI DDRC, PC2	;Definiendo PC2 como salida
-	CBI PORTC, PC2	; Colocar 0 en PC2
-
-	SBI DDRC, PC3	;Definiendo PC3 como salida
-	CBI PORTC, PC3	; Colocar 0 en PC3*/
 
 	LDI R16, (0<<PB4)|(0<<PB3) // Se definen dichos bits como entradas 
 	OUT DDRB, R16 // se cargan los bits en 0 para establecerlos como entradas
@@ -66,14 +52,6 @@ SETUP:
 
 	SBI DDRB, PB5	;Definiendo PB5 como salida
 	CBI PORTB, PB5	; Colocar 0 en PB5
-
-	/*
-	
-	SBI PORTB, PB4	; Colocar 1 en PB4 pullup
-	CBI DDRB, PB4	;Definiendo PB4 como enntrada
-
-	SBI PORTB, PB3	; Colocar 1 en PB3 pullup
-	CBI DDRB, PB3	;Definiendo PB3 como entrada */
 
 	LDI R16, 0xFF // Carga un byte seteado, en el registro R16
 	OUT DDRD, R16 // Carga el registro R16 en DDRD, para que estos sean salidas
