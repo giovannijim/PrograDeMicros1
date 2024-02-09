@@ -1,0 +1,36 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\Debug\Prelab03.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Prelab03.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Prelab03.map</FILE>
+  <FILE>Prelab03.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>19</LINE></MAIN>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>81</LINE></ISR_PCINT0>
+  <Setup><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>30</LINE></Setup>
+  <Loop><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>54</LINE></Loop>
+  <PRENDER1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>63</LINE></PRENDER1>
+  <PRENDER2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>68</LINE></PRENDER2>
+  <PRENDER3><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>73</LINE></PRENDER3>
+  <CHECKPB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>96</LINE></CHECKPB1>
+  <SALIR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm</FILE><LINE>103</LINE></SALIR>
+ </LABELS>
+</ASSEMBLER_INFO>
