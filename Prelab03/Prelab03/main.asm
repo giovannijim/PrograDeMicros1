@@ -50,30 +50,12 @@ Setup:
 	SEI ; Se habilitan las interrupciones globales
 
 	LDI R20, 0x00 ; Contador en 0
-
+//*****************************************************************************
+// LOOP
+//*****************************************************************************
 Loop:
-	CPI R20, 1
-	BREQ PRENDER1
-	CPI R20, 2
-	BREQ PRENDER2
-	CPI R20, 3
-	BREQ PRENDER3
-	RJMP LOOP
+	OUT PORTC, R20
 
-PRENDER1:
-	SBI PORTC, PC0
-	CBI PORTC, PC1
-	CBI PORTC, PC2
-	RJMP LOOP
-PRENDER2:
-	SBI PORTC, PC0
-	SBI PORTC, PC1
-	CBI PORTC, PC2
-	RJMP LOOP
-PRENDER3:
-	SBI PORTC, PC0
-	SBI PORTC, PC1
-	SBI PORTC, PC2
 	RJMP LOOP
 //*****************************************************************************
 // Subrutina de ISR INT0
@@ -83,22 +65,35 @@ ISR_PCINT0:
 	IN R16, SREG
 	PUSH R16 ; Guardamos en pila el registro SREG
 
-	IN R18, PINB
+	IN R18, PINB // Obtiene los valores de pinb, se almacenan en el registro R18
 
-	SBRC R18, PB4
-	JMP CHECKPB1
-	INC R20
-	CPI R20, 4
-	BRNE SALIR
-	LDI R20, 1
-	JMP SALIR
+	SBRS R18, PB3 // Revisa si PB3 esta presionado
+	RJMP CHECKPB2 // Si está presionado, se dirige a la otra subrutina
+	
+	SBRS R18, PB4 // Revisa si PB4 esta presionado
+	RJMP CHECKPB1  // Si está presionado, se dirige a la otra subrutina
+	
+	JMP SALIR // Realiza un salto a la subrutina de salida
 
 CHECKPB1:
-	SBRC R18, PB4
-	JMP SALIR
-	DEC R20
-	BRNE SALIR
-	LDI R20, 3
+	LDI R19, 255
+	delay:
+		DEC R19
+		BRNE delay
+	DEC R20 // Decrementa 1 en el valor del registro R20
+	CPI R20, 0x00 // Compara si ya llego a 0 el registro 20
+	BRNE SALIR // Si no son iguales se dirige a la subrutina de salida
+	LDI R20, 0x00 // Carga el valor 0 en R20 en caso sean iguales
+
+CHECKPB2:
+	LDI R19, 255
+	delay1:
+		DEC R19
+		BRNE delay1
+	INC R20 // Incrementa 1 en el valor del registro R20
+	CPI R20, 0x10 // Compara si ya llego a 16 el registro 20
+	BRNE SALIR  // Si no son iguales se dirige a la subrutina de salida
+	LDI R20, 0x0F // Carga el valor 00 en R20 en caso sean iguales
 
 SALIR:
 	SBI PINB, PB5 ; Toggle Pb5
@@ -106,7 +101,6 @@ SALIR:
 
 	POP R16				; Obtener el valor de SREG
 	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
-	POP R16				; oBTENER EL VALOR DE r16
+	POP R16				; OBTENER EL VALOR DE r16
 	RETI				; Retornamos a la ISR
-
 //******************************************************************************

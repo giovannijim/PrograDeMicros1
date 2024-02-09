@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm Fri Feb 09 10:05:36 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm Fri Feb 09 11:08:19 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1043,7 +1043,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm(10): Including f
                                  .org 0x00
 000000 940c 0008                 	JMP MAIN
                                  .org 0x0006     // Vector de ISR_INT0
-000006 940c 0031                 	JMP ISR_PCINT0 
+000006 940c 0020                 	JMP ISR_PCINT0 
                                  //.org 0x0008		// Vector de ISR_INT1
                                  	//JMP ISR_INT1
                                  
@@ -1081,65 +1081,59 @@ D:\GIOLESS\Documents\PrograDeMicros1\Prelab03\Prelab03\main.asm(10): Including f
 00001c 9478                      	SEI ; Se habilitan las interrupciones globales
                                  
 00001d e040                      	LDI R20, 0x00 ; Contador en 0
-                                 
+                                 //*****************************************************************************
+                                 // LOOP
+                                 //*****************************************************************************
                                  Loop:
-00001e 3041                      	CPI R20, 1
-00001f f029                      	BREQ PRENDER1
-000020 3042                      	CPI R20, 2
-000021 f039                      	BREQ PRENDER2
-000022 3043                      	CPI R20, 3
-000023 f049                      	BREQ PRENDER3
-000024 cff9                      	RJMP LOOP
+00001e b948                      	OUT PORTC, R20
                                  
-                                 PRENDER1:
-000025 9a40                      	SBI PORTC, PC0
-000026 9841                      	CBI PORTC, PC1
-000027 9842                      	CBI PORTC, PC2
-000028 cff5                      	RJMP LOOP
-                                 PRENDER2:
-000029 9a40                      	SBI PORTC, PC0
-00002a 9a41                      	SBI PORTC, PC1
-00002b 9842                      	CBI PORTC, PC2
-00002c cff1                      	RJMP LOOP
-                                 PRENDER3:
-00002d 9a40                      	SBI PORTC, PC0
-00002e 9a41                      	SBI PORTC, PC1
-00002f 9a42                      	SBI PORTC, PC2
-000030 cfed                      	RJMP LOOP
+00001f cffe                      	RJMP LOOP
                                  //*****************************************************************************
                                  // Subrutina de ISR INT0
                                  //*****************************************************************************
                                  ISR_PCINT0:
-000031 930f                      	PUSH R16 ; Guardamos en pila el registro R16
-000032 b70f                      	IN R16, SREG
-000033 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
+000020 930f                      	PUSH R16 ; Guardamos en pila el registro R16
+000021 b70f                      	IN R16, SREG
+000022 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
                                  
-000034 b123                      	IN R18, PINB
+000023 b123                      	IN R18, PINB // Obtiene los valores de pinb, se almacenan en el registro R18
                                  
-000035 fd24                      	SBRC R18, PB4
-000036 940c 003e                 	JMP CHECKPB1
-000038 9543                      	INC R20
-000039 3044                      	CPI R20, 4
-00003a f449                      	BRNE SALIR
-00003b e041                      	LDI R20, 1
-00003c 940c 0044                 	JMP SALIR
+000024 ff23                      	SBRS R18, PB3 // Revisa si PB3 esta presionado
+000025 c00b                      	RJMP CHECKPB2 // Si está presionado, se dirige a la otra subrutina
+                                 	
+000026 ff24                      	SBRS R18, PB4 // Revisa si PB4 esta presionado
+000027 c002                      	RJMP CHECKPB1  // Si está presionado, se dirige a la otra subrutina
+                                 	
+000028 940c 0038                 	JMP SALIR // Realiza un salto a la subrutina de salida
                                  
                                  CHECKPB1:
-00003e fd24                      	SBRC R18, PB4
-00003f 940c 0044                 	JMP SALIR
-000041 954a                      	DEC R20
-000042 f409                      	BRNE SALIR
-000043 e043                      	LDI R20, 3
+00002a ef3f                      	LDI R19, 255
+                                 	delay:
+00002b 953a                      		DEC R19
+00002c f7f1                      		BRNE delay
+00002d 954a                      	DEC R20 // Decrementa 1 en el valor del registro R20
+00002e 3040                      	CPI R20, 0x00 // Compara si ya llego a 0 el registro 20
+00002f f441                      	BRNE SALIR // Si no son iguales se dirige a la subrutina de salida
+000030 e040                      	LDI R20, 0x00 // Carga el valor 0 en R20 en caso sean iguales
+                                 
+                                 CHECKPB2:
+000031 ef3f                      	LDI R19, 255
+                                 	delay1:
+000032 953a                      		DEC R19
+000033 f7f1                      		BRNE delay1
+000034 9543                      	INC R20 // Incrementa 1 en el valor del registro R20
+000035 3140                      	CPI R20, 0x10 // Compara si ya llego a 16 el registro 20
+000036 f409                      	BRNE SALIR  // Si no son iguales se dirige a la subrutina de salida
+000037 e04f                      	LDI R20, 0x0F // Carga el valor 00 en R20 en caso sean iguales
                                  
                                  SALIR:
-000044 9a1d                      	SBI PINB, PB5 ; Toggle Pb5
-000045 9ad8                      	SBI PCIFR, PCIF0 ; Apagar la bandera de ISR PCINT0
+000038 9a1d                      	SBI PINB, PB5 ; Toggle Pb5
+000039 9ad8                      	SBI PCIFR, PCIF0 ; Apagar la bandera de ISR PCINT0
                                  
-000046 910f                      	POP R16				; Obtener el valor de SREG
-000047 bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
-000048 910f                      	POP R16				; oBTENER EL VALOR DE r16
-000049 9518                      	RETI				; Retornamos a la ISR
-                                 
+00003a 910f                      	POP R16				; Obtener el valor de SREG
+00003b bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
+00003c 910f                      	POP R16				; OBTENER EL VALOR DE r16
+00003d 9518                      	RETI				; Retornamos a la ISR
 
 
 RESOURCE USE INFORMATION
@@ -1159,37 +1153,37 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  20 r17:   2 r18:   3 r19:   0 r20:   9 
+r13:   0 r14:   0 r15:   0 r16:  20 r17:   2 r18:   3 r19:   4 r20:   8 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 4 out of 35 (11.4%)
+Registers used: 5 out of 35 (14.3%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   3 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   4 cbr   :   0 
+brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   1 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   4 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   1 jmp   :   5 
-ld    :   0 ldd   :   0 ldi   :  11 lds   :   0 lpm   :   0 lsl   :   0 
+cpi   :   2 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   1 jmp   :   3 
+ld    :   0 ldd   :   0 ldi   :  13 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   7 pop   :   2 
-push  :   2 rcall :   0 ret   :   0 reti  :   1 rjmp  :   4 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   9 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   2 sbrs  :   0 sec   :   0 seh   :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   8 pop   :   2 
+push  :   2 rcall :   0 ret   :   0 reti  :   1 rjmp  :   3 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   3 sbic  :   0 sbis  :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 18 out of 113 (15.9%)
+Instructions used: 17 out of 113 (15.0%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000094    140      0    140   32768   0.4%
+[.cseg] 0x000000 0x00007c    116      0    116   32768   0.4%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
