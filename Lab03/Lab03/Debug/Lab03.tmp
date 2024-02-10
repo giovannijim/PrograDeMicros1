@@ -1,19 +1,19 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.8</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\Debug</WORKING_DIR>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\Debug</WORKING_DIR>
  <INCLUDE_PATH>
-  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
-  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
-  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
-  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\Debug\Lab03.obj</FILE>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\Debug\Lab03.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>Lab03.hex</FILE>
@@ -23,22 +23,21 @@
   <FILE>Lab03.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <MAIN><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>19</LINE></MAIN>
-  <ISR_PCINT0><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>128</LINE></ISR_PCINT0>
-  <ISR_TIMER0_OVF><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>175</LINE></ISR_TIMER0_OVF>
-  <Setup><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>30</LINE></Setup>
-  <TABLE><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>195</LINE></TABLE>
-  <Init_T0><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>98</LINE></Init_T0>
-  <Loop><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>78</LINE></Loop>
-  <Timer><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>83</LINE></Timer>
-  <AUMENTO_HEX><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>109</LINE></AUMENTO_HEX>
-  <LOAD_PORTD><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>121</LINE></LOAD_PORTD>
-  <CHECKPB2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>153</LINE></CHECKPB2>
-  <CHECKPB1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>143</LINE></CHECKPB1>
-  <SALIR><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>163</LINE></SALIR>
-  <delay><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>145</LINE></delay>
-  <delay1><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>155</LINE></delay1>
-  <SALIR2><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>185</LINE></SALIR2>
-  <TABLADOS><FILE>C:\Users\casaj\Documents\PrograDeMicros\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>194</LINE></TABLADOS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>19</LINE></MAIN>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>120</LINE></ISR_PCINT0>
+  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>167</LINE></ISR_TIMER0_OVF>
+  <Setup><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>30</LINE></Setup>
+  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>187</LINE></TABLE>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>93</LINE></Init_T0>
+  <Loop><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>82</LINE></Loop>
+  <AUMENTO_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>104</LINE></AUMENTO_HEX>
+  <RESET_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>114</LINE></RESET_HEX>
+  <CHECKPB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>145</LINE></CHECKPB2>
+  <CHECKPB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>135</LINE></CHECKPB1>
+  <SALIR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>155</LINE></SALIR>
+  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>137</LINE></delay>
+  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>147</LINE></delay1>
+  <SALIR2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>177</LINE></SALIR2>
+  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>186</LINE></TABLADOS>
  </LABELS>
 </ASSEMBLER_INFO>

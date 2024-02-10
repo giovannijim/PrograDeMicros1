@@ -56,9 +56,12 @@ Setup:
 	LDI R16, (1<<PB4)|(1<<PB3)
 	OUT PORTB, R16 ; Se les configura Pull-up a dichas entradas
 
-	SBI DDRB, PB5 ; PB5 como salida
+	LDI R16, (1<<PB5)|(1<<PB2)|(1<<PB1)
+	OUT DDRB, R16 // Se establece como salida PB5, PB2, PB1
 	CBI PORTB, PB5 ; Apagar PB5
-
+	SBI PORTB, PB2 ; Apagar PB2 // UNIDADES
+	cBI PORTB, PB1 ; prender PB1 // DECADAS
+	
 	LDI R16, (1<<PCINT4)|(1<<PCINT3)
 	STS PCMSK0, R16 ; Habilitando PCINT en los pines PCINT4 Y PCINT3
 
@@ -66,7 +69,8 @@ Setup:
 	STS PCICR, R16 ; Habilitando la ISR PCINT[7:0]
 
 	SEI ; Se habilitan las interrupciones globales
-
+	
+	LDI R24, 0x00 ; Contador en 0
 	LDI R20, 0x00 ; Contador en 0
 	LDI R21, 0x00 ; Contador en 0
 	LPM R17, Z
@@ -76,18 +80,9 @@ Setup:
 // LOOP
 //*****************************************************************************
 Loop:
-	
-
-	//IN R16, TIFR0 ; Carga los valores del registro Tifr0 en R16
-	//CPI R16, (1<<TOV0)
-	Timer:
-		/*LDI R16, 236 ;Cargar valor de desbordamiento
-		OUT TCNT0, R16 ; Carga el valor inicial del contador
-		SBI TIFR0, TOV0 ; Realiza un toggle en la bandera de overflow del Timer0
-		INC R21 ; Incrementa R21 por cada 10 ms*/
 		OUT PORTC, R20 // Carga el valor de R20 a PortC
 		CPI R21, 100 ; Compara si ya llego a los 1000 ms
-		BRNE Timer ; Sino ha lelgado enviar a Check b1
+		BRNE LOOP ; Sino ha lelgado enviar a Check b1
 		CLR R21 ; Se limpia el registro r21 0x00
 		CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
 	
@@ -107,21 +102,18 @@ Init_T0:
 // SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
 //******************************************************************************
 AUMENTO_HEX:
-	//CPI R18, 0x0F // Compara si el contador es 15 = F
-	//BREQ RESET // Si el contador es cero salta a Reset
-	INC R18 // Incrementa R18
-	//LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	//LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	// MOV ZL, R23 // Copia R23 en ZL
-	LDI R16, 1
-	ADD ZL, R16
-	//ADD ZL, R18 // Suma ZL y R18
-	//SBRC	SREG, 0
-	//INC	ZH
-LOAD_PORTD:
+	INC R24 // Incrementa R18
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	CPI R24, 0x10 // Compara si el contador es 16
+	BREQ RESET_HEX // Si el contador es cero salta al reset
+	ADD ZL, R24 // Suma ZL y R24
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	RET
+RESET_HEX:
+	CLR R24
+	RJMP AUMENTO_HEX
 //*****************************************************************************
 // Subrutina de ISR INT0
 //*****************************************************************************
@@ -192,5 +184,5 @@ SALIR2:
 //Tabla de valores
 //******************************************************************************
 	TABLADOS: .DB 0x20, 0x10
-	TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36,  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36  
+	TABLE: .DB 0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
 //******************************************************************************
