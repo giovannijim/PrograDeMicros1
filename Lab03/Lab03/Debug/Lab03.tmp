@@ -24,20 +24,21 @@
  </OUTPUT_FILES>
  <LABELS>
   <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>19</LINE></MAIN>
-  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>120</LINE></ISR_PCINT0>
-  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>167</LINE></ISR_TIMER0_OVF>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>147</LINE></ISR_PCINT0>
+  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>194</LINE></ISR_TIMER0_OVF>
   <Setup><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>30</LINE></Setup>
-  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>187</LINE></TABLE>
-  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>93</LINE></Init_T0>
-  <Loop><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>82</LINE></Loop>
-  <AUMENTO_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>104</LINE></AUMENTO_HEX>
-  <RESET_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>114</LINE></RESET_HEX>
-  <CHECKPB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>145</LINE></CHECKPB2>
-  <CHECKPB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>135</LINE></CHECKPB1>
-  <SALIR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>155</LINE></SALIR>
-  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>137</LINE></delay>
-  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>147</LINE></delay1>
-  <SALIR2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>177</LINE></SALIR2>
-  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>186</LINE></TABLADOS>
+  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>215</LINE></TABLE>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>110</LINE></Init_T0>
+  <Loop><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>87</LINE></Loop>
+  <AUMENTO_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>121</LINE></AUMENTO_HEX>
+  <COMPARACION><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>97</LINE></COMPARACION>
+  <RESET_HEX><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>133</LINE></RESET_HEX>
+  <CHECKPB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>172</LINE></CHECKPB2>
+  <CHECKPB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>162</LINE></CHECKPB1>
+  <SALIR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>182</LINE></SALIR>
+  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>164</LINE></delay>
+  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>174</LINE></delay1>
+  <SALIR2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>205</LINE></SALIR2>
+  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm</FILE><LINE>214</LINE></TABLADOS>
  </LABELS>
 </ASSEMBLER_INFO>

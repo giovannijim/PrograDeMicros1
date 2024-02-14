@@ -59,8 +59,8 @@ Setup:
 	LDI R16, (1<<PB5)|(1<<PB2)|(1<<PB1)
 	OUT DDRB, R16 // Se establece como salida PB5, PB2, PB1
 	CBI PORTB, PB5 ; Apagar PB5
-	SBI PORTB, PB2 ; Apagar PB2 // UNIDADES
-	cBI PORTB, PB1 ; prender PB1 // DECADAS
+	//CBI PORTB, PB2 ; Apagar PB2 // UNIDADES
+	//CBI PORTB, PB1 ; APAGAR PB1 // DECADAS
 	
 	LDI R16, (1<<PCINT4)|(1<<PCINT3)
 	STS PCMSK0, R16 ; Habilitando PCINT en los pines PCINT4 Y PCINT3
@@ -75,18 +75,35 @@ Setup:
 	LDI R21, 0x00 ; Contador en 0
 	LPM R17, Z
 	OUT PORTD, R17
+	LDI R17, 0x00
 	STS UCSR0B, R18 //Desactiva los puertos TX y RX
+
+	SBI PORTB, PB1
+	CBI PORTB, PB2
 //*****************************************************************************
 // LOOP
 //*****************************************************************************
+
 Loop:
-		OUT PORTC, R20 // Carga el valor de R20 a PortC
-		CPI R21, 100 ; Compara si ya llego a los 1000 ms
-		BRNE LOOP ; Sino ha lelgado enviar a Check b1
-		CLR R21 ; Se limpia el registro r21 0x00
-		CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
+		
+	OUT PORTC, R20 // Carga el valor de R20 a PortC
 	
-	RJMP LOOP
+
+	CPI R21, 100 ; Compara si ya llego a los 1000 ms
+	BRNE LOOP ; Sino ha lelgado enviar a Check b1
+	CLR R21 ; Se limpia el registro r21 0x00
+	CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
+
+	COMPARACION:
+	CPI R25, 2 ; Contar si ya llego a 20ms
+	BRNE COMPARACION
+	CLR R25
+	SBI PINB, PB1 // Desactiva display de decenas
+	SBI PINB, PB2 // Activa display de unidades
+	
+
+	
+RJMP LOOP
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
 //******************************************************************************
@@ -102,16 +119,26 @@ Init_T0:
 // SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
 //******************************************************************************
 AUMENTO_HEX:
-	INC R24 // Incrementa R18
+	//SBI PINB, PB1 // Desactiva display de decenas
+	//SBI PINB, PB2 // Activa display de unidades
 	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
 	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	CPI R24, 0x10 // Compara si el contador es 16
+	CPI R24, 0x0B // Compara si el contador es 16
 	BREQ RESET_HEX // Si el contador es cero salta al reset
 	ADD ZL, R24 // Suma ZL y R24
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	INC R24 // Incrementa R24
 	RET
 RESET_HEX:
+	//CBI PORTB, PB1 // Activa display de decenas
+	//SBI PORTB, PB2  // Desactiva display de unidades
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	INC R17 // Incrementa Contador de decenas
+	ADD ZL, R17
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	CLR R24
 	RJMP AUMENTO_HEX
 //*****************************************************************************
@@ -140,7 +167,7 @@ CHECKPB1:
 	DEC R20 // Decrementa 1 en el valor del registro R20
 	CPI R20, 0x00 // Compara si ya llego a 0 el registro 20
 	BRNE SALIR // Si no son iguales se dirige a la subrutina de salida
-	LDI R20, 0x00 // Carga el valor 0 en R20 en caso sean iguales
+	//LDI R20, 0x00 // Carga el valor 0 en R20 en caso sean iguales
 
 CHECKPB2:
 	LDI R19, 255
@@ -173,6 +200,7 @@ ISR_TIMER0_OVF:
 	OUT TCNT0, R16		; Cargar el valor inicial al contador
 	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
 	INC R21				; Incrementamos contador de 10 ms
+	INC R25				; Incrementamos contador para toggle de display cada 10ms
 
 SALIR2:
 	POP R22				; Obtener el valor de SREG
