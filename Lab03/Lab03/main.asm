@@ -149,6 +149,7 @@ RESET_HEX:
 RESET_BOTH:
 	CLR R17				// Limpia el registro 17
 	CLR R24				// Limpia el registro 24
+	CLR R20
 	RJMP AUMENTO_HEX
 //*****************************************************************************
 // Subrutina de ISR INT0
