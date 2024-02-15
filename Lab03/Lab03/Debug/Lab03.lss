@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm Wed Feb 14 11:30:18 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm Thu Feb 15 10:54:26 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1042,10 +1042,10 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
                                  .cseg
                                  .org 0x00
 000000 940c 0022                 	JMP MAIN
-                                 .org 0x0006     // Vector de ISR_INT0
-000006 940c 0096                 	JMP ISR_PCINT0 
+                                 .org 0x0006     // Vector de ISR_PCINT0
+000006 940c 0082                 	JMP ISR_PCINT0 
                                  .org 0x0020		// Vector de TIMER0_OVF
-000020 940c 00ad                 	JMP ISR_TIMER0_OVF
+000020 940c 009e                 	JMP ISR_TIMER0_OVF
                                  
                                  MAIN:
                                  //*****************************************************************************
@@ -1059,7 +1059,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
                                  // Configuracion
                                  //*****************************************************************************
                                  Setup:
-000026 e7e6                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000026 e5e8                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
 000027 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
 000028 2f7e                      	MOV R23, ZL // Se hace una copia del valor en el registro ZL al registro R23
                                  
@@ -1079,8 +1079,8 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
 000035 e000                      	LDI R16, 0x00
 000036 b908                      	OUT PORTC, R16 ; Apagar los pines
                                  
-000037 ef0f                      	LDI	R16, 0xFF
-000038 b90a                      	OUT	DDRD, R16
+000037 ef0f                      	LDI	R16, 0xFF // Establece todo el puerto D como salida
+000038 b90a                      	OUT	DDRD, R16 // carga el registro 16 en puerto DDRD
                                  
 000039 e000                      	LDI R16, (0<<PB4)|(0<<PB3)
 00003a b904                      	OUT DDRB, R16  ; Se establecen los pines PB4 Y PB3 como entradas
@@ -1105,47 +1105,43 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
 000048 e040                      	LDI R20, 0x00 ; Contador en 0, BITS, LEDS
 000049 e050                      	LDI R21, 0x00 ; Contador en 0, C. DE 1 S
                                  
-                                 	//LPM R17, Z
-00004a ef1c                      	LDI R17, 0xFC
-00004b b91b                      	OUT PORTD, R17
+00004a ef1c                      	LDI R17, 0xFC // Carga el digito 0 en los displays
+00004b b91b                      	OUT PORTD, R17 // Carga el registro hacia el portD
                                  	
-                                 
 00004c 9320 00c1                 	STS UCSR0B, R18 //Desactiva los puertos TX y RX
                                  
-00004e e010                      	LDI R17, 0x00 ; Contador en 0
+00004e e010                      	LDI R17, 0x00 // Contador en 0
 00004f 9a29                      	SBI PORTB, PB1 //decenas
 000050 982a                      	CBI PORTB, PB2 //unidades
                                  //*****************************************************************************
                                  // LOOP
                                  //*****************************************************************************
-                                 
                                  Loop:		
 000051 b948                      	OUT PORTC, R20 // Carga el valor de R20 a PortC
                                  
                                  	AUMENTO_UNIDADES:
-                                 	//CALL MEGA_DELAY
-000052 30a1                      	CPI R26, 1 ; Contar si ya llego a 10ms
-000053 f7f1                      	BRNE AUMENTO_UNIDADES
-000054 27aa                      	CLR R26
+000052 30a1                      	CPI R26, 1 // Contar si ya llego a 10ms
+000053 f7f1                      	BRNE AUMENTO_UNIDADES // Salta a dicha subrutina (regresa), si no es igual
+000054 27aa                      	CLR R26 // Limpia el registro 26
 000055 9829                      	CBI PORTB, PB1 // Desactiva display de decenas
 000056 9a2a                      	SBI PORTB, PB2 // Activa display de unidades
-000057 e7e6                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000057 e5e8                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
 000058 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-000059 e001                      	ldi r16, 1
-00005a 1be0                      	sub zl, r16
-00005b 0fe8                      	ADD ZL, R24
+000059 e001                      	LDI R16, 1 //Se carga 1 en el registro 16
+00005a 1be0                      	SUB ZL, R16 // A zl se le resta 1
+00005b 0fe8                      	ADD ZL, R24	// Se desplaza el pointer
 00005c 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 00005d b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
                                  
                                  	AUMENTO_DECENAS:
-00005e 3092                      	CPI R25, 2 ; Contar si ya llego a 20ms
-00005f f441                      	BRNE AUMENTO
-000060 2799                      	CLR R25
+00005e 3092                      	CPI R25, 2 // Contar si ya llego a 20ms
+00005f f441                      	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+000060 2799                      	CLR R25 // limpia el registro 25
 000061 9a29                      	SBI PORTB, PB1 // Activa display de decenas
 000062 982a                      	CBI PORTB, PB2 // Desactiva display de unidades
-000063 e7e6                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000063 e5e8                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
 000064 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-000065 0fe1                      	ADD ZL, R17
+000065 0fe1                      	ADD ZL, R17 // Mueve ZL a donde se encuentra el pointer (la posición de R17)
 000066 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 000067 b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
                                  
@@ -1153,7 +1149,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
 000068 3654                      	CPI R21, 100 ; Compara si ya llego a los 1000 ms
 000069 f739                      	BRNE LOOP ; Sino ha lelgado enviar a Check b1
 00006a 2755                      	CLR R21 ; Se limpia el registro r21 0x00
-00006b 940e 008a                 	CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
+00006b 940e 0076                 	CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
                                  
 00006d cfe3                      RJMP LOOP
                                  //******************************************************************************
@@ -1164,163 +1160,118 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
 00006f bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
 000070 ee0c                          LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
 000071 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
-000072 e001                      	LDI	R16, (1 << TOIE0)
+000072 e001                      	LDI	R16, (1 << TOIE0)	// Habilita la interrupción del overflow
 000073 9300 006e                 	STS	TIMSK0, R16
 000075 9508                      	RET
                                  //******************************************************************************
                                  // SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
                                  //******************************************************************************
-                                 MEGA_DELAY:
-000076 ef0f                      	LDI R16, 255
-                                 	delay3:
-000077 950a                      		DEC R16
-000078 f7f1                      		BRNE delay3
-000079 ef0f                      	LDI R16, 255
-                                 	delay4:
-00007a 950a                      		DEC R16
-00007b f7f1                      		BRNE delay4
-00007c ef0f                      	LDI R16, 255
-                                 	delay5:
-00007d 950a                      		DEC R16
-00007e f7f1                      		BRNE delay5
-00007f ef0f                      	LDI R16, 255
-                                 	delay6:
-000080 950a                      		DEC R16
-000081 f7f1                      		BRNE delay6
-000082 ef0f                      	LDI R16, 255
-                                 	delay7:
-000083 950a                      		DEC R16
-000084 f7f1                      		BRNE delay7
-000085 ef0f                      	LDI R16, 255
-                                 	delay8:
-000086 950a                      		DEC R16
-000087 f7f1                      		BRNE delay8
-000088 f769                      	brne mega_delay
-000089 9508                      RET
                                  AUMENTO_HEX:
-                                 	;CPI R21, 1 ; Compara si ya llego a los 1000 ms
-                                 	;BRNE AUMENTO_HEX ; Sino ha lelgado enviar a Check b1
-                                 	;SBI PINB, PB1 // Desactiva display de decenas
-                                 	;SBI PINB, PB2 // Activa display de unidades
-                                 	;LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-                                 	;LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-00008a 308a                      	CPI R24, 0x0A // Compara si el contador es 10
-00008b f011                      	BREQ RESET_HEX // Si el contador es cero salta al reset
-                                 	;ADD ZL, R24 // Suma ZL y R24
-                                 	;LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-                                 	;OUT PORTD, R16 // Carga el registro R16 al puerto D
-00008c 9583                      	INC R24 // Incrementa R24
-00008d 9508                      	RET
-                                 RESET_HEX:
-                                 	//CBI PORTB, PB1 // Activa display de decenas
-                                 	//SBI PORTB, PB2  // Desactiva display de unidades
-                                 	;LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-                                 	;LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-                                 	
-00008e 3015                      	CPI R17, 0x05 // Compara si el contador es 10
-00008f f019                      	BREQ RESET_BOTH // Si el contador es cero salta al reset
-000090 9513                      	INC R17 // Incrementa Contador de decenas///
-                                 	;ADD ZL, R17
-                                 	;LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-                                 	;OUT PORTD, R16 // Carga el registro R16 al puerto D
-000091 2788                      	CLR R24
-000092 cff7                      	RJMP AUMENTO_HEX
+000076 308a                      	CPI R24, 0x0A		// Compara si el contador es 10
+000077 f011                      	BREQ RESET_HEX		// Si el contador es cero salta al reset
+000078 9583                      	INC R24				// Incrementa R24
+000079 9508                      	RET
+                                 RESET_HEX:	
+00007a 3015                      	CPI R17, 0x05		// Compara si el contador es 10
+00007b f019                      	BREQ RESET_BOTH		// Si el contador es cero salta al reset
+00007c 9513                      	INC R17				// Incrementa Contador de decenas
+00007d 2788                      	CLR R24				// Limpia el registro 24
+00007e cff7                      	RJMP AUMENTO_HEX
                                  RESET_BOTH:
-000093 2711                      	CLR R17
-000094 2788                      	CLR R24
-000095 cff4                      	RJMP AUMENTO_HEX
+00007f 2711                      	CLR R17				// Limpia el registro 17
+000080 2788                      	CLR R24				// Limpia el registro 24
+000081 cff4                      	RJMP AUMENTO_HEX
                                  //*****************************************************************************
                                  // Subrutina de ISR INT0
                                  //*****************************************************************************
                                  ISR_PCINT0:
-000096 930f                      	PUSH R16 ; Guardamos en pila el registro R16
-000097 b70f                      	IN R16, SREG
-000098 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
+000082 930f                      	PUSH R16 ; Guardamos en pila el registro R16
+000083 b70f                      	IN R16, SREG
+000084 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
                                  
-000099 b123                      	IN R18, PINB // Obtiene los valores de pinb, se almacenan en el registro R18
-                                 	/*SBRC R18, PB3
-                                 	RJMP CHECKPB3
+000085 b123                      	IN R18, PINB // Obtiene los valores de pinb, se almacenan en el registro R18
+                                 	/*
+                                 	Inicio:
+                                 	SBRC R18, PB3
+                                 	RJMP CHECKPB4
                                  	DEC R20
                                  	RJMP SALIR
                                  
-                                 	CHECKPB3:
-                                 	SBRC R18, PB2
+                                 	CHECKPB4:
+                                 	IN R18, PINB 
+                                 	SBRC R18, PB4
                                  	RJMP SALIR
-                                 
                                  	INC R20
-                                 	RJMP SALIR*/
+                                 	RJMP SALIR
+                                 	*/
                                  
-00009a ff23                      	SBRS R18, PB3 // Revisa si PB3 esta presionado
-00009b c007                      	RJMP CHECKPB2 // Si está presionado, se dirige a la otra subrutina
+000086 ff23                      	SBRS R18, PB3	// Revisa si PB3 esta presionado
+000087 c009                      	RJMP CHECKPB2	// Si está presionado, se dirige a la otra subrutina
                                  	
-00009c ff24                      	SBRS R18, PB4 // Revisa si PB4 esta presionado
-00009d c002                      	RJMP CHECKPB1  // Si está presionado, se dirige a la otra subrutina
+000088 ff24                      	SBRS R18, PB4	// Revisa si PB4 esta presionado
+000089 c002                      	RJMP CHECKPB1	// Si está presionado, se dirige a la otra subrutina
                                  	
-00009e 940c 00a7                 	JMP SALIR // Realiza un salto a la subrutina de salida
+00008a 940c 0098                 	JMP SALIR		// Realiza un salto a la subrutina de salida
                                  
                                  CHECKPB1:
-                                 	/*LDI R19, 255
-                                 	delay:
-                                 		DEC R19
-                                 		BRNE delay*/
-0000a0 954a                      	DEC R20 // Decrementa 1 en el valor del registro R20
-0000a1 3040                      	CPI R20, 0x00 // Compara si ya llego a 0 el registro 20
-0000a2 f421                      	BRNE SALIR // Si no son iguales se dirige a la subrutina de salida
-                                 	
-                                 	//LDI R20, 0x00 // Carga el valor 0 en R20 en caso sean iguales
+00008c ef3f                      	LDI R19, 255
+                                 	delay1:
+00008d 953a                      		DEC R19
+00008e f7f1                      		BRNE delay1
+00008f 954a                      	DEC R20			// Decrementa 1 en el valor del registro R20
+000090 f439                      	BRNE SALIR		// Si no son iguales se dirige a la subrutina de salida
                                  
                                  CHECKPB2:
-                                 	/*LDI R19, 255
-                                 	delay1:
-                                 		DEC R19
-                                 		BRNE delay1*/
-0000a3 9543                      	INC R20 // Incrementa 1 en el valor del registro R20
-0000a4 3140                      	CPI R20, 0x10 // Compara si ya llego a 16 el registro 20
-0000a5 f409                      	BRNE SALIR  // Si no son iguales se dirige a la subrutina de salida
-0000a6 e04f                      	LDI R20, 0x0F // Carga el valor 00 en R20 en caso sean iguales
-                                 	
+000091 ef3f                      	LDI R19, 255
+                                 	delay2:
+000092 953a                      		DEC R19
+000093 f7f1                      		BRNE delay2
+000094 9543                      	INC R20				// Incrementa 1 en el valor del registro R20
+000095 3140                      	CPI R20, 0x10		// Compara si ya llego a 16 el registro 20
+000096 f409                      	BRNE SALIR			// Si no son iguales se dirige a la subrutina de salida
+000097 e04f                      	LDI R20, 0x0F		// Carga el valor 00 en R20 en caso sean iguales
+                                 
                                  SALIR:
-0000a7 9a1d                      	SBI PINB, PB5 ; Toggle Pb5
-0000a8 9ad8                      	SBI PCIFR, PCIF0 ; Apagar la bandera de ISR PCINT0
+000098 9a1d                      	SBI PINB, PB5 ; Toggle Pb5
+000099 9ad8                      	SBI PCIFR, PCIF0 ; Apagar la bandera de ISR PCINT0
                                  
-0000a9 910f                      	POP R16				; Obtener el valor de SREG
-0000aa bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
-0000ab 910f                      	POP R16				; OBTENER EL VALOR DE r16
-0000ac 9518                      	RETI				; Retornamos a la ISR
-                                 
+00009a 910f                      	POP R16				; Obtener el valor de SREG
+00009b bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
+00009c 910f                      	POP R16				; OBTENER EL VALOR DE r16
+00009d 9518                      	RETI				; Retornamos a la ISR
                                  //*****************************************************************************
                                  // Subrutina de ISR_TIMER0_OVF
                                  //*****************************************************************************
                                  ISR_TIMER0_OVF:
-0000ad 936f                      	PUSH R22 ; Guardamos en pila el registro R16
-0000ae b76f                      	IN R22, SREG
-0000af 936f                      	PUSH R22 ; Guardamos en pila el registro SREG
+00009e 936f                      	PUSH R22 ; Guardamos en pila el registro R16
+00009f b76f                      	IN R22, SREG
+0000a0 936f                      	PUSH R22 ; Guardamos en pila el registro SREG
                                  
-0000b0 ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
-0000b1 bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
-0000b2 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
-0000b3 9553                      	INC R21				; Incrementamos contador de 10 ms
-0000b4 9593                      	INC R25				; Incrementamos contador para toggle de display cada 20ms
-0000b5 95a3                      	INC R26				; Incrementamos contador para toggle de display cada 10ms
+0000a1 ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
+0000a2 bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
+0000a3 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
+0000a4 9553                      	INC R21				; Incrementamos contador de 10 ms
+0000a5 9593                      	INC R25				; Incrementamos contador para toggle de display cada 20ms
+0000a6 95a3                      	INC R26				; Incrementamos contador para toggle de display cada 10ms
                                  
                                  SALIR2:
-0000b6 916f                      	POP R22				; Obtener el valor de SREG
-0000b7 bf6f                      	OUT SREG, R22		; REstaurar los antiguos vlaores de SREG
-0000b8 916f                      	POP R22				; OBTENER EL VALOR DE r16
-0000b9 9518                      	RETI				; Retornamos a la ISR
+0000a7 916f                      	POP R22				; Obtener el valor de SREG
+0000a8 bf6f                      	OUT SREG, R22		; REstaurar los antiguos vlaores de SREG
+0000a9 916f                      	POP R22				; OBTENER EL VALOR DE r16
+0000aa 9518                      	RETI				; Retornamos a la ISR
                                  //******************************************************************************
                                  //******************************************************************************
                                  //Tabla de valores
                                  //******************************************************************************
-0000ba 1020                      	TABLADOS: .DB 0x20, 0x10
-0000bb c0fc
-0000bc ea6e
-0000bd bad2
-0000be e2be
-0000bf f2fe
-0000c0 9ef6
-0000c1 ce3c
-0000c2 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
+0000ab 1020                      	TABLADOS: .DB 0x20, 0x10
+0000ac c0fc
+0000ad ea6e
+0000ae bad2
+0000af e2be
+0000b0 f2fe
+0000b1 9ef6
+0000b2 ce3c
+0000b3 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
 
 
 RESOURCE USE INFORMATION
@@ -1340,26 +1291,26 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  56 r17:   9 r18:   4 r19:   0 r20:   7 
+r13:   0 r14:   0 r15:   0 r16:  44 r17:   9 r18:   4 r19:   4 r20:   6 
 r21:   4 r22:   6 r23:   1 r24:   6 r25:   3 r26:   3 r27:   0 r28:   0 
 r29:   0 r30:   7 r31:   3 
-Registers used: 13 out of 35 (37.1%)
+Registers used: 14 out of 35 (40.0%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   2 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   2 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :  12 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   7 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   4 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   6 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   7 cpse  :   0 dec   :   7 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   6 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   6 jmp   :   4 
-ld    :   0 ldd   :   0 ldi   :  36 lds   :   0 lpm   :   4 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  32 lds   :   0 lpm   :   4 lsl   :   0 
 lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  18 pop   :   4 
-push  :   4 rcall :   0 ret   :   3 reti  :   2 rjmp  :   5 rol   :   0 
+push  :   4 rcall :   0 ret   :   2 reti  :   2 rjmp  :   5 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   6 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
@@ -1370,7 +1321,7 @@ Instructions used: 25 out of 113 (22.1%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000186    316     18    334   32768   1.0%
+[.cseg] 0x000000 0x000168    286     18    304   32768   0.9%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
