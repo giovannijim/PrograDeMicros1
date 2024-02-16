@@ -174,7 +174,6 @@ ISR_PCINT0:
 	INC R20
 	RJMP SALIR
 	*/
-
 	SBRS R18, PB3	// Revisa si PB3 esta presionado
 	RJMP CHECKPB2	// Si está presionado, se dirige a la otra subrutina
 	
@@ -184,18 +183,10 @@ ISR_PCINT0:
 	JMP SALIR		// Realiza un salto a la subrutina de salida
 
 CHECKPB1:
-	LDI R19, 255
-	delay1:
-		DEC R19
-		BRNE delay1
 	DEC R20			// Decrementa 1 en el valor del registro R20
 	BRNE SALIR		// Si no son iguales se dirige a la subrutina de salida
 
 CHECKPB2:
-	LDI R19, 255
-	delay2:
-		DEC R19
-		BRNE delay2
 	INC R20				// Incrementa 1 en el valor del registro R20
 	CPI R20, 0x10		// Compara si ya llego a 16 el registro 20
 	BRNE SALIR			// Si no son iguales se dirige a la subrutina de salida
