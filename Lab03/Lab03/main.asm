@@ -116,7 +116,7 @@ Loop:
 
 	AUMENTO:
 	CPI R21, 100 ; Compara si ya llego a los 1000 ms
-	BRNE LOOP ; Sino ha lelgado enviar a Check b1
+	BRNE LOOP ; Sino ha lelgado enviar a aumento
 	CLR R21 ; Se limpia el registro r21 0x00
 	CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
 
