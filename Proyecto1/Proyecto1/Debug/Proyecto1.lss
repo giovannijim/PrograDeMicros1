@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm Sat Feb 24 21:25:45 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm Sun Feb 25 17:27:23 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm(10): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ; Universidad del Valle de Guatemala
                                  
@@ -987,11 +987,11 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 ; IE2023: PROGRAMACION DE MICROCONTROLADORES
-                                 ; Prelab03.asm
-                                 ; Created: 2/9/2024 4:45:10 PM
+                                 ; IE2023: Programacion de microcontroladores
+                                 ; Proyecto1.asm
+                                 ; Created: 2/16/2024 5:20:45 PM
                                  ; Author : Giovanni Jimenez
-                                 ; HARDWARE: ATMEGA328P
+                                 ; Hardware: ATMEGA328P
                                  //*****************************************************************************
                                  // Encabezado
                                  //*****************************************************************************
@@ -1042,10 +1042,17 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
                                  .cseg
                                  .org 0x00
 000000 940c 0022                 	JMP MAIN
-                                 .org 0x0006     // Vector de ISR_PCINT0
-000006 940c 0083                 	JMP ISR_PCINT0 
+                                 
+                                 .def CntSegUnidades = R18
+                                 .def CntSegDecenas = R19
+                                 .def CntMinUnidades = R20
+                                 .def CntMinDecenas = R21
+                                 .def CntHrsUnidades = R22
+                                 .def CntHrsDecenas = R23
+                                 .def HRS = R24
+                                 
                                  .org 0x0020		// Vector de TIMER0_OVF
-000020 940c 0099                 	JMP ISR_TIMER0_OVF
+000020 940c 00c2                 	JMP ISR_TIMER0_OVF
                                  
                                  MAIN:
                                  //*****************************************************************************
@@ -1058,212 +1065,261 @@ D:\GIOLESS\Documents\PrograDeMicros1\Lab03\Lab03\main.asm(10): Including file 'D
                                  //*****************************************************************************
                                  // Configuracion
                                  //*****************************************************************************
-                                 Setup:
-000026 e4ee                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000026 eae4                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
 000027 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-000028 2f7e                      	MOV R23, ZL // Se hace una copia del valor en el registro ZL al registro R23
                                  
-000029 e800                      	LDI R16, (1 << CLKPCE) ; Se coloca un uno en el bit de CLKPCE
-00002a 9300 0061                 	STS CLKPR, R16 ; Se habilita el prescaler
+000028 e800                      	LDI R16, (1 << CLKPCE) ; Se coloca un uno en el bit de CLKPCE
+000029 9300 0061                 	STS CLKPR, R16 ; Se habilita el prescaler
                                  
-00002c e003                      	LDI R16, 0b0000_0011
-00002d 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
+00002b e003                      	LDI R16, 0b0000_0011
+00002c 9300 0061                 	STS CLKPR, R16 ; Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
                                  
-00002f e000                      	LDI R16, 0X00
-000030 bd04                      	OUT TCCR0A, R16 ;Se indica al Timer que opere de manera normal
+00002e e000                      	LDI R16, 0X00
+00002f bd04                      	OUT TCCR0A, R16 ;Se indica al Timer que opere de manera normal
                                  
-000031 940e 006e                 	CALL Init_T0 ; Inicializar Timer 0
+000030 940e 0092                 	CALL Init_T0 ; Inicializar Timer 0
                                  
-000033 e00f                      	LDI R16, (1<<PC0)|(1<<PC1)|(1<<PC2)|(1<<PC3)
-000034 b907                      	OUT DDRC, R16 ; Establecer los bits PC0, PC1, PC2, PC3 como salidas
-000035 e000                      	LDI R16, 0x00
-000036 b908                      	OUT PORTC, R16 ; Apagar los pines
+000032 9478                      	SEI ; Se habilitan las interrupciones globales
                                  
-000037 ef0f                      	LDI	R16, 0xFF // Establece todo el puerto D como salida
-000038 b90a                      	OUT	DDRD, R16 // carga el registro 16 en puerto DDRD
+000033 9320 00c1                 	STS UCSR0B, R18		//Desactiva los puertos TX y RX
                                  
-000039 e000                      	LDI R16, (0<<PB4)|(0<<PB3)
-00003a b904                      	OUT DDRB, R16  ; Se establecen los pines PB4 Y PB3 como entradas
-00003b e108                      	LDI R16, (1<<PB4)|(1<<PB3)
-00003c b905                      	OUT PORTB, R16 ; Se les configura Pull-up a dichas entradas
+000035 ef0f                      	LDI R16, 0xFF
+000036 b90a                      	OUT DDRD, R16		// Se establece el puerto D como salida
+000037 e010                      	LDI R17, 0x00		
+000038 b91b                      	OUT PORTD, R17		// Se limpia el puerto D, para que se encuentre en 0
                                  
-00003d e206                      	LDI R16, (1<<PB5)|(1<<PB2)|(1<<PB1)
-00003e b904                      	OUT DDRB, R16 // Se establece como salida PB5, PB2, PB1
-00003f 982d                      	CBI PORTB, PB5 ; Apagar PB5
-                                 	//CBI PORTB, PB2 ; Apagar PB2 // UNIDADES
-                                 	//CBI PORTB, PB1 ; APAGAR PB1 // DECADAS
-                                 	
-000040 e108                      	LDI R16, (1<<PCINT4)|(1<<PCINT3)
-000041 9300 006b                 	STS PCMSK0, R16 ; Habilitando PCINT en los pines PCINT4 Y PCINT3
+000039 b907                      	OUT DDRC, R16		// Se establece el puerto C como salida
+00003a b918                      	OUT PORTC, R17		// Se limpia el puerto C, para que se encuentre en 0
                                  
-000043 e001                      	LDI R16, (1<<PCIE0)
-000044 9300 0068                 	STS PCICR, R16 ; Habilitando la ISR PCINT[7:0]
+00003b e000                      	LDI R16, 0x00
+00003c b904                      	OUT DDRB, R16			// Se establece el puerto B como entrada 
+00003d e10f                      	LDI R16, (1<<PB4)|(1<<PB3)|(1<<PB2)|(1<<PB1)|(1<<PB0)
+00003e b905                      	OUT PORTB, R16			// Se colocan pull ups en la entrada del puerto B
                                  
-000046 9478                      	SEI ; Se habilitan las interrupciones globales
-                                 	
-000047 e080                      	LDI R24, 0x00 ; Contador en 0, UNIDADES
-000048 e040                      	LDI R20, 0x00 ; Contador en 0, BITS, LEDS
-000049 e050                      	LDI R21, 0x00 ; Contador en 0, C. DE 1 S
+00003f e200                      	LDI R16, (1<<PB5)		
+000040 b904                      	OUT DDRB, R16			// Se establece PB5 como salida
+000041 e000                      	LDI R16, 0x00
+000042 b908                      	OUT PORTC, R16			// Se limpia el puerto B, para que se encuentre en 0
                                  
-00004a ef1c                      	LDI R17, 0xFC // Carga el digito 0 en los displays
-00004b b91b                      	OUT PORTD, R17 // Carga el registro hacia el portD
-                                 	
-00004c 9320 00c1                 	STS UCSR0B, R18 //Desactiva los puertos TX y RX
-                                 
-00004e e010                      	LDI R17, 0x00 // Contador en 0
-00004f 9a29                      	SBI PORTB, PB1 //decenas
-000050 982a                      	CBI PORTB, PB2 //unidades
+000043 2733                      	CLR CntSegDecenas			// Limpia el registro 
+000044 2722                      	CLR CntSegUnidades			// Limpia el registro 
+000045 2744                      	CLR CntMinUnidades
+000046 2755                      	CLR CntMinDecenas
+000047 2766                      	CLR CntHrsUnidades
+000048 2777                      	CLR CntHrsDecenas
+000049 e055                      	LDI CntMinDecenas, 5
+00004a e049                      	LDI CntMinUnidades, 9
+00004b e187                      	LDI Hrs, 23
+00004c e072                      	LDI CntHrsDecenas, 2
+00004d e063                      	LDI CntHrsUnidades, 3
                                  //*****************************************************************************
                                  // LOOP
                                  //*****************************************************************************
-                                 Loop:		
-000051 b948                      	OUT PORTC, R20 // Carga el valor de R20 a PortC
+                                 LOOP:	
+                                 	/*AUMENTO_U_SEG:
+                                 	CPI R28, 1 // Contar si ya llego a 10ms
+                                 	BRNE AUMENTO_U_SEG // Salta a dicha subrutina (regresa), si no es igual
+                                 	CLR R28 // Limpia el registro 26
+                                 	SBI PORTC, PC2 // Activa display de unidades minutos
+                                 	CBI PORTC, PC3 // Desactiva display de decenas minutos
+                                 	CBI PORTC, PC4 // Activa display de decenas horas 
+                                 	CBI PORTC, PC5 // Desactiva display de unidade horas
+                                 	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+                                 	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+                                 	LDI R16, 1
+                                 	SUB ZL, R16
+                                 	ADD ZL, CntSegUnidades	// Se desplaza el pointer
+                                 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+                                 	OUT PORTD, R16 // Carga el registro R16 al puerto D
+                                 	
+                                 	AUMENTO_D_SEG:
+                                 	CLR R16
+                                 	MOV R16, R1
+                                 	CPI R16, 2 // Contar si ya llego a 20ms
+                                 	BRNE AUMENTO_U_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
+                                 	CLR R1 // limpia el registro 25
+                                 	CBI PORTC, PC2 // Activa display de unidades minutos
+                                 	SBI PORTC, PC3 // Desactiva display de decenas minutos
+                                 	CBI PORTC, PC4 // Activa display de decenas horas 
+                                 	CBI PORTC, PC5 // Desactiva display de unidade horas
+                                 	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+                                 	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+                                 	ADD ZL, CntSegDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+                                 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+                                 	OUT PORTD, R16 // Carga el registro R16 al puerto D
+                                 	*/
+                                 	AUMENTO_U_MINUTOS:
+00004e 30c1                      	CPI R28, 1 // Contar si ya llego a 10ms
+00004f f469                      	BRNE AUMENTO_D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
+000050 27cc                      	CLR R28 // Limpia el registro 26
+000051 2411                      	CLR R1 // Limpia el registro 26
+000052 2422                      	CLR R2 // Limpia el registro 26
+000053 2433                      	CLR R3 // Limpia el registro 26
+000054 9a42                      	SBI PORTC, PC2 // Activa display de unidades minutos
+000055 9843                      	CBI PORTC, PC3 // Desactiva display de decenas minutos
+000056 9844                      	CBI PORTC, PC4 // Activa display de decenas horas 
+000057 9845                      	CBI PORTC, PC5 // Desactiva display de unidade horas
+000058 eae4                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000059 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+00005a 0fe4                      	ADD ZL, CntMinUnidades	// Se desplaza el pointer
+00005b 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+00005c b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
+                                 	
+                                 	AUMENTO_D_MINUTOS:
+00005d 2d01                      	MOV R16, R1
+00005e 3001                      	CPI R16, 1 // Contar si ya llego a 20ms
+00005f f469                      	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
+000060 27cc                      	CLR R28 // Limpia el registro 26
+000061 2411                      	CLR R1 // Limpia el registro 26
+000062 2422                      	CLR R2 // Limpia el registro 26
+000063 2433                      	CLR R3 // Limpia el registro 26
+000064 9842                      	CBI PORTC, PC2 // Activa display de unidades minutos
+000065 9a43                      	SBI PORTC, PC3 // Desactiva display de decenas minutos
+000066 9844                      	CBI PORTC, PC4 // Activa display de decenas horas 
+000067 9845                      	CBI PORTC, PC5 // Desactiva display de unidade horas
+000068 eae4                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000069 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+00006a 0fe5                      	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00006b 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+00006c b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
                                  
-                                 	AUMENTO_UNIDADES:
-000052 30a1                      	CPI R26, 1 // Contar si ya llego a 10ms
-000053 f7f1                      	BRNE AUMENTO_UNIDADES // Salta a dicha subrutina (regresa), si no es igual
-000054 27aa                      	CLR R26 // Limpia el registro 26
-000055 9829                      	CBI PORTB, PB1 // Desactiva display de decenas
-000056 9a2a                      	SBI PORTB, PB2 // Activa display de unidades
-000057 e4ee                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-000058 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-000059 e001                      	LDI R16, 1 //Se carga 1 en el registro 16
-00005a 1be0                      	SUB ZL, R16 // A zl se le resta 1
-00005b 0fe8                      	ADD ZL, R24	// Se desplaza el pointer
-00005c 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-00005d b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
-                                 
-                                 	AUMENTO_DECENAS:
-00005e 3092                      	CPI R25, 2 // Contar si ya llego a 20ms
-00005f f441                      	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
-000060 2799                      	CLR R25 // limpia el registro 25
-000061 9a29                      	SBI PORTB, PB1 // Activa display de decenas
-000062 982a                      	CBI PORTB, PB2 // Desactiva display de unidades
-000063 e4ee                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-000064 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-000065 0fe1                      	ADD ZL, R17 // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000066 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-000067 b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
-                                 
+                                 	AUMENTO_U_HORAS:
+00006d 2d02                      	MOV R16, R2
+00006e 3001                      	CPI R16, 1 // Contar si ya llego a 10ms
+00006f f469                      	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
+000070 27cc                      	CLR R28 // Limpia el registro 26
+000071 2411                      	CLR R1 // Limpia el registro 26
+000072 2422                      	CLR R2 // Limpia el registro 26
+000073 2433                      	CLR R3 // Limpia el registro 26
+000074 9842                      	CBI PORTC, PC2 // Activa display de unidades minutos
+000075 9843                      	CBI PORTC, PC3 // Desactiva display de decenas minutos
+000076 9844                      	CBI PORTC, PC4 // Activa display de decenas horas 
+000077 9a45                      	SBI PORTC, PC5 // Desactiva display de unidade horas
+000078 eae4                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000079 e0f1                      	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+00007a 0fe6                      	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
+00007b 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+00007c b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
+                                 	
+                                 	AUMENTO_D_HORAS:
+00007d 2d03                      	MOV R16, R3
+00007e 3001                      	CPI R16, 1 // Contar si ya llego a 10ms
+00007f f461                      	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+000080 27cc                      	CLR R28 // Limpia el registro 26
+000081 2411                      	CLR R1 // Limpia el registro 26
+000082 2422                      	CLR R2 // Limpia el registro 26
+000083 2433                      	CLR R3 // Limpia el registro 26
+000084 9842                      	CBI PORTC, PC2 // Activa display de unidades minutos
+000085 9843                      	CBI PORTC, PC3 // Desactiva display de decenas minutos
+000086 9a44                      	SBI PORTC, PC4 // Activa display de decenas horas 
+000087 9845                      	CBI PORTC, PC5 // Desactiva display de unidade horas
+000088 eae4                      	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+000089 0fe7                      	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00008a 9104                      	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+00008b b90b                      	OUT PORTD, R16 // Carga el registro R16 al puerto D
+                                 	
                                  	AUMENTO:
-000068 3654                      	CPI R21, 100 ; Compara si ya llego a los 1000 ms
-000069 f739                      	BRNE LOOP ; Sino ha lelgado enviar a aumento
-00006a 2755                      	CLR R21 ; Se limpia el registro r21 0x00
-00006b 940e 0076                 	CALL AUMENTO_HEX ; Salta a la subrutina para aumentar
+00008c 36b4                      	CPI R27, 100 ; Compara si ya llego a los 100 ms
+00008d f601                      	BRNE LOOP ; Sino ha llegado enviar a loop
+00008e 27bb                      	CLR R27 ; Se limpia el registro r21 0x00
+00008f 940e 009a                 	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
                                  
-00006d cfe3                      RJMP LOOP
+000091 cfbc                      RJMP LOOP
                                  //******************************************************************************
                                  // SUBRUTINA PARA INICIALIZAR TIMER 0
                                  //******************************************************************************
                                  Init_T0:
-00006e e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
-00006f bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
-000070 ee0c                          LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
-000071 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
-000072 e001                      	LDI	R16, (1 << TOIE0)	// Habilita la interrupción del overflow
-000073 9300 006e                 	STS	TIMSK0, R16
-000075 9508                      	RET
+000092 e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
+000093 bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+000094 ee0c                          LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
+000095 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
+000096 e001                      	LDI	R16, (1 << TOIE0)	// Habilita la interrupción del overflow
+000097 9300 006e                 	STS	TIMSK0, R16
+000099 9508                      	RET
                                  //******************************************************************************
                                  // SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
                                  //******************************************************************************
-                                 AUMENTO_HEX:
-000076 308a                      	CPI R24, 0x0A		// Compara si el contador es 10
-000077 f011                      	BREQ RESET_HEX		// Si el contador es cero salta al reset
-000078 9583                      	INC R24				// Incrementa R24
-000079 9508                      	RET
-                                 RESET_HEX:	
-00007a 3015                      	CPI R17, 0x05		// Compara si el contador es 10
-00007b f019                      	BREQ RESET_BOTH		// Si el contador es cero salta al reset
-00007c 9513                      	INC R17				// Incrementa Contador de decenas
-00007d 2788                      	CLR R24				// Limpia el registro 24
-00007e cff7                      	RJMP AUMENTO_HEX
-                                 RESET_BOTH:
-00007f 2711                      	CLR R17				// Limpia el registro 17
-000080 2788                      	CLR R24				// Limpia el registro 24
-000081 2744                      	CLR R20
-000082 cff3                      	RJMP AUMENTO_HEX
-                                 //*****************************************************************************
-                                 // Subrutina de ISR INT0
-                                 //*****************************************************************************
-                                 ISR_PCINT0:
-000083 930f                      	PUSH R16 ; Guardamos en pila el registro R16
-000084 b70f                      	IN R16, SREG
-000085 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
-                                 
-000086 b123                      	IN R18, PINB // Obtiene los valores de pinb, se almacenan en el registro R18
-                                 	/*
-                                 	Inicio:
-                                 	SBRC R18, PB3
-                                 	RJMP CHECKPB4
-                                 	DEC R20
-                                 	RJMP SALIR
-                                 
-                                 	CHECKPB4:
-                                 	IN R18, PINB 
-                                 	SBRC R18, PB4
-                                 	RJMP SALIR
-                                 	INC R20
-                                 	RJMP SALIR
-                                 	*/
-000087 ff23                      	SBRS R18, PB3	// Revisa si PB3 esta presionado
-000088 c006                      	RJMP CHECKPB2	// Si está presionado, se dirige a la otra subrutina
-                                 	
-000089 ff24                      	SBRS R18, PB4	// Revisa si PB4 esta presionado
-00008a c002                      	RJMP CHECKPB1	// Si está presionado, se dirige a la otra subrutina
-                                 	
-00008b 940c 0093                 	JMP SALIR		// Realiza un salto a la subrutina de salida
-                                 
-                                 CHECKPB1:
-00008d 954a                      	DEC R20			// Decrementa 1 en el valor del registro R20
-00008e f421                      	BRNE SALIR		// Si no son iguales se dirige a la subrutina de salida
-                                 
-                                 CHECKPB2:
-00008f 9543                      	INC R20				// Incrementa 1 en el valor del registro R20
-000090 3140                      	CPI R20, 0x10		// Compara si ya llego a 16 el registro 20
-000091 f409                      	BRNE SALIR			// Si no son iguales se dirige a la subrutina de salida
-000092 e04f                      	LDI R20, 0x0F		// Carga el valor 00 en R20 en caso sean iguales
-                                 
-                                 SALIR:
-000093 9a1d                      	SBI PINB, PB5 ; Toggle Pb5
-000094 9ad8                      	SBI PCIFR, PCIF0 ; Apagar la bandera de ISR PCINT0
-                                 
-000095 910f                      	POP R16				; Obtener el valor de SREG
-000096 bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
-000097 910f                      	POP R16				; OBTENER EL VALOR DE r16
-000098 9518                      	RETI				; Retornamos a la ISR
+                                 AUMENTO_UNIDADES_SEGUNDOS:
+00009a 302a                      	CPI CntSegUnidades, 0x0A		// Compara si el contador es 10
+00009b f011                      	BREQ AUMENTO_DECENAS_SEGUNDOS		// Si el contador es cero salta 
+00009c 9523                      	INC CntSegUnidades				// Incrementa 
+00009d 9508                      	RET
+                                 AUMENTO_DECENAS_SEGUNDOS:
+00009e 3035                      	CPI CntSegDecenas, 0x05		// Compara si el contador de decenas es 5
+00009f f019                      	BREQ AUMENTO_UNIDADES_MINUTOS		// Si el contador es cero salta 
+0000a0 9533                      	INC CntSegDecenas				// Incrementa Contador de decenas
+0000a1 2722                      	CLR CntSegUnidades				// Limpia el registro 
+0000a2 cff7                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+                                 AUMENTO_UNIDADES_MINUTOS:
+0000a3 2733                      	CLR CntSegDecenas			// Limpia el registro 
+0000a4 2722                      	CLR CntSegUnidades			// Limpia el registro 
+0000a5 9543                      	INC CntMinUnidades
+0000a6 304a                      	CPI CntMinUnidades, 0x0A		// Compara si el contador de unidades es 9
+0000a7 f009                      	BREQ AUMENTO_DECENAS_MINUTOS		// Si el contador es cero salta al reset
+0000a8 cff1                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+                                 AUMENTO_DECENAS_MINUTOS:
+0000a9 2744                      	CLR CntMinUnidades			// Limpia el registro 
+0000aa 3055                      	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
+0000ab f011                      	BREQ AUMENTO_UNIDADES_HORAS	// Si el contador es cero salta al reset
+0000ac 9553                      	INC CntMinDecenas
+0000ad cfec                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+                                 AUMENTO_UNIDADES_HORAS:
+0000ae 2755                      	CLR CntMinDecenas			// Limpia el registro 
+0000af 2744                      	CLR CntMinUnidades			// Limpia el registro
+0000b0 9583                      	INC HRS 
+0000b1 3188                      	CPI HRS, 24
+0000b2 f039                      	BREQ RESET_ALL
+0000b3 9563                      	INC CntHrsUnidades
+0000b4 306a                      	CPI CntHrsUnidades, 0x0A		// Compara si el contador de unidades es 9
+0000b5 f009                      	BREQ AUMENTO_DECENAS_HORAS	// Si el contador es cero salta al reset
+0000b6 cfe3                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+                                 AUMENTO_DECENAS_HORAS:
+0000b7 2766                      	CLR CntHrsUnidades
+0000b8 9573                      	INC CntHrsDecenas
+0000b9 cfe0                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+                                 RESET_ALL:
+0000ba 2722                      	CLR CntSegUnidades			// Limpia el registro 
+0000bb 2733                      	CLR CntSegDecenas			// Limpia el registro 
+0000bc 2744                      	CLR CntMinUnidades			// Limpia el registro
+0000bd 2755                      	CLR CntMinDecenas			// Limpia el registro 
+0000be 2766                      	CLR CntHrsUnidades
+0000bf 2777                      	CLR CntHrsDecenas
+0000c0 2788                      	CLR HRS
+0000c1 cfd8                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  //*****************************************************************************
                                  // Subrutina de ISR_TIMER0_OVF
                                  //*****************************************************************************
                                  ISR_TIMER0_OVF:
-000099 936f                      	PUSH R22 ; Guardamos en pila el registro R16
-00009a b76f                      	IN R22, SREG
-00009b 936f                      	PUSH R22 ; Guardamos en pila el registro SREG
+0000c2 931f                      	PUSH R17 ; Guardamos en pila el registro R16
+0000c3 b71f                      	IN R17, SREG
+0000c4 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
                                  
-00009c ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
-00009d bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
-00009e 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
-00009f 9553                      	INC R21				; Incrementamos contador de 10 ms
-0000a0 9593                      	INC R25				; Incrementamos contador para toggle de display cada 20ms
-0000a1 95a3                      	INC R26				; Incrementamos contador para toggle de display cada 10ms
+0000c5 ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
+0000c6 bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
+0000c7 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
+0000c8 95b3                      	INC R27 			; Incrementamos contador de 10 ms
+0000c9 95c3                      	INC R28				; Incrementamos contador para toggle de display cada 20ms
+0000ca 9413                      	INC R1				; Incrementamos contador para toggle de display cada 10ms
+0000cb 9423                      	INC R2				; Incrementamos contador para toggle de display cada 10ms
+0000cc 9433                      	INC R3				; Incrementamos contador para toggle de display cada 10ms
                                  
                                  SALIR2:
-0000a2 916f                      	POP R22				; Obtener el valor de SREG
-0000a3 bf6f                      	OUT SREG, R22		; REstaurar los antiguos vlaores de SREG
-0000a4 916f                      	POP R22				; OBTENER EL VALOR DE r16
-0000a5 9518                      	RETI				; Retornamos a la ISR
-                                 //******************************************************************************
+0000cd 911f                      	POP R17				; Obtener el valor de SREG
+0000ce bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
+0000cf 911f                      	POP R17				; OBTENER EL VALOR DE r16
+0000d0 9518                      	RETI				; Retornamos a la ISR
                                  //******************************************************************************
                                  //Tabla de valores
                                  //******************************************************************************
-0000a6 1020                      	TABLADOS: .DB 0x20, 0x10
-0000a7 c0fc
-0000a8 ea6e
-0000a9 bad2
-0000aa e2be
-0000ab f2fe
-0000ac 9ef6
-0000ad ce3c
-0000ae 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
+0000d1 1020                      	TABLADOS: .DB 0x20, 0x10
+0000d2 c0fc
+0000d3 ea6e
+0000d4 bad2
+0000d5 e2be
+0000d6 f2fe
+0000d7 9ef6
+0000d8 ce3c
+0000d9 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
 
 
 RESOURCE USE INFORMATION
@@ -1281,39 +1337,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   0 z  :   4 r0 :   0 r1 :   6 r2 :   6 r3 :   6 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  44 r17:   9 r18:   4 r19:   0 r20:   7 
-r21:   4 r22:   6 r23:   1 r24:   6 r25:   3 r26:   3 r27:   0 r28:   0 
-r29:   0 r30:   7 r31:   3 
-Registers used: 13 out of 35 (37.1%)
+r13:   0 r14:   0 r15:   0 r16:  41 r17:  11 r18:   7 r19:   5 r20:   8 
+r21:   7 r22:   7 r23:   5 r24:   4 r25:   0 r26:   0 r27:   3 r28:   6 
+r29:   0 r30:   9 r31:   4 
+Registers used: 17 out of 35 (48.6%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   2 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   0 add   :   4 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   2 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   6 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   4 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   7 cls   :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :  12 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  37 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   6 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   6 jmp   :   4 
-ld    :   0 ldd   :   0 ldi   :  30 lds   :   0 lpm   :   4 lsl   :   0 
-lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  18 pop   :   4 
-push  :   4 rcall :   0 ret   :   2 reti  :   2 rjmp  :   5 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   6 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   2 sec   :   0 seh   :   0 
+cpi   :  11 cpse  :   0 dec   :   0 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :  12 jmp   :   2 
+ld    :   0 ldd   :   0 ldi   :  29 lds   :   0 lpm   :   8 lsl   :   0 
+lsr   :   0 mov   :   3 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  19 pop   :   2 
+push  :   2 rcall :   0 ret   :   2 reti  :   1 rjmp  :   7 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   5 sbic  :   0 sbis  :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   6 
-sub   :   1 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 25 out of 113 (22.1%)
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   4 
+sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 22 out of 113 (19.5%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00015e    276     18    294   32768   0.9%
+[.cseg] 0x000000 0x0001b4    358     18    376   32768   1.1%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

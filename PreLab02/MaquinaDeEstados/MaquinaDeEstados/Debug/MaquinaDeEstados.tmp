@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\Debug\MaquinaDeEstados.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>MaquinaDeEstados.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>MaquinaDeEstados.map</FILE>
+  <FILE>MaquinaDeEstados.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>20</LINE></MAIN>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>84</LINE></ISR_PCINT0>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>66</LINE></LOOP>
+  <ESTADO0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>72</LINE></ESTADO0>
+  <ESTADO1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>77</LINE></ESTADO1>
+  <ESTADO0_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>94</LINE></ESTADO0_ISR>
+  <ESTADO1_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>102</LINE></ESTADO1_ISR>
+  <ISR_POP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>111</LINE></ISR_POP>
+ </LABELS>
+</ASSEMBLER_INFO>

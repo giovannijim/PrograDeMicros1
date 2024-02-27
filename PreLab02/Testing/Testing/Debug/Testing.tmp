@@ -1,0 +1,29 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\Testing\Testing\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\Testing\Testing\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\Testing\Testing\Debug\Testing.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Testing.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Testing.map</FILE>
+  <FILE>Testing.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <SETUP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\Testing\Testing\main.asm</FILE><LINE>30</LINE></SETUP>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\Testing\Testing\main.asm</FILE><LINE>64</LINE></LOOP>
+ </LABELS>
+</ASSEMBLER_INFO>

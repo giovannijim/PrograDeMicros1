@@ -1,0 +1,46 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\Debug\Proyecto1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Proyecto1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Proyecto1.map</FILE>
+  <FILE>Proyecto1.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>26</LINE></MAIN>
+  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>261</LINE></ISR_TIMER0_OVF>
+  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>284</LINE></TABLE>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>200</LINE></Init_T0>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>87</LINE></LOOP>
+  <AUMENTO_U_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>120</LINE></AUMENTO_U_MINUTOS>
+  <AUMENTO_D_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>137</LINE></AUMENTO_D_MINUTOS>
+  <AUMENTO_U_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>155</LINE></AUMENTO_U_HORAS>
+  <AUMENTO_D_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>173</LINE></AUMENTO_D_HORAS>
+  <AUMENTO><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>190</LINE></AUMENTO>
+  <AUMENTO_UNIDADES_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>211</LINE></AUMENTO_UNIDADES_SEGUNDOS>
+  <AUMENTO_DECENAS_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>216</LINE></AUMENTO_DECENAS_SEGUNDOS>
+  <AUMENTO_UNIDADES_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>222</LINE></AUMENTO_UNIDADES_MINUTOS>
+  <AUMENTO_DECENAS_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>229</LINE></AUMENTO_DECENAS_MINUTOS>
+  <AUMENTO_UNIDADES_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>235</LINE></AUMENTO_UNIDADES_HORAS>
+  <RESET_ALL><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>249</LINE></RESET_ALL>
+  <AUMENTO_DECENAS_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>245</LINE></AUMENTO_DECENAS_HORAS>
+  <SALIR2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>275</LINE></SALIR2>
+  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\Proyecto1\Proyecto1\main.asm</FILE><LINE>283</LINE></TABLADOS>
+ </LABELS>
+</ASSEMBLER_INFO>
