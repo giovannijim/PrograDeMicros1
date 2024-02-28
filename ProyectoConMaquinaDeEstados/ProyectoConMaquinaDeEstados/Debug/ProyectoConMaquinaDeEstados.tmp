@@ -1,0 +1,45 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\Debug\ProyectoConMaquinaDeEstados.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>ProyectoConMaquinaDeEstados.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>ProyectoConMaquinaDeEstados.map</FILE>
+  <FILE>ProyectoConMaquinaDeEstados.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>29</LINE></MAIN>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>253</LINE></ISR_PCINT0>
+  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>229</LINE></ISR_TIMER0_OVF>
+  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>311</LINE></TABLE>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>168</LINE></Init_T0>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>97</LINE></LOOP>
+  <AUMENTO_U_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>99</LINE></AUMENTO_U_MINUTOS>
+  <AUMENTO_D_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>114</LINE></AUMENTO_D_MINUTOS>
+  <AUMENTO><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>158</LINE></AUMENTO>
+  <AUMENTO_UNIDADES_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>179</LINE></AUMENTO_UNIDADES_SEGUNDOS>
+  <AUMENTO_DECENAS_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>184</LINE></AUMENTO_DECENAS_SEGUNDOS>
+  <AUMENTO_UNIDADES_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>190</LINE></AUMENTO_UNIDADES_MINUTOS>
+  <AUMENTO_DECENAS_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>197</LINE></AUMENTO_DECENAS_MINUTOS>
+  <AUMENTO_UNIDADES_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>203</LINE></AUMENTO_UNIDADES_HORAS>
+  <RESET_ALL><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>217</LINE></RESET_ALL>
+  <AUMENTO_DECENAS_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>213</LINE></AUMENTO_DECENAS_HORAS>
+  <ISR_POP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>298</LINE></ISR_POP>
+  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>310</LINE></TABLADOS>
+ </LABELS>
+</ASSEMBLER_INFO>

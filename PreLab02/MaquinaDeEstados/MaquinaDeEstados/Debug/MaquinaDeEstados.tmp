@@ -29,7 +29,9 @@
   <ESTADO0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>72</LINE></ESTADO0>
   <ESTADO1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>77</LINE></ESTADO1>
   <ESTADO0_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>94</LINE></ESTADO0_ISR>
-  <ESTADO1_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>102</LINE></ESTADO1_ISR>
-  <ISR_POP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>111</LINE></ISR_POP>
+  <ESTADO1_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>97</LINE></ESTADO1_ISR>
+  <ISR_ESTADO0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>109</LINE></ISR_ESTADO0>
+  <ISR_ESTADO1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>117</LINE></ISR_ESTADO1>
+  <ISR_POP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\PreLab02\MaquinaDeEstados\MaquinaDeEstados\main.asm</FILE><LINE>101</LINE></ISR_POP>
  </LABELS>
 </ASSEMBLER_INFO>

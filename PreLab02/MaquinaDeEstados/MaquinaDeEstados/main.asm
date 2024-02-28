@@ -92,27 +92,32 @@ ISR_PCINT0:
 
 
 ESTADO0_ISR:
-	IN R16, PINB
-	SBRS R16, 1			; RB1 = 1? Boton de accion
-	INC CONTADOR		; Incrementamos contador
-	SBRS R16, 0			; PB0 = 1? Boton de modo
-	SBR ESTADO, 1		; Seteamos el bit 0 de estado
-	RJMP ISR_POP
+	JMP ISR_ESTADO0
 
 ESTADO1_ISR:
-	IN R16, PINB
-	SBRS R16, 1			; RB1 = 1? Boton de accion
-	DEC CONTADOR		; Incrementamos contador
-	SBRS R16, 0			; PB0 = 1? Boton de modo
-	CBR ESTADO, 1		; Seteamos el bit 0 de estado
-	RJMP ISR_POP
+	JMP ISR_ESTADO1
 
 	
 ISR_POP:
 	SBI PCIFR, PCIF0	; Apagar la bandera de ISR PCINT0
-
 	POP R16				; Obtener el valor de SREG
 	OUT SREG, R16		; Restaurar los antiguos valores de Sreg
 	POP R16				; Obtener el valor de R16
 	RETI				; Se retorna de la ISR
 
+ISR_ESTADO0:
+	IN R16, PINB
+	SBRS R16, 1			; RB1 = 1? Boton de accion
+	INC CONTADOR		; Incrementamos contador
+	SBRS R16, 0			; PB0 = 1? Boton de modo
+	SBR ESTADO, 1		; Seteamos el bit 0 de estado
+	JMP ISR_POP
+
+ISR_ESTADO1:
+	IN R16, PINB
+	SBRS R16, 1			; RB1 = 1? Boton de accion
+	DEC CONTADOR		; Incrementamos contador
+	SBRS R16, 0			; PB0 = 1? Boton de modo
+	CBR ESTADO, 1		; Seteamos el bit 0 de estad 
+	éþå
+	JMP ISR_POP
