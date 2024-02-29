@@ -23,6 +23,8 @@
 
 .org 0x0006		// Vector de ISR_PCINT0
 	JMP ISR_PCINT0 
+.org 0x0012		// Vector de TIMER2_OVF
+	JMP ISR_TIMER2_OVF
 .org 0x0020		// Vector de TIMER0_OVF
 	JMP ISR_TIMER0_OVF
 
@@ -46,10 +48,15 @@ MAIN:
 	LDI R16, 0b0000_0011
 	STS CLKPR, R16		// Se define un prescaler de 8, por lo tanto la FCPU = 2MHz
 
-	LDI R16, 0X00
-	OUT TCCR0A, R16		// Se indica al Timer que opere de manera normal
+	LDI R16, 0
+	OUT TCCR0A, R16		// Se indica al Timer 0 que opere de manera normal
 
 	CALL Init_T0		// Inicializar Timer 0
+
+	LDI R16, 0
+	STS TCCR2A, R16		// Se indica al Timer 2 que opere de manera normal
+
+	CALL Init_T2		// Inicializar Timer 2
 
 	SEI					// Se habilitan las interrupciones globales
 
@@ -85,6 +92,7 @@ MAIN:
 	CLR CntMinDecenas		// Limpia el registro 
 	CLR CntHrsUnidades		// Limpia el registro 
 	CLR CntHrsDecenas		// Limpia el registro 
+	CLR ESTADO		// Limpia el registro 
 
 	LDI CntMinDecenas, 5
 	LDI CntMinUnidades, 9
@@ -104,7 +112,6 @@ ESTADOXX0:
 	JMP ESTADOX00
 	JMP ESTADOX10
 	
-
 ESTADOX00:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	JMP ESTADO000
@@ -116,13 +123,11 @@ ESTADOX10:
 	//JMP ESTADO010
 //	JMP ESTADO110
 	
-
 ESTADOXX1:
 	SBRS ESTADO, 1 ;ESTADO 1 = 1?
 	JMP ESTADOX01
 	JMP ESTADOX11
 	
-
 ESTADOX01:
 	//SBRS ESTADO, 2 ;ESTADO 2 = 1?
 //	JMP ESTADO001
@@ -153,8 +158,8 @@ ESTADO000:
 	
 	AUMENTO_D_MINUTOS:
 	MOV R16, R3
-	CPI R16, 2 // Contar si ya llego a 20ms
-	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+	CPI R16, 1 // Contar si ya llego a 20ms
+	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R3 // Limpia el registro 2
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	SBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -165,12 +170,12 @@ ESTADO000:
 	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	/*
+	
 	AUMENTO_U_HORAS:
 	MOV R16, R4
-	CPI R16, 3 // Contar si ya llego a 10ms
-	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R3 // Limpia el registro 3
+	CPI R16, 1 // Contar si ya llego a 10ms
+	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
+	CLR R4 // Limpia el registro 3
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
 	CBI PORTC, PC4 // Activa display de decenas horas 
@@ -183,9 +188,9 @@ ESTADO000:
 	
 	AUMENTO_D_HORAS:
 	MOV R16, R5
-	CPI R16, 4 // Contar si ya llego a 10ms
-	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R4 // Limpia el registro 4
+	CPI R16, 2 // Contar si ya llego a 10ms
+	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+	CLR R5 // Limpia el registro 5
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
 	SBI PORTC, PC4 // Activa display de decenas horas 
@@ -194,11 +199,11 @@ ESTADO000:
 	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	*/
+	
 AUMENTO:
 	MOV R16, R1
 	CPI R16, 100 ; Compara si ya llego a los 1000 ms
-	BRNE LOOP ; Sino ha llegado enviar a loop
+	BRNE ESTADO000 ; Sino ha llegado enviar a loop
 	CLR R1 ; Se limpia el registro r1 0x00
 	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
 	
@@ -213,8 +218,19 @@ Init_T0:
 	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
     LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
 	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
-	LDI	R16, (1 << TOIE0)	// Habilita la interrupción del overflow
+	LDI	R16, (1 << TOIE0)	// Habilita la interrupción del overflow - timer 1
 	STS	TIMSK0, R16
+	RET
+//******************************************************************************
+// SUBRUTINA PARA INICIALIZAR TIMER 2
+//******************************************************************************
+Init_T2:
+	LDI R16, (1<< CS22)|(1<< CS21)|(1<<CS20) ; Carga el siguiente byte a R16 0x04
+	STS TCCR2B, R16			; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+    LDI R16, 255			; CARGA VALOR DE DESBORDAMIENTO
+	STS TCNT2, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
+	LDI	R16, (1 << TOIE2)	; Habilita la interrupción del overflow en el timer 2
+	STS	TIMSK2, R16
 	RET
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
@@ -280,10 +296,27 @@ ISR_TIMER0_OVF:
 
 	INC R1 				; Incrementamos contador de 10 ms
 
-	INC R2				; Incrementamos contador para toggle de display cada 10ms
-	INC R3				; Incrementamos contador para toggle de display cada 10ms
-	//INC R4				; Incrementamos contador para toggle de display cada 10ms
-	//INC R5				; Incrementamos contador para toggle de display cada 10ms
+	POP R17				; Obtener el valor de SREG
+	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
+	POP R17				; OBTENER EL VALOR DE r16
+	RETI				; Retornamos a la ISR
+//******************************************************************************
+//*****************************************************************************
+// Subrutina de ISR_TIMER2_OVF
+//*****************************************************************************
+ISR_TIMER2_OVF:
+	PUSH R17 ; Guardamos en pila el registro R16
+	IN R17, SREG
+	PUSH R17 ; Guardamos en pila el registro SREG
+
+	LDI R16, 255		; Cargar el valor de desbordamiento
+	STS TCNT2, R16		; Cargar el valor inicial al contador
+	SBI TIFR2, TOV2		; Borramos la bandera de TOV2
+
+	INC R2				; Incrementamos contador para toggle de display cada 1ms
+	INC R3				; Incrementamos contador para toggle de display cada 1ms
+	INC R4				; Incrementamos contador para toggle de display cada 1ms
+	INC R5				; Incrementamos contador para toggle de display cada 1ms
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
@@ -335,9 +368,9 @@ ESTADOX11_ISR:
 	
 ESTADO000_ISR:
 	IN R16, PINB 
-	SBRS R16, PB2
-					; PB2 = 0
-
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO001_ISR:

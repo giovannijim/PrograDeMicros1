@@ -23,23 +23,48 @@
   <FILE>ProyectoConMaquinaDeEstados.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>29</LINE></MAIN>
-  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>253</LINE></ISR_PCINT0>
-  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>229</LINE></ISR_TIMER0_OVF>
-  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>311</LINE></TABLE>
-  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>168</LINE></Init_T0>
-  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>97</LINE></LOOP>
-  <AUMENTO_U_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>99</LINE></AUMENTO_U_MINUTOS>
-  <AUMENTO_D_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>114</LINE></AUMENTO_D_MINUTOS>
-  <AUMENTO><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>158</LINE></AUMENTO>
-  <AUMENTO_UNIDADES_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>179</LINE></AUMENTO_UNIDADES_SEGUNDOS>
-  <AUMENTO_DECENAS_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>184</LINE></AUMENTO_DECENAS_SEGUNDOS>
-  <AUMENTO_UNIDADES_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>190</LINE></AUMENTO_UNIDADES_MINUTOS>
-  <AUMENTO_DECENAS_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>197</LINE></AUMENTO_DECENAS_MINUTOS>
-  <AUMENTO_UNIDADES_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>203</LINE></AUMENTO_UNIDADES_HORAS>
-  <RESET_ALL><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>217</LINE></RESET_ALL>
-  <AUMENTO_DECENAS_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>213</LINE></AUMENTO_DECENAS_HORAS>
-  <ISR_POP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>298</LINE></ISR_POP>
-  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>310</LINE></TABLADOS>
+  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>31</LINE></MAIN>
+  <ISR_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>329</LINE></ISR_PCINT0>
+  <ISR_TIMER2_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>307</LINE></ISR_TIMER2_OVF>
+  <ISR_TIMER0_OVF><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>288</LINE></ISR_TIMER0_OVF>
+  <TABLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>413</LINE></TABLE>
+  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>216</LINE></Init_T0>
+  <Init_T2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>227</LINE></Init_T2>
+  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>105</LINE></LOOP>
+  <ESTADOXX0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>110</LINE></ESTADOXX0>
+  <ESTADOXX1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>126</LINE></ESTADOXX1>
+  <ESTADOX00><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>115</LINE></ESTADOX00>
+  <ESTADOX10><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>121</LINE></ESTADOX10>
+  <ESTADO000><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>143</LINE></ESTADO000>
+  <ESTADOX01><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>131</LINE></ESTADOX01>
+  <ESTADOX11><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>137</LINE></ESTADOX11>
+  <AUMENTO_U_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>144</LINE></AUMENTO_U_MINUTOS>
+  <AUMENTO_D_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>159</LINE></AUMENTO_D_MINUTOS>
+  <AUMENTO_U_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>174</LINE></AUMENTO_U_HORAS>
+  <AUMENTO_D_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>189</LINE></AUMENTO_D_HORAS>
+  <AUMENTO><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>203</LINE></AUMENTO>
+  <AUMENTO_UNIDADES_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>238</LINE></AUMENTO_UNIDADES_SEGUNDOS>
+  <AUMENTO_DECENAS_SEGUNDOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>243</LINE></AUMENTO_DECENAS_SEGUNDOS>
+  <AUMENTO_UNIDADES_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>249</LINE></AUMENTO_UNIDADES_MINUTOS>
+  <AUMENTO_DECENAS_MINUTOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>256</LINE></AUMENTO_DECENAS_MINUTOS>
+  <AUMENTO_UNIDADES_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>262</LINE></AUMENTO_UNIDADES_HORAS>
+  <RESET_ALL><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>276</LINE></RESET_ALL>
+  <AUMENTO_DECENAS_HORAS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>272</LINE></AUMENTO_DECENAS_HORAS>
+  <ESTADOXX0_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>338</LINE></ESTADOXX0_ISR>
+  <ESTADOXX1_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>353</LINE></ESTADOXX1_ISR>
+  <ESTADOX00_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>343</LINE></ESTADOX00_ISR>
+  <ESTADOX10_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>348</LINE></ESTADOX10_ISR>
+  <ESTADO000_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>369</LINE></ESTADO000_ISR>
+  <ESTADO100_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>388</LINE></ESTADO100_ISR>
+  <ESTADO010_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>380</LINE></ESTADO010_ISR>
+  <ESTADO110_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>395</LINE></ESTADO110_ISR>
+  <ESTADOX01_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>358</LINE></ESTADOX01_ISR>
+  <ESTADOX11_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>364</LINE></ESTADOX11_ISR>
+  <ESTADO001_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>376</LINE></ESTADO001_ISR>
+  <ESTADO111_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>399</LINE></ESTADO111_ISR>
+  <ESTADO011_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>384</LINE></ESTADO011_ISR>
+  <ISR_POP_PCINT0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>402</LINE></ISR_POP_PCINT0>
+  <ESTADO101_ISR><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>392</LINE></ESTADO101_ISR>
+  <TABLADOS><FILE>D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm</FILE><LINE>412</LINE></TABLADOS>
  </LABELS>
 </ASSEMBLER_INFO>
