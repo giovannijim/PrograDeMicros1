@@ -129,17 +129,15 @@ ESTADOXX1:
 	JMP ESTADOX11
 	
 ESTADOX01:
-	//SBRS ESTADO, 2 ;ESTADO 2 = 1?
-//	JMP ESTADO001
+	SBRS ESTADO, 2 ;ESTADO 2 = 1?
+	JMP ESTADO001
 	//JMP ESTADO111
 	
-
 ESTADOX11:
 	//SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	//JMP ESTADO011
 	//JMP ESTADO111
 	
-
 ESTADO000:
 	AUMENTO_U_MINUTOS:
 	MOV R16, R2
@@ -200,7 +198,7 @@ ESTADO000:
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	
-AUMENTO:
+	AUMENTO:
 	MOV R16, R1
 	CPI R16, 100 ; Compara si ya llego a los 1000 ms
 	BRNE ESTADO000 ; Sino ha llegado enviar a loop
@@ -209,7 +207,66 @@ AUMENTO:
 	
 	RJMP LOOP
 
-
+ESTADO000:
+	AUMENTO_U_MINUTOS:
+	MOV R16, R2
+	CPI R16, 1 // Contar si ya llego a 10ms
+	BRNE AUMENTO_D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
+	CLR R2 // Limpia el registro 1
+	SBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinUnidades	// Se desplaza el pointer
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	
+	AUMENTO_D_MINUTOS:
+	MOV R16, R3
+	CPI R16, 1 // Contar si ya llego a 20ms
+	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
+	CLR R3 // Limpia el registro 2
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	SBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	
+	AUMENTO_U_HORAS:
+	MOV R16, R4
+	CPI R16, 1 // Contar si ya llego a 10ms
+	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
+	CLR R4 // Limpia el registro 3
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	SBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	
+	AUMENTO_D_HORAS:
+	MOV R16, R5
+	CPI R16, 2 // Contar si ya llego a 10ms
+	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+	CLR R5 // Limpia el registro 5
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	SBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	RJMP LOOP
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
 //******************************************************************************
@@ -233,7 +290,7 @@ Init_T2:
 	STS	TIMSK2, R16
 	RET
 //******************************************************************************
-// SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL
+// SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL COMO RELOJ
 //******************************************************************************
 AUMENTO_UNIDADES_SEGUNDOS:
 	CPI CntSegUnidades, 0x0A		// Compara si el contador es 10
@@ -282,6 +339,7 @@ RESET_ALL:
 	CLR CntHrsDecenas			// Limpia el registro
 	CLR HRS						// Limpia el registro
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
 //*****************************************************************************
 // Subrutina de ISR_TIMER0_OVF
 //*****************************************************************************
@@ -323,6 +381,7 @@ ISR_TIMER2_OVF:
 	POP R17				; OBTENER EL VALOR DE r16
 	RETI				; Retornamos a la ISR
 //******************************************************************************
+
 //*****************************************************************************
 // Subrutina de ISR_TIMER0_OVF
 //*****************************************************************************
@@ -360,7 +419,6 @@ ESTADOX01_ISR:
 	JMP ESTADO001_ISR
 	JMP ESTADO111_ISR
 
-
 ESTADOX11_ISR:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	JMP ESTADO011_ISR
@@ -374,7 +432,22 @@ ESTADO000_ISR:
 	RJMP ISR_POP_PCINT0
 
 ESTADO001_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
+	SBRS R16, PB1	; PB1 = 1?
+	INC CntMinUnidades		; PB1 = 0
+							; PB1 = 1
+	SBRS R16, PB2	; PB2 = 1?
+	DEC CntHrsUnidades		; PB2 = 0
+							; PB2 = 1
+	SBRS R16, PB3	; PB3 = 1?
+	INC CntHrsUnidades		; PB3 = 0
+							; PB3 = 1
+	SBRS R16, PB4	; PB4 = 1?
+	INC CntHrsUnidades		; PB4 = 0
+							; PB4 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO010_ISR:
@@ -411,4 +484,5 @@ ISR_POP_PCINT0:
 //******************************************************************************
 	TABLADOS: .DB 0x20, 0x10
 	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
+	DIASxMes: .DB 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 //******************************************************************************
