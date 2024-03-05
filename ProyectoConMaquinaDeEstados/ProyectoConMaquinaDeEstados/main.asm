@@ -99,10 +99,21 @@ MAIN:
 	LDI Hrs, 23
 	LDI CntHrsDecenas, 2
 	LDI CntHrsUnidades, 3
+
+	CBI PORTB, PB5
+	CBI PORTC, PC0
+	CBI PORTC, PC1
 //*****************************************************************************
 // LOOP
 //*****************************************************************************
 LOOP:	
+	AUMENTO:
+	MOV R16, R1
+	CPI R16, 100 ; Compara si ya llego a los 1000 ms
+	BRNE COMPARACION ; Sino ha llegado enviar a loop
+	CLR R1 ; Se limpia el registro r1 0x00
+	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
+COMPARACION:
 	SBRS ESTADO, 0 ;ESTADO 0 = 1?
 	JMP ESTADOXX0
 	JMP ESTADOXX1
@@ -115,13 +126,12 @@ ESTADOXX0:
 ESTADOX00:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	JMP ESTADO000
-//	JMP ESTADO100
-	
-
+	JMP ESTADO100
+	 
 ESTADOX10:
-	//SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	//JMP ESTADO010
-//	JMP ESTADO110
+	SBRS ESTADO, 2 ;ESTADO 2 = 1?
+	JMP ESTADO010
+	JMP ESTADO110
 	
 ESTADOXX1:
 	SBRS ESTADO, 1 ;ESTADO 1 = 1?
@@ -131,14 +141,17 @@ ESTADOXX1:
 ESTADOX01:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	JMP ESTADO001
-	//JMP ESTADO111
+	JMP ESTADO101
 	
 ESTADOX11:
-	//SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	//JMP ESTADO011
-	//JMP ESTADO111
+	SBRS ESTADO, 2 ;ESTADO 2 = 1?
+	JMP ESTADO011
+	JMP ESTADO111
 	
 ESTADO000:
+	CBI PORTB, PB5
+	SBI PORTC, PC0
+
 	AUMENTO_U_MINUTOS:
 	MOV R16, R2
 	CPI R16, 1 // Contar si ya llego a 10ms
@@ -156,7 +169,7 @@ ESTADO000:
 	
 	AUMENTO_D_MINUTOS:
 	MOV R16, R3
-	CPI R16, 1 // Contar si ya llego a 20ms
+	CPI R16, 2 // Contar si ya llego a 20ms
 	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R3 // Limpia el registro 2
 	CBI PORTC, PC2 // Activa display de unidades minutos
@@ -171,7 +184,7 @@ ESTADO000:
 	
 	AUMENTO_U_HORAS:
 	MOV R16, R4
-	CPI R16, 1 // Contar si ya llego a 10ms
+	CPI R16, 3 // Contar si ya llego a 10ms
 	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R4 // Limpia el registro 3
 	CBI PORTC, PC2 // Activa display de unidades minutos
@@ -186,8 +199,8 @@ ESTADO000:
 	
 	AUMENTO_D_HORAS:
 	MOV R16, R5
-	CPI R16, 2 // Contar si ya llego a 10ms
-	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+	CPI R16, 4 // Contar si ya llego a 10ms
+	BRNE AUMENTO_U_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R5 // Limpia el registro 5
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -198,20 +211,16 @@ ESTADO000:
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	
-	AUMENTO:
-	MOV R16, R1
-	CPI R16, 100 ; Compara si ya llego a los 1000 ms
-	BRNE ESTADO000 ; Sino ha llegado enviar a loop
-	CLR R1 ; Se limpia el registro r1 0x00
-	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
 	
 	RJMP LOOP
 
-ESTADO000:
-	AUMENTO_U_MINUTOS:
+ESTADO001:
+	CBI PORTB, PB5
+	SBI PORTC, PC0
+	U_MINUTOS:
 	MOV R16, R2
 	CPI R16, 1 // Contar si ya llego a 10ms
-	BRNE AUMENTO_D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
+	BRNE D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R2 // Limpia el registro 1
 	SBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -223,10 +232,10 @@ ESTADO000:
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	
-	AUMENTO_D_MINUTOS:
+	D_MINUTOS:
 	MOV R16, R3
-	CPI R16, 1 // Contar si ya llego a 20ms
-	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
+	CPI R16, 2 // Contar si ya llego a 20ms
+	BRNE U_HORAS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R3 // Limpia el registro 2
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	SBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -238,10 +247,10 @@ ESTADO000:
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	
-	AUMENTO_U_HORAS:
+	U_HORAS:
 	MOV R16, R4
-	CPI R16, 1 // Contar si ya llego a 10ms
-	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
+	CPI R16, 3 // Contar si ya llego a 10ms
+	BRNE D_HORAS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R4 // Limpia el registro 3
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -253,10 +262,10 @@ ESTADO000:
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	
-	AUMENTO_D_HORAS:
+	D_HORAS:
 	MOV R16, R5
-	CPI R16, 2 // Contar si ya llego a 10ms
-	BRNE AUMENTO // Salta a dicha subrutina (regresa), si no es igual
+	CPI R16, 4 // Contar si ya llego a 10ms
+	BRNE U_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
 	CLR R5 // Limpia el registro 5
 	CBI PORTC, PC2 // Activa display de unidades minutos
 	CBI PORTC, PC3 // Desactiva display de decenas minutos
@@ -266,6 +275,42 @@ ESTADO000:
 	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
 	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	
+	RJMP LOOP
+
+ESTADO010:
+	CBI PORTB, PB5
+	CBI PORTC, PC0
+	SBI PORTC, PC1
+	RJMP LOOP
+
+ESTADO011:
+	CBI PORTB, PB5
+	CBI PORTC, PC0
+	SBI PORTC, PC1
+
+	RJMP LOOP
+
+ESTADO100:
+	CBI PORTC, PC1
+	SBI PORTB, PB5
+	RJMP LOOP
+
+ESTADO101:
+	CBI PORTC, PC1
+	SBI PORTB, PB5
+	RJMP LOOP
+
+ESTADO110:
+	CBI PORTB, PB5
+	CBI PORTC, PC0
+	CBI PORTC, PC1
+	RJMP LOOP
+
+ESTADO111:
+	CBI PORTB, PB5
+	CBI PORTC, PC0
+	CBI PORTC, PC1
 	RJMP LOOP
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
@@ -451,28 +496,50 @@ ESTADO001_ISR:
 	RJMP ISR_POP_PCINT0
 
 ESTADO010_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO011_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO100_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO101_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 ESTADO110_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO111_ISR:
-	
+	IN R16, PINB 
+	SBRS R16, PB0	; PB0 = 1?
+	INC ESTADO		; PB0 = 0
+					; PB0 = 1
 
 ISR_POP_PCINT0:
+	CPI ESTADO, 6
+	BRNE ISRPOPPCINT0
+	CLR ESTADO
+ISRPOPPCINT0:
 	SBI PCIFR, PCIF0    ; Apagar la bandera de ISR PCINT0  
 	POP R16 			; Obtener el valor de SREG
 	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
