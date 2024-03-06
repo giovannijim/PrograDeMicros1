@@ -60,6 +60,8 @@ MAIN:
 
 	SEI					// Se habilitan las interrupciones globales
 
+	CLR R18
+	
 	STS UCSR0B, R18		//Desactiva los puertos TX y RX
 
 	LDI R16, 0xFF
@@ -94,7 +96,7 @@ MAIN:
 	CLR CntHrsDecenas		// Limpia el registro 
 	CLR ESTADO		// Limpia el registro 
 
-	LDI CntMinDecenas, 5
+	LDI CntMinDecenas, 4
 	LDI CntMinUnidades, 9
 	LDI Hrs, 23
 	LDI CntHrsDecenas, 2
@@ -107,12 +109,21 @@ MAIN:
 // LOOP
 //*****************************************************************************
 LOOP:	
+	;BLINK_PUNTOS:
+	;MOV R16, R6
+	;CPI R16, 50 ; Compara si ya llego a los 500 ms
+	;BRNE BLINK_PUNTOS
+	;CLR R6
+	;SBI PIND, PD0
+	
+
 	AUMENTO:
 	MOV R16, R1
 	CPI R16, 100 ; Compara si ya llego a los 1000 ms
 	BRNE COMPARACION ; Sino ha llegado enviar a loop
 	CLR R1 ; Se limpia el registro r1 0x00
 	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
+
 COMPARACION:
 	SBRS ESTADO, 0 ;ESTADO 0 = 1?
 	JMP ESTADOXX0
@@ -147,171 +158,212 @@ ESTADOX11:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
 	JMP ESTADO011
 	JMP ESTADO111
-	
+
+//*****************************************************************************
+//*****************************************************************************	
+
 ESTADO000:
 	CBI PORTB, PB5
-	SBI PORTC, PC0
+	CBI PORTC, PC0
+	CBI PORTC, PC1
+	
+	CALL SHOW_MULTIPLEX_RELOJ
 
-	AUMENTO_U_MINUTOS:
-	MOV R16, R2
-	CPI R16, 1 // Contar si ya llego a 10ms
-	BRNE AUMENTO_D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R2 // Limpia el registro 1
-	SBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	AUMENTO_D_MINUTOS:
-	MOV R16, R3
-	CPI R16, 2 // Contar si ya llego a 20ms
-	BRNE AUMENTO_U_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R3 // Limpia el registro 2
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	SBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	AUMENTO_U_HORAS:
-	MOV R16, R4
-	CPI R16, 3 // Contar si ya llego a 10ms
-	BRNE AUMENTO_D_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R4 // Limpia el registro 3
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	SBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	AUMENTO_D_HORAS:
-	MOV R16, R5
-	CPI R16, 4 // Contar si ya llego a 10ms
-	BRNE AUMENTO_U_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R5 // Limpia el registro 5
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	SBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	
 	RJMP LOOP
 
 ESTADO001:
 	CBI PORTB, PB5
-	SBI PORTC, PC0
-	U_MINUTOS:
-	MOV R16, R2
-	CPI R16, 1 // Contar si ya llego a 10ms
-	BRNE D_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R2 // Limpia el registro 1
-	SBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	D_MINUTOS:
-	MOV R16, R3
-	CPI R16, 2 // Contar si ya llego a 20ms
-	BRNE U_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R3 // Limpia el registro 2
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	SBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	U_HORAS:
-	MOV R16, R4
-	CPI R16, 3 // Contar si ya llego a 10ms
-	BRNE D_HORAS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R4 // Limpia el registro 3
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	SBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
-	D_HORAS:
-	MOV R16, R5
-	CPI R16, 4 // Contar si ya llego a 10ms
-	BRNE U_MINUTOS // Salta a dicha subrutina (regresa), si no es igual
-	CLR R5 // Limpia el registro 5
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	SBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	
+	CBI PORTC, PC0
+	SBI PORTC, PC1
+
+	CALL SHOW_MULTIPLEX_RELOJ
+
+	U_MIN_CONF_HORA:
+	CPI CntMinUnidades, 0x0A			// Compara si el contador es 10
+	BREQ D_MIN_CONF_HORA		// Si el contador es cero salta 
+	CPI CntMinUnidades, 0
+	BREQ DEC_D_MIN_CONF_HORA
+	CPI CntMinUnidades, -1
+	BREQ UNDERFLOW_MINUTOS
+	RJMP LOOP
+
+	DEC_D_MIN_CONF_HORA:
+	CPI CntMinDecenas, -1
+	BREQ UPPER_RESET_CONF_HORA_MIN
+	DEC CntMinDecenas
+	LDI CntMinUnidades, 0x09
+
+	RJMP U_MIN_CONF_HORA
+
+	D_MIN_CONF_HORA:
+	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
+	BREQ RESET_CONF_HORA_MINS		// Si el contador es cero salta 
+	INC CntMinDecenas				// Aumenta las decenas de los minutos
+	CLR CntMinUnidades				// Limpia el registro 
+	RJMP U_MIN_CONF_HORA
+
+	UNDERFLOW_MINUTOS:
+	LDI CntMinUnidades, 0x0A
+	LDI CntMinDecenas, 0x05
+	RJMP U_MIN_CONF_HORA
+
+	UPPER_RESET_CONF_HORA_MIN:
+	LDI CntMinDecenas, 0
+	RJMP U_MIN_CONF_HORA
+
+	 RESET_CONF_HORA_MINS:
+	 CLR CntMinDecenas
+	 CLR CntMinUnidades
+
+	 /*
+;AUMENTO_UNIDADES_MINUTOS:
+	CLR CntSegDecenas			// Limpia el registro 
+	CLR CntSegUnidades			// Limpia el registro 
+	INC CntMinUnidades
+	CPI CntMinUnidades, 0x0A		// Compara si el contador de unidades es 9
+	BREQ AUMENTO_DECENAS_MINUTOS		// Si el contador es cero salta al reset
+	RJMP AUMENTO_UNIDADES_SEGUNDOS
+;AUMENTO_DECENAS_MINUTOS:
+	CLR CntMinUnidades			// Limpia el registro 
+	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
+	BREQ AUMENTO_UNIDADES_HORAS	// Si el contador es cero salta al reset
+	INC CntMinDecenas
+	RJMP AUMENTO_UNIDADES_SEGUNDOS
+;AUMENTO_UNIDADES_HORAS:
+	CLR CntMinDecenas			// Limpia el registro 
+	CLR CntMinUnidades			// Limpia el registro
+	INC HRS 
+	CPI HRS, 24
+	BREQ RESET_ALL
+	INC CntHrsUnidades
+	CPI CntHrsUnidades, 0x0A		// Compara si el contador de unidades es 9
+	BREQ AUMENTO_DECENAS_HORAS	// Si el contador es cero salta al reset
+	RJMP AUMENTO_UNIDADES_SEGUNDOS
+;AUMENTO_DECENAS_HORAS:
+	CLR CntHrsUnidades
+	INC CntHrsDecenas
+	RJMP AUMENTO_UNIDADES_SEGUNDOS
+;RESET_ALL:
+	CLR CntSegUnidades			// Limpia el registro 
+	CLR CntSegDecenas			// Limpia el registro 
+	CLR CntMinUnidades			// Limpia el registro
+	CLR CntMinDecenas			// Limpia el registro 
+	CLR CntHrsUnidades			// Limpia el registro
+	CLR CntHrsDecenas			// Limpia el registro
+	CLR HRS						// Limpia el registro
+	;RJMP AUMENTO_UNIDADES_SEGUNDOS
+	CPI 
+	*/
 	RJMP LOOP
 
 ESTADO010:
 	CBI PORTB, PB5
-	CBI PORTC, PC0
-	SBI PORTC, PC1
+	SBI PORTC, PC0
+	CBI PORTC, PC1
 	RJMP LOOP
 
 ESTADO011:
 	CBI PORTB, PB5
-	CBI PORTC, PC0
+	SBI PORTC, PC0
 	SBI PORTC, PC1
 
 	RJMP LOOP
 
 ESTADO100:
-	CBI PORTC, PC1
 	SBI PORTB, PB5
+	CBI PORTC, PC0
+	CBI PORTC, PC1
+
 	RJMP LOOP
 
 ESTADO101:
-	CBI PORTC, PC1
 	SBI PORTB, PB5
+	CBI PORTC, PC0
+	SBI PORTC, PC1
+
 	RJMP LOOP
 
 ESTADO110:
-	CBI PORTB, PB5
-	CBI PORTC, PC0
+	SBI PORTB, PB5
+	SBI PORTC, PC0
 	CBI PORTC, PC1
+
 	RJMP LOOP
 
 ESTADO111:
-	CBI PORTB, PB5
-	CBI PORTC, PC0
-	CBI PORTC, PC1
+	SBI PORTB, PB5
+	SBI PORTC, PC0
+	SBI PORTC, PC1
+
 	RJMP LOOP
+
+//******************************************************************************
+SHOW_MULTIPLEX_RELOJ:
+//******************************************************************************
+U_MINUTOS:
+	SBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinUnidades	// Se desplaza el pointer
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX4:
+	MOV R16, R5
+	CPI R16, 4
+	BRNE DELAY_MULTIPLEX4
+	CLR R5
+
+	D_MINUTOS:
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	SBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX5:
+	MOV R16, R5
+	CPI R16, 4
+	BRNE DELAY_MULTIPLEX5
+	CLR R5
+
+	U_HORAS:
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	CBI PORTC, PC4 // Activa display de decenas horas 
+	SBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX6:
+	MOV R16, R5
+	CPI R16, 4
+	BRNE DELAY_MULTIPLEX6
+	CLR R5
+
+	D_HORAS:
+	CBI PORTC, PC2 // Activa display de unidades minutos
+	CBI PORTC, PC3 // Desactiva display de decenas minutos
+	SBI PORTC, PC4 // Activa display de decenas horas 
+	CBI PORTC, PC5 // Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
+	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16 // Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX7:
+	MOV R16, R5
+	CPI R16, 4
+	BRNE DELAY_MULTIPLEX7
+	CLR R5
+RET
+
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
 //******************************************************************************
@@ -398,6 +450,7 @@ ISR_TIMER0_OVF:
 	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
 
 	INC R1 				; Incrementamos contador de 10 ms
+	INC R6				; Incrementamos contador de 10 ms
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
@@ -485,13 +538,13 @@ ESTADO001_ISR:
 	INC CntMinUnidades		; PB1 = 0
 							; PB1 = 1
 	SBRS R16, PB2	; PB2 = 1?
-	DEC CntHrsUnidades		; PB2 = 0
+	DEC CntMinUnidades		; PB2 = 0
 							; PB2 = 1
 	SBRS R16, PB3	; PB3 = 1?
 	INC CntHrsUnidades		; PB3 = 0
 							; PB3 = 1
 	SBRS R16, PB4	; PB4 = 1?
-	INC CntHrsUnidades		; PB4 = 0
+	DEC CntHrsUnidades		; PB4 = 0
 							; PB4 = 1
 	RJMP ISR_POP_PCINT0
 
