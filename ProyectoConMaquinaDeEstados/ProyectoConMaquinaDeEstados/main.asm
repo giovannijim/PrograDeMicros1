@@ -10,14 +10,20 @@
 .cseg
 .org 0x00
 	JMP MAIN
-.def CntHrs = R7
+
+.DEF PointerMES = R3
+.DEF CntDiaUnidad = R4
+.DEF CntDiaDecena = R5
+.DEF CntMesUnidad = R6
+.DEF CntMesDecena = R7
+
 .def CntSegUnidades = R18
 .def CntSegDecenas = R19
 .def CntMinUnidades = R20
 .def CntMinDecenas = R21
 .def CntHrsUnidades = R22
 .def CntHrsDecenas = R23
-.def HRS = R24
+
 .def MODO = R25
 .def ESTADO = R26
 
@@ -96,11 +102,19 @@ MAIN:
 	CLR CntHrsDecenas		// Limpia el registro 
 	CLR ESTADO		// Limpia el registro 
 
-	LDI CntMinDecenas, 0
-	LDI CntMinUnidades, 1
-	LDI Hrs, 23
-	LDI CntHrsDecenas, 0
-	LDI CntHrsUnidades, 0
+	//LDI R17, 0x01
+	//OR	CntDiaUnidad, R17
+	//OR	CntMesUnidad, R17
+	CLR CntMesDecena
+	CLR CntDiaDecena
+	CLR CntDiaUnidad
+	CLR CntMesUnidad
+	CLR R17
+
+	LDI CntMinDecenas, 5
+	LDI CntMinUnidades, 9
+	LDI CntHrsDecenas, 2
+	LDI CntHrsUnidades, 3
 
 	CBI PORTB, PB5
 	CBI PORTC, PC0
@@ -110,53 +124,53 @@ MAIN:
 //*****************************************************************************
 LOOP:	
 	BLINK_PUNTOS:
-	MOV R16, R6
-	CPI R16, 50 ; Compara si ya llego a los 500 ms
-	BRNE AUMENTO
-	CLR R6
-	SBI PIND, PD0
+	MOV R16, R0		; Copia el registro0 a r16
+	CPI R16, 50		; Compara si ya llego a los 500 ms
+	BRNE AUMENTO	; Si no es igual saltar a la subrutina Aumento
+	CLR R0			; Limpiar el registro
+	SBI PIND, PD0	; Hacer toggle en el bit PD0
 
 	AUMENTO:
-	MOV R16, R1
-	CPI R16, 100 ; Compara si ya llego a los 1000 ms
-	BRNE COMPARACION ; Sino ha llegado enviar a loop
-	CLR R1 ; Se limpia el registro r1 0x00
-	CALL AUMENTO_UNIDADES_SEGUNDOS ; Salta a la subrutina para aumentar
+	MOV R16, R1			; Copia el registro1 a r16
+	CPI R16, 100		; Compara si ya llego a los 1000 ms
+	BRNE COMPARACION	; Sino ha llegado enviar a loop
+	CLR R1				; Se limpia el registro r1 0x00
+	CALL AUMENTO_UNIDADES_SEGUNDOS	; Salta a la subrutina para aumentar
 
 COMPARACION:
 	SBRS ESTADO, 0 ;ESTADO 0 = 1?
-	JMP ESTADOXX0
-	JMP ESTADOXX1
+	JMP ESTADOXX0 ;ESTADO 0 = 0
+	JMP ESTADOXX1 ;ESTADO 0 = 1
 
 ESTADOXX0:
 	SBRS ESTADO, 1 ;ESTADO 1 = 1?
-	JMP ESTADOX00
-	JMP ESTADOX10
+	JMP ESTADOX00  ;ESTADO 1 = 0
+	JMP ESTADOX10  ;ESTADO 1 = 1
 	
 ESTADOX00:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	JMP ESTADO000
-	JMP ESTADO100
+	JMP ESTADO000	;ESTADO 2 = 0
+	JMP ESTADO100	;ESTADO 2 = 1
 	 
 ESTADOX10:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	JMP ESTADO010
-	JMP ESTADO110
+	JMP ESTADO010	;ESTADO 2 = 0
+	JMP ESTADO110	;ESTADO 2 = 1
 	
 ESTADOXX1:
 	SBRS ESTADO, 1 ;ESTADO 1 = 1?
-	JMP ESTADOX01
-	JMP ESTADOX11
+	JMP ESTADOX01	;ESTADO 1 = 0
+	JMP ESTADOX11	;ESTADO 1 = 1
 	
 ESTADOX01:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	JMP ESTADO001
-	JMP ESTADO101
+	JMP ESTADO001	;ESTADO 2 = 0
+	JMP ESTADO101	;ESTADO 2 = 1
 	
 ESTADOX11:
 	SBRS ESTADO, 2 ;ESTADO 2 = 1?
-	JMP ESTADO011
-	JMP ESTADO111
+	JMP ESTADO011	;ESTADO 2 = 0
+	JMP ESTADO111	;ESTADO 2 = 1
 
 //*****************************************************************************
 //*****************************************************************************	
@@ -262,6 +276,9 @@ ESTADO010:
 	CBI PORTB, PB5
 	SBI PORTC, PC0
 	CBI PORTC, PC1
+
+	CALL SHOW_MULTIPLEX_FECHA
+
 	RJMP LOOP
 
 ESTADO011:
@@ -269,12 +286,16 @@ ESTADO011:
 	SBI PORTC, PC0
 	SBI PORTC, PC1
 
+
+
 	RJMP LOOP
 
 ESTADO100:
 	SBI PORTB, PB5
 	CBI PORTC, PC0
 	CBI PORTC, PC1
+
+
 
 	RJMP LOOP
 
@@ -303,68 +324,137 @@ ESTADO111:
 SHOW_MULTIPLEX_RELOJ:
 //******************************************************************************
 U_MINUTOS:
-	SBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	DELAY_MULTIPLEX4:
-	MOV R16, R5
-	CPI R16, 5
-	BRNE DELAY_MULTIPLEX4
-	CLR R5
+	SBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)		// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)	// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinUnidades		// Se desplaza el pointer
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX4:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX4	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
 
 	D_MINUTOS:
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	SBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntMinDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	DELAY_MULTIPLEX5:
-	MOV R16, R5
-	CPI R16, 5
-	BRNE DELAY_MULTIPLEX5
-	CLR R5
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	SBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)		// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)	// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMinDecenas		// Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX5:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX5	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
 
 	U_HORAS:
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	CBI PORTC, PC4 // Activa display de decenas horas 
-	SBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	LDI ZH, HIGH(TABLE << 1) // Se obtiene la dirección más significativa del registro Z
-	ADD ZL, CntHrsUnidades	// Se desplaza el pointer
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	DELAY_MULTIPLEX6:
-	MOV R16, R5
-	CPI R16, 5
-	BRNE DELAY_MULTIPLEX6
-	CLR R5
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	SBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)			// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)		// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntHrsUnidades			// Se desplaza el pointer
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX6:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX6	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
 
 	D_HORAS:
-	CBI PORTC, PC2 // Activa display de unidades minutos
-	CBI PORTC, PC3 // Desactiva display de decenas minutos
-	SBI PORTC, PC4 // Activa display de decenas horas 
-	CBI PORTC, PC5 // Desactiva display de unidade horas
-	LDI ZL, LOW(TABLE << 1) // Se obtiene la dirección menos significativa del registro Z
-	ADD ZL, CntHrsDecenas // Mueve ZL a donde se encuentra el pointer (la posición de R17)
-	LPM R16, Z // Carga el valor que existe en Z en el registro R 16
-	OUT PORTD, R16 // Carga el registro R16 al puerto D
-	DELAY_MULTIPLEX7:
-	MOV R16, R5
-	CPI R16, 5
-	BRNE DELAY_MULTIPLEX7
-	CLR R5
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	SBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)			// Se obtiene la dirección menos significativa del registro Z
+	ADD ZL, CntHrsDecenas			// Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX7:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX7	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
 RET
+//******************************************************************************
+SHOW_MULTIPLEX_FECHA:
+//******************************************************************************
+U_MES:
+	SBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)			// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)		// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntMesUnidad			// Se desplaza el pointer
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX8:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX8	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
+
+D_MES:
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	SBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)			// Se obtiene la dirección menos significativa del registro Z
+	ADD ZL, CntMesDecena			// Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX9:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX9	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
+
+U_DIA:
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	CBI PORTC, PC4			// Activa display de decenas horas 
+	SBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)		// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)	// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntDiaUnidad		// Se desplaza el pointer
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX10:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX10	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
+
+D_DIA:
+	CBI PORTC, PC2			// Activa display de unidades minutos
+	CBI PORTC, PC3			// Desactiva display de decenas minutos
+	SBI PORTC, PC4			// Activa display de decenas horas 
+	CBI PORTC, PC5			// Desactiva display de unidade horas
+	LDI ZL, LOW(TABLE << 1)		// Se obtiene la dirección menos significativa del registro Z
+	LDI ZH, HIGH(TABLE << 1)	// Se obtiene la dirección más significativa del registro Z
+	ADD ZL, CntDiaDecena		// Mueve ZL a donde se encuentra el pointer (la posición de R17)
+	LPM R16, Z				// Carga el valor que existe en Z en el registro R 16
+	OUT PORTD, R16			// Carga el registro R16 al puerto D
+	DELAY_MULTIPLEX11:		// Delay de multiplexeo
+	MOV R16, R2				// Copia el registro 2 en el 16
+	CPI R16, 10				// Compara el registro 16 con 10
+	BRNE DELAY_MULTIPLEX11	// Si no es igual Regresar a dicha subrutina
+	CLR R2					// Limpiar el registro R2
+
+
+RET
+//******************************************************************************
 
 //******************************************************************************
 // SUBRUTINA PARA INICIALIZAR TIMER 0
@@ -396,12 +486,14 @@ AUMENTO_UNIDADES_SEGUNDOS:
 	BREQ AUMENTO_DECENAS_SEGUNDOS		// Si el contador es cero salta 
 	INC CntSegUnidades				// Incrementa 
 	RET
+
 AUMENTO_DECENAS_SEGUNDOS:
 	CPI CntSegDecenas, 0x05		// Compara si el contador de decenas es 5
 	BREQ AUMENTO_UNIDADES_MINUTOS		// Si el contador es cero salta 
 	INC CntSegDecenas				// Incrementa Contador de decenas
 	CLR CntSegUnidades				// Limpia el registro 
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
 AUMENTO_UNIDADES_MINUTOS:
 	CLR CntSegDecenas			// Limpia el registro 
 	CLR CntSegUnidades			// Limpia el registro 
@@ -409,26 +501,35 @@ AUMENTO_UNIDADES_MINUTOS:
 	CPI CntMinUnidades, 0x0A		// Compara si el contador de unidades es 9
 	BREQ AUMENTO_DECENAS_MINUTOS		// Si el contador es cero salta al reset
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
 AUMENTO_DECENAS_MINUTOS:
 	CLR CntMinUnidades			// Limpia el registro 
 	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
 	BREQ AUMENTO_UNIDADES_HORAS	// Si el contador es cero salta al reset
 	INC CntMinDecenas
+
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
 AUMENTO_UNIDADES_HORAS:
 	CLR CntMinDecenas			// Limpia el registro 
 	CLR CntMinUnidades			// Limpia el registro
-	INC HRS 
-	CPI HRS, 24
-	BREQ RESET_ALL
 	INC CntHrsUnidades
+	CPI CntHrsUnidades, 0x04		// Compara si el contador de unidades es 9
+	BREQ RESET_AFTER23	// Si el contador es cero salta al reset
 	CPI CntHrsUnidades, 0x0A		// Compara si el contador de unidades es 9
 	BREQ AUMENTO_DECENAS_HORAS	// Si el contador es cero salta al reset
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
 AUMENTO_DECENAS_HORAS:
 	CLR CntHrsUnidades
 	INC CntHrsDecenas
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
+RESET_AFTER23:
+	INC CntDiaUnidad
+	CPI CntHrsDecenas, 2
+	BREQ RESET_ALL
+	RJMP AUMENTO_UNIDADES_SEGUNDOS
+
 RESET_ALL:
 	CLR CntSegUnidades			// Limpia el registro 
 	CLR CntSegDecenas			// Limpia el registro 
@@ -436,7 +537,6 @@ RESET_ALL:
 	CLR CntMinDecenas			// Limpia el registro 
 	CLR CntHrsUnidades			// Limpia el registro
 	CLR CntHrsDecenas			// Limpia el registro
-	CLR HRS						// Limpia el registro
 	RJMP AUMENTO_UNIDADES_SEGUNDOS
 
 //*****************************************************************************
@@ -451,8 +551,8 @@ ISR_TIMER0_OVF:
 	OUT TCNT0, R16		; Cargar el valor inicial al contador
 	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
 
+	INC R0				; Incrementamos contador de 10 ms
 	INC R1 				; Incrementamos contador de 10 ms
-	INC R6				; Incrementamos contador de 10 ms
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
@@ -472,9 +572,6 @@ ISR_TIMER2_OVF:
 	SBI TIFR2, TOV2		; Borramos la bandera de TOV2
 
 	INC R2				; Incrementamos contador para toggle de display cada 1ms
-	INC R3				; Incrementamos contador para toggle de display cada 1ms
-	INC R4				; Incrementamos contador para toggle de display cada 1ms
-	INC R5				; Incrementamos contador para toggle de display cada 1ms
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
