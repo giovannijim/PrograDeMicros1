@@ -96,8 +96,8 @@ MAIN:
 	CLR CntHrsDecenas		// Limpia el registro 
 	CLR ESTADO		// Limpia el registro 
 
-	LDI CntMinDecenas, 4
-	LDI CntMinUnidades, 9
+	LDI CntMinDecenas, 0
+	LDI CntMinUnidades, 1
 	LDI Hrs, 23
 	LDI CntHrsDecenas, 2
 	LDI CntHrsUnidades, 3
@@ -109,13 +109,12 @@ MAIN:
 // LOOP
 //*****************************************************************************
 LOOP:	
-	;BLINK_PUNTOS:
-	;MOV R16, R6
-	;CPI R16, 50 ; Compara si ya llego a los 500 ms
-	;BRNE BLINK_PUNTOS
-	;CLR R6
-	;SBI PIND, PD0
-	
+	BLINK_PUNTOS:
+	MOV R16, R6
+	CPI R16, 50 ; Compara si ya llego a los 500 ms
+	BRNE AUMENTO
+	CLR R6
+	SBI PIND, PD0
 
 	AUMENTO:
 	MOV R16, R1
@@ -166,54 +165,47 @@ ESTADO000:
 	CBI PORTB, PB5
 	CBI PORTC, PC0
 	CBI PORTC, PC1
-	
+
 	CALL SHOW_MULTIPLEX_RELOJ
 
 	RJMP LOOP
 
 ESTADO001:
-	CBI PORTB, PB5
-	CBI PORTC, PC0
-	SBI PORTC, PC1
+		CBI PORTB, PB5
+		CBI PORTC, PC0
+		SBI PORTC, PC1
 
-	CALL SHOW_MULTIPLEX_RELOJ
+		CALL SHOW_MULTIPLEX_RELOJ
 
 	U_MIN_CONF_HORA:
-	CPI CntMinUnidades, 0x0A			// Compara si el contador es 10
-	BREQ D_MIN_CONF_HORA		// Si el contador es cero salta 
-	CPI CntMinUnidades, 0
-	BREQ DEC_D_MIN_CONF_HORA
-	CPI CntMinUnidades, -1
-	BREQ UNDERFLOW_MINUTOS
-	RJMP LOOP
+		CPI CntMinUnidades, 0x0A			// Compara si el contador es 10
+		BREQ D_MIN_CONF_HORA		// Si el contador es cero salta 
+		//CPI CntMinUnidades, 0
+		//BREQ DEC_D_MIN_CONF_HORA	
+		RJMP LOOP
 
-	DEC_D_MIN_CONF_HORA:
-	CPI CntMinDecenas, -1
-	BREQ UPPER_RESET_CONF_HORA_MIN
-	DEC CntMinDecenas
-	LDI CntMinUnidades, 0x09
-
-	RJMP U_MIN_CONF_HORA
-
+	/*DEC_D_MIN_CONF_HORA:
+		CPI CntMinDecenas, -1
+		BREQ UNDERFLOW_MINUTOS
+		DEC CntMinDecenas
+		LDI CntMinUnidades, 0x09
+		RJMP U_MIN_CONF_HORA*/
+		
 	D_MIN_CONF_HORA:
-	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
-	BREQ RESET_CONF_HORA_MINS		// Si el contador es cero salta 
-	INC CntMinDecenas				// Aumenta las decenas de los minutos
-	CLR CntMinUnidades				// Limpia el registro 
-	RJMP U_MIN_CONF_HORA
+		CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
+		BREQ RESET_CONF_HORA_MINS		// Si el contador es cero salta 
+		INC CntMinDecenas				// Aumenta las decenas de los minutos
+		CLR CntMinUnidades				// Limpia el registro 
+		RJMP U_MIN_CONF_HORA
 
-	UNDERFLOW_MINUTOS:
-	LDI CntMinUnidades, 0x0A
-	LDI CntMinDecenas, 0x05
-	RJMP U_MIN_CONF_HORA
-
-	UPPER_RESET_CONF_HORA_MIN:
-	LDI CntMinDecenas, 0
-	RJMP U_MIN_CONF_HORA
+	/*UNDERFLOW_MINUTOS:
+		LDI CntMinUnidades, 0x0A
+		LDI CntMinDecenas, 0x05
+		RJMP U_MIN_CONF_HORA*/
 
 	 RESET_CONF_HORA_MINS:
-	 CLR CntMinDecenas
-	 CLR CntMinUnidades
+		CLR CntMinDecenas
+		CLR CntMinUnidades
 
 	 /*
 ;AUMENTO_UNIDADES_MINUTOS:
