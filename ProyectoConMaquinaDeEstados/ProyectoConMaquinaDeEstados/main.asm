@@ -10,7 +10,7 @@
 .cseg
 .org 0x00
 	JMP MAIN
-
+.def CntHrs = R7
 .def CntSegUnidades = R18
 .def CntSegDecenas = R19
 .def CntMinUnidades = R20
@@ -99,8 +99,8 @@ MAIN:
 	LDI CntMinDecenas, 0
 	LDI CntMinUnidades, 1
 	LDI Hrs, 23
-	LDI CntHrsDecenas, 2
-	LDI CntHrsUnidades, 3
+	LDI CntHrsDecenas, 0
+	LDI CntHrsUnidades, 0
 
 	CBI PORTB, PB5
 	CBI PORTC, PC0
@@ -161,6 +161,8 @@ ESTADOX11:
 //*****************************************************************************
 //*****************************************************************************	
 
+// MOSTRAR HORA
+
 ESTADO000:
 	CBI PORTB, PB5
 	CBI PORTC, PC0
@@ -175,21 +177,24 @@ ESTADO001:
 		CBI PORTC, PC0
 		SBI PORTC, PC1
 
-		CALL SHOW_MULTIPLEX_RELOJ
+		CALL SHOW_MULTIPLEX_RELOJ			// Llamar a subrutina de multiplexeo
 
+//COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
 	U_MIN_CONF_HORA:
 		CPI CntMinUnidades, 0x0A			// Compara si el contador es 10
-		BREQ D_MIN_CONF_HORA		// Si el contador es cero salta 
-		//CPI CntMinUnidades, 0
-		//BREQ DEC_D_MIN_CONF_HORA	
-		RJMP LOOP
+		BREQ D_MIN_CONF_HORA				// Si el contador es cero salta 
+		CPI CntMinUnidades, -1				// Compara si el registro es -1
+		BREQ DEC_D_MIN_CONF_HORA			// Si si lo es, saltar a la subrutina
+		CPI CntMinUnidades, -2				// Compara si el registro es -1
+		BREQ DEC_D_MIN_CONF_HORA			// Si si lo es, saltar a la subrutina
+		RJMP U_HRS_CONF_HORA
 
-	/*DEC_D_MIN_CONF_HORA:
+	DEC_D_MIN_CONF_HORA:
+		DEC CntMinDecenas
 		CPI CntMinDecenas, -1
 		BREQ UNDERFLOW_MINUTOS
-		DEC CntMinDecenas
 		LDI CntMinUnidades, 0x09
-		RJMP U_MIN_CONF_HORA*/
+		RJMP U_MIN_CONF_HORA
 		
 	D_MIN_CONF_HORA:
 		CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
@@ -198,54 +203,59 @@ ESTADO001:
 		CLR CntMinUnidades				// Limpia el registro 
 		RJMP U_MIN_CONF_HORA
 
-	/*UNDERFLOW_MINUTOS:
-		LDI CntMinUnidades, 0x0A
+	UNDERFLOW_MINUTOS:
+		LDI CntMinUnidades, 0x09
 		LDI CntMinDecenas, 0x05
-		RJMP U_MIN_CONF_HORA*/
+		RJMP U_MIN_CONF_HORA
 
 	 RESET_CONF_HORA_MINS:
 		CLR CntMinDecenas
 		CLR CntMinUnidades
+		RJMP U_MIN_CONF_HORA
 
-	 /*
-;AUMENTO_UNIDADES_MINUTOS:
-	CLR CntSegDecenas			// Limpia el registro 
-	CLR CntSegUnidades			// Limpia el registro 
-	INC CntMinUnidades
-	CPI CntMinUnidades, 0x0A		// Compara si el contador de unidades es 9
-	BREQ AUMENTO_DECENAS_MINUTOS		// Si el contador es cero salta al reset
-	RJMP AUMENTO_UNIDADES_SEGUNDOS
-;AUMENTO_DECENAS_MINUTOS:
-	CLR CntMinUnidades			// Limpia el registro 
-	CPI CntMinDecenas, 0x05		// Compara si el contador de decenas es 5
-	BREQ AUMENTO_UNIDADES_HORAS	// Si el contador es cero salta al reset
-	INC CntMinDecenas
-	RJMP AUMENTO_UNIDADES_SEGUNDOS
-;AUMENTO_UNIDADES_HORAS:
-	CLR CntMinDecenas			// Limpia el registro 
-	CLR CntMinUnidades			// Limpia el registro
-	INC HRS 
-	CPI HRS, 24
-	BREQ RESET_ALL
-	INC CntHrsUnidades
-	CPI CntHrsUnidades, 0x0A		// Compara si el contador de unidades es 9
-	BREQ AUMENTO_DECENAS_HORAS	// Si el contador es cero salta al reset
-	RJMP AUMENTO_UNIDADES_SEGUNDOS
-;AUMENTO_DECENAS_HORAS:
-	CLR CntHrsUnidades
-	INC CntHrsDecenas
-	RJMP AUMENTO_UNIDADES_SEGUNDOS
-;RESET_ALL:
-	CLR CntSegUnidades			// Limpia el registro 
-	CLR CntSegDecenas			// Limpia el registro 
-	CLR CntMinUnidades			// Limpia el registro
-	CLR CntMinDecenas			// Limpia el registro 
-	CLR CntHrsUnidades			// Limpia el registro
-	CLR CntHrsDecenas			// Limpia el registro
-	CLR HRS						// Limpia el registro
-	;RJMP AUMENTO_UNIDADES_SEGUNDOS
-	CPI 
-	*/
+//COMPARACION DE CONFIGURACION DISPLAYS DE HORAS EN HORA
+	U_HRS_CONF_HORA:
+		CPI CntHrsUnidades, 0x0A			// Compara si el contador es 10
+		BREQ D_HRS_CONF_HORA				// Si el contador es cero salta 
+		CPI CntHrsUnidades, 0x04
+		BREQ RESET_2359_TO_0
+		CPI CntHrsUnidades, -1				// Compara si el registro es -1
+		BREQ DEC_D_HRS_CONF_HORA			// Si si lo es, saltar a la subrutina
+		CPI CntHrsUnidades, -2				// Compara si el registro es -1
+		BREQ DEC_D_HRS_CONF_HORA			// Si si lo es, saltar a la subrutina
+		RJMP LOOP
+
+	DEC_D_HRS_CONF_HORA:
+		DEC CntHrsDecenas
+		CPI CntHrsDecenas, -1
+		BREQ UNDERFLOW_HORAS
+		LDI CntHrsUnidades, 0x09
+		RJMP U_HRS_CONF_HORA
+		
+	D_HRS_CONF_HORA:
+		INC CntHrsDecenas	
+		CLR CntHrsUnidades		
+		RJMP U_HRS_CONF_HORA
+
+	UNDERFLOW_HORAS:
+		LDI CntHrsUnidades, 0x03
+		LDI CntHrsDecenas, 0x02
+		RJMP U_HRS_CONF_HORA
+
+	CARGAR_CONF:
+		MOV CntHrsUnidades, CntHrsUnidades
+		MOV CntHrsDecenas, CntHrsDecenas
+		RJMP U_HRS_CONF_HORA
+
+	RESET_2359_TO_0:	
+		CPI CntHrsDecenas, 0x02			// Compara si el contador es 2
+		BREQ RESET_CONF_HORA_HRS		// Si el contador es cero salta	
+		RJMP ESTADO001
+
+	 RESET_CONF_HORA_HRS:
+		CLR CntHrsDecenas
+		CLR CntHrsUnidades
+
 	RJMP LOOP
 
 ESTADO010:
@@ -304,7 +314,7 @@ U_MINUTOS:
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX4:
 	MOV R16, R5
-	CPI R16, 4
+	CPI R16, 5
 	BRNE DELAY_MULTIPLEX4
 	CLR R5
 
@@ -320,7 +330,7 @@ U_MINUTOS:
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX5:
 	MOV R16, R5
-	CPI R16, 4
+	CPI R16, 5
 	BRNE DELAY_MULTIPLEX5
 	CLR R5
 
@@ -336,7 +346,7 @@ U_MINUTOS:
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX6:
 	MOV R16, R5
-	CPI R16, 4
+	CPI R16, 5
 	BRNE DELAY_MULTIPLEX6
 	CLR R5
 
@@ -351,7 +361,7 @@ U_MINUTOS:
 	OUT PORTD, R16 // Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX7:
 	MOV R16, R5
-	CPI R16, 4
+	CPI R16, 5
 	BRNE DELAY_MULTIPLEX7
 	CLR R5
 RET
