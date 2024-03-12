@@ -130,7 +130,10 @@ MAIN:
 	CLR AlarmaMinDecena		; Limpiar el registro
 	CLR AlarmaHrsUnidad		; Limpiar el registro
 	CLR AlarmaHrsDecena		; Limpiar el registro
-	
+	LDI R16, 0x05
+	MOV AlarmaMinUnidad, R16
+	MOV AlarmaHrsUnidad , R16
+
 	CLR R1					; Limpiar el registro
 	CLR R0					; Limpiar el registro
 	CLR R2					; Limpiar el registro
@@ -142,9 +145,11 @@ MAIN:
 	LDI CntHrsDecenas, 1	; Cargar valor inicial en el reloj
 	LDI CntHrsUnidades, 5	; Cargar valor inicial en el reloj
 
+	
 	CBI PORTB, PB5		; Apagar PB5
 	CBI PORTC, PC0		; Apagar PC0
 	CBI PORTC, PC1		; Apagar PC1
+	CLR R16
 ;*****************************************************************************
 ; LOOP
 ;*****************************************************************************
@@ -198,9 +203,10 @@ LOOP:
 
 ESTADO000:
 	; Prende LEDS para indicar el estado
+	SBIS PINB, PB5
 	CBI PORTB, PB5	; Apagar PB5
-	CBI PORTC, PC0	; Apagar PC0	
-	CBI PORTC, PC1	; Apagar PC1
+	;CBI PORTC, PC0	; Apagar PC0	
+	;CBI PORTC, PC1	; Apagar PC1
 	CLR R2			; Limpia el registro 2
 	
 ; ---------------------------------------MULTIPLEXACION--------------------------------------------
@@ -274,6 +280,30 @@ ESTADO000:
 	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX3	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
+
+	; -------------------------------------COMPARAR RELOJ CON ALARMA------------------------------
+	COMPARACION_CON_ALARMA:
+			CP CntMinUnidades, AlarmaMinUnidad		; Comparar el registro CntMinUnidades con AlarmaMinUnidad
+			BREQ EQUAL_DECENA_MINUTO				; Si hay igualdad saltar a dicha subrutina
+			RJMP LOOP								; Si no es igual regresar al LOOP
+
+		EQUAL_DECENA_MINUTO:
+			CP CntMinDecenas, AlarmaMinDecena		; Comparar el registro CntMinDecenas con AlarmaMinDecenas
+			BREQ EQUAL_UNIDAD_HORA					; Si hay igualdad saltar a dicha subrutina
+			RJMP LOOP								; Si no es igual regresar al LOOP
+			
+		EQUAL_UNIDAD_HORA:
+			CP CntHrsUnidades, AlarmaHrsUnidad
+			BREQ EQUAL_DECENA_HORA					; Si hay igualdad saltar a dicha subrutina
+			RJMP LOOP								; Si no es igual regresar al LOOP
+
+		EQUAL_DECENA_HORA:
+			CP CntHrsDecenas, AlarmaHrsDecena
+			BREQ PRENDER_ALARMA						; Si hay igualdad saltar a dicha subrutina
+			RJMP LOOP								; Si no es igual regresar al LOOP
+	
+		PRENDER_ALARMA:
+			SBI PORTC, PC1							; Prender la alarma
 
 	RJMP LOOP				; Salta de regreso al LOOP
 
@@ -1278,6 +1308,7 @@ ISR_TIMER2_OVF:
 	SBI TIFR2, TOV2		; Borramos la bandera de TOV2
 
 	INC R2				; Incrementamos contador para toggle de display cada 1ms
+	INC R10
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
@@ -1332,6 +1363,9 @@ ESTADO000_ISR:
 	SBRS R16, PB0		; PB0 = 1?
 	INC ESTADO			; PB0 = 0
 						; PB0 = 1
+	SBRS R16, PB1	; PB1 = 1?
+	CBI PORTB, PB5		; PB1 = 0, Incrementa registro
+						; PB1 = 1
 	RJMP ISR_POP_PCINT0
 
 ESTADO001_ISR:
@@ -1384,7 +1418,7 @@ ESTADO100_ISR:
 	SBRS R16, PB0	; PB0 = 1?
 	INC ESTADO		; PB0 = 0
 					; PB0 = 1
-					SBRS R16, PB1	; PB1 = 1?
+	SBRS R16, PB1	; PB1 = 1?
 	INC AlarmaMinUnidad		; PB1 = 0, Incrementa registro
 							; PB1 = 1
 	SBRS R16, PB2	; PB2 = 1?
