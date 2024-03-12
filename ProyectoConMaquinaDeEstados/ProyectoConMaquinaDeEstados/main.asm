@@ -1115,32 +1115,18 @@ ESTADO100:
 	RJMP LOOP ; Regresar al loop
 
 ESTADO101:
-	SBI PORTB, PB5
-	CBI PORTC, PC0
-	SBI PORTC, PC1
+	
+
 
 	RJMP LOOP
 
-ESTADO110:
-	SBI PORTB, PB5
-	SBI PORTC, PC0
-	CBI PORTC, PC1
-
+ESTADO110: 
+	; ESTE ESTADO NO SE UTILIZA
 	RJMP LOOP
 
 ESTADO111:
-	SBI PORTB, PB5
-	SBI PORTC, PC0
-	SBI PORTC, PC1
-
+	; ESTE ESTADO NO SE UTILIZA
 	RJMP LOOP
-
-;******************************************************************************
-;SHOW_MULTIPLEX_RELOJ:
-;******************************************************************************
-
-
-;******************************************************************************
 
 ;******************************************************************************
 ; SUBRUTINA PARA INICIALIZAR TIMER 0
@@ -1418,6 +1404,7 @@ ESTADO101_ISR:
 	INC ESTADO		; PB0 = 0
 					; PB0 = 1
 	RJMP ISR_POP_PCINT0
+
 ESTADO110_ISR:		; Este registro no se utiliza, puesto que solo se necesito 6
 	IN R16, PINB	; Obtiene la informacion de PINB
 	SBRS R16, PB0	; PB0 = 1?
