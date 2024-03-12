@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm Tue Mar 12 10:52:06 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm Tue Mar 12 11:18:16 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm(9): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1238,7 +1238,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  
                                  ESTADO000:
                                  	; Prende LEDS para indicar el estado
-00009c 9b1d                      	SBIS PINB, PB5
+00009c 991d                      	SBIC PINB, PB5
 00009d 982d                      	CBI PORTB, PB5	; Apagar PB5
                                  	;CBI PORTC, PC0	; Apagar PC0	
                                  	;CBI PORTC, PC1	; Apagar PC1
@@ -2488,7 +2488,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  					; PB0 = 1
                                  
                                  ISR_POP_PCINT0:
-00042e 30a6                      	CPI ESTADO, 6		; Compara el estado con 6
+00042e 30a5                      	CPI ESTADO, 5		; Compara el estado con 6
 00042f f409                      	BRNE ISRPOPPCINT0	; Si no es igual, saltar a la siguiente subrutina
 000430 27aa                      	CLR ESTADO			; Limpiar el estado si es igual
                                  ISRPOPPCINT0:
@@ -2563,12 +2563,12 @@ ld    :   0 ldd   :   0 ldi   : 125 lds   :   0 lpm   :  64 lsl   :   0
 lsr   :   0 mov   :  67 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   8 out   :  38 pop   :   8 
 push  :   8 rcall :   0 ret   :   4 reti  :   4 rjmp  :  72 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :  33 sbic  :  20 sbis  :   1 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :  33 sbic  :  21 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :  35 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  18 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 29 out of 113 (25.7%)
+Instructions used: 28 out of 113 (24.8%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%

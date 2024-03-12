@@ -203,7 +203,7 @@ LOOP:
 
 ESTADO000:
 	; Prende LEDS para indicar el estado
-	SBIS PINB, PB5
+	SBIC PINB, PB5
 	CBI PORTB, PB5	; Apagar PB5
 	;CBI PORTC, PC0	; Apagar PC0	
 	;CBI PORTC, PC1	; Apagar PC1
@@ -1453,7 +1453,7 @@ ESTADO111_ISR:		; Este registro no se utiliza, puesto que solo se necesito 6
 					; PB0 = 1
 
 ISR_POP_PCINT0:
-	CPI ESTADO, 6		; Compara el estado con 6
+	CPI ESTADO, 5		; Compara el estado con 6
 	BRNE ISRPOPPCINT0	; Si no es igual, saltar a la siguiente subrutina
 	CLR ESTADO			; Limpiar el estado si es igual
 ISRPOPPCINT0:
