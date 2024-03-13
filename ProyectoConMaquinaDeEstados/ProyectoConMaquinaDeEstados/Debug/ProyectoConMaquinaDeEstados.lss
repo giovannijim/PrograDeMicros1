@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm Wed Mar 13 09:50:16 2024
+AVRASM ver. 2.2.8  D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm Wed Mar 13 11:28:37 2024
 
 [builtin](2): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaquinaDeEstados\main.asm(9): Including file 'D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1074,13 +1074,13 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  ; Se definen los vectores de interrupcion
                                  
                                  .org 0x0006		; Vector de ISR_PCINT0
-000006 940c 03cc                 	JMP ISR_PCINT0 
+000006 940c 03bd                 	JMP ISR_PCINT0 
                                  .org 0x0012		; Vector de TIMER2_OVF
-000012 940c 03c0                 	JMP ISR_TIMER2_OVF
+000012 940c 03b1                 	JMP ISR_TIMER2_OVF
                                  .org 0x001A 	; Vector de TIMER1_OVF
-00001a 940c 03b1                 	JMP ISR_TIMER1_OVF
+00001a 940c 03a2                 	JMP ISR_TIMER1_OVF
                                  .org 0x0020		; Vector de TIMER0_OVF
-000020 940c 03a4                 	JMP ISR_TIMER0_OVF
+000020 940c 0396                 	JMP ISR_TIMER0_OVF
                                  
                                  MAIN:
                                  ;*****************************************************************************
@@ -1093,7 +1093,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  ;*****************************************************************************
                                  ; Configuracion
                                  ;*****************************************************************************
-000026 e6e8                      	LDI ZL, LOW(TABLE << 1)	; Se obtiene la dirección menos significativa del registro Z
+000026 e4ea                      	LDI ZL, LOW(TABLE << 1)	; Se obtiene la dirección menos significativa del registro Z
 000027 e0f8                      	LDI ZH, HIGH(TABLE << 1); Se obtiene la dirección más significativa del registro Z
                                  
 000028 e800                      	LDI R16, (1 << CLKPCE)	; Se coloca un uno en el bit de CLKPCE
@@ -1105,17 +1105,17 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
 00002e e000                      	LDI R16, 0
 00002f bd04                      	OUT TCCR0A, R16		; Se indica al Timer 0 que opere de manera normal
                                  
-000030 940e 035b                 	CALL Init_T0		; Inicializar Timer 0
+000030 940e 034d                 	CALL Init_T0		; Inicializar Timer 0
                                  
 000032 e000                      	LDI R16, 0
 000033 9300 0080                 	STS TCCR1A, R16		; Se indica al Timer 1 que opere de manera normal
                                  
-000035 940e 0363                 	CALL Init_T1		; Inicializar Timer 1
+000035 940e 0355                 	CALL Init_T1		; Inicializar Timer 1
                                  
 000037 e000                      	LDI R16, 0
 000038 9300 00b0                 	STS TCCR2A, R16		; Se indica al Timer 2 que opere de manera normal
                                  
-00003a 940e 0370                 	CALL Init_T2		; Inicializar Timer 2
+00003a 940e 0362                 	CALL Init_T2		; Inicializar Timer 2
                                  
 00003c 9478                      	SEI					; Se habilitan las interrupciones globales
                                  
@@ -1175,10 +1175,10 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  	
 00006a 2433                      	CLR PointerMes			; Limpiar el registro
                                  
-00006b e054                      	LDI CntMinDecenas, 4	; Cargar valor inicial en el reloj
-00006c e040                      	LDI CntMinUnidades, 0	; Cargar valor inicial en el reloj
-00006d e071                      	LDI CntHrsDecenas, 1	; Cargar valor inicial en el reloj
-00006e e065                      	LDI CntHrsUnidades, 5	; Cargar valor inicial en el reloj
+00006b e055                      	LDI CntMinDecenas, 5	; Cargar valor inicial en el reloj
+00006c e048                      	LDI CntMinUnidades, 8	; Cargar valor inicial en el reloj
+00006d e072                      	LDI CntHrsDecenas, 2	; Cargar valor inicial en el reloj
+00006e e063                      	LDI CntHrsUnidades, 3	; Cargar valor inicial en el reloj
                                  
                                  	
 00006f 982d                      	CBI PORTB, PB5		; Apagar PB5
@@ -1195,7 +1195,7 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
 000074 3604                      	CPI R16, 100		; Compara si ya llego a los 1000 ms
 000075 f419                      	BRNE COMPARACION	; Sino ha llegado enviar a loop
 000076 2411                      	CLR R1				; Se limpia el registro r1 0x00
-000077 940e 037a                 	CALL AUMENTO_UNIDADES_SEGUNDOS	; Salta a la subrutina para aumentar
+000077 940e 036c                 	CALL AUMENTO_UNIDADES_SEGUNDOS	; Salta a la subrutina para aumentar
                                  ;---------------------------------------MAQUINA DE ESTADOS-----------------------------------------	
                                  	COMPARACION:
 000079 ffa0                      		SBRS ESTADO, 0 ;ESTADO 0 = 1?
@@ -1210,12 +1210,12 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  	ESTADOX00:
 000083 ffa2                      		SBRS ESTADO, 2 ;ESTADO 2 = 1?
 000084 940c 009c                 		JMP ESTADO000	;ESTADO 2 = 0
-000086 940c 02e9                 		JMP ESTADO100	;ESTADO 2 = 1
+000086 940c 02e7                 		JMP ESTADO100	;ESTADO 2 = 1
                                  	 
                                  	ESTADOX10:
 000088 ffa2                      		SBRS ESTADO, 2 ;ESTADO 2 = 1?
-000089 940c 0158                 		JMP ESTADO010	;ESTADO 2 = 0
-00008b 940c 0359                 		JMP ESTADO110	;ESTADO 2 = 1
+000089 940c 0156                 		JMP ESTADO010	;ESTADO 2 = 0
+00008b 940c 034b                 		JMP ESTADO110	;ESTADO 2 = 1
                                  	
                                  	ESTADOXX1:
 00008d ffa1                      		SBRS ESTADO, 1 ;ESTADO 1 = 1?
@@ -1224,1080 +1224,1095 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
                                  	
                                  	ESTADOX01:
 000092 ffa2                      		SBRS ESTADO, 2 ;ESTADO 2 = 1?
-000093 940c 00e8                 		JMP ESTADO001	;ESTADO 2 = 0
-000095 940c 0358                 		JMP ESTADO101	;ESTADO 2 = 1
+000093 940c 00e6                 		JMP ESTADO001	;ESTADO 2 = 0
+000095 940c 034a                 		JMP ESTADO101	;ESTADO 2 = 1
                                  	
                                  	ESTADOX11:
 000097 ffa2                      		SBRS ESTADO, 2 ;ESTADO 2 = 1?
-000098 940c 0220                 		JMP ESTADO011	;ESTADO 2 = 0
-00009a 940c 035a                 		JMP ESTADO111	;ESTADO 2 = 1
+000098 940c 021e                 		JMP ESTADO011	;ESTADO 2 = 0
+00009a 940c 034c                 		JMP ESTADO111	;ESTADO 2 = 1
                                  
                                  ;*****************************************************************************	
                                  
                                  ; ----------------------------------------MOSTRAR HORA----------------------------------------
                                  
                                  ESTADO000:
-00009c 9840                      	CBI PORTC, PC0	; Apagar PC0	
-00009d 9841                      	CBI PORTC, PC1	; Apagar PC1
-00009e 2422                      	CLR R2			; Limpia el registro 2
-                                 	
+                                 	;LDI R16, 0
+                                 	;CP R1, R16
+                                 	;BREQ AUMENTO
+                                 	;CLR R1
+                                 
+00009c 2422                      	CLR R2			; Limpia el registro 2
+                                 
                                  ; ---------------------------------------MULTIPLEXACION--------------------------------------------
                                  	U_MINUTOS_000:
-00009f 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
-0000a0 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-0000a1 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0000a2 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0000a3 e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-0000a4 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-0000a5 0fe4                      	ADD ZL, CntMinUnidades		; Se desplaza el pointer
-0000a6 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0000a7 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0000a8 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
-0000a9 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+00009d 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
+00009e 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+00009f 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0000a0 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0000a1 e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0000a2 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0000a3 0fe4                      	ADD ZL, CntMinUnidades		; Se desplaza el pointer
+0000a4 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0000a5 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+0000a6 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
+0000a7 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX0:		; Delay de multiplexeo
-0000aa 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0000ab 300a                      	CPI R16, 10				; Compara el registro 16 con 10
-0000ac f7e9                      	BRNE DELAY_MULTIPLEX0	; Si no es igual Regresar a dicha subrutina
-0000ad 2422                      	CLR R2					; Limpiar el registro R2
+0000a8 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0000a9 3005                      	CPI R16, 5				; Compara el registro 16 con 10
+0000aa f7e9                      	BRNE DELAY_MULTIPLEX0	; Si no es igual Regresar a dicha subrutina
+0000ab 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	D_MINUTOS_000:
-0000ae 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-0000af 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
-0000b0 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0000b1 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0000b2 e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-0000b3 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-0000b4 0fe5                      	ADD ZL, CntMinDecenas		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0000b5 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0000b6 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0000b7 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
-0000b8 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0000ac 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+0000ad 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
+0000ae 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0000af 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0000b0 e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0000b1 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0000b2 0fe5                      	ADD ZL, CntMinDecenas		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0000b3 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0000b4 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+0000b5 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
+0000b6 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX1:		; Delay de multiplexeo
-0000b9 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0000ba 300a                      	CPI R16, 10			; Compara el registro 16 con 10
-0000bb f7e9                      	BRNE DELAY_MULTIPLEX1	; Si no es igual Regresar a dicha subrutina
-0000bc 2422                      	CLR R2					; Limpiar el registro R2
+0000b7 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0000b8 3005                      	CPI R16, 5			; Compara el registro 16 con 10
+0000b9 f7e9                      	BRNE DELAY_MULTIPLEX1	; Si no es igual Regresar a dicha subrutina
+0000ba 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	U_HORAS_000:
-0000bd 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-0000be 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-0000bf 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0000c0 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
-0000c1 e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-0000c2 e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
-0000c3 0fe6                      	ADD ZL, CntHrsUnidades			; Se desplaza el pointer
-0000c4 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0000c5 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0000c6 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
-0000c7 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0000bb 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+0000bc 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+0000bd 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0000be 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
+0000bf e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+0000c0 e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
+0000c1 0fe6                      	ADD ZL, CntHrsUnidades			; Se desplaza el pointer
+0000c2 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0000c3 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+0000c4 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
+0000c5 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX2:		; Delay de multiplexeo
-0000c8 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0000c9 300a                      	CPI R16, 10				; Compara el registro 16 con 10
-0000ca f7e9                      	BRNE DELAY_MULTIPLEX2	; Si no es igual Regresar a dicha subrutina
-0000cb 2422                      	CLR R2					; Limpiar el registro R2
+0000c6 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0000c7 3005                      	CPI R16, 5				; Compara el registro 16 con 10
+0000c8 f7e9                      	BRNE DELAY_MULTIPLEX2	; Si no es igual Regresar a dicha subrutina
+0000c9 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	D_HORAS_000:
-0000cc 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-0000cd 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-0000ce 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
-0000cf 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0000d0 e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-0000d1 0fe7                      	ADD ZL, CntHrsDecenas			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0000d2 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0000d3 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0000d4 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
-0000d5 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0000ca 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+0000cb 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+0000cc 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
+0000cd 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0000ce e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+0000cf 0fe7                      	ADD ZL, CntHrsDecenas			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0000d0 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0000d1 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+0000d2 6001                      	ORI R16, 0x01			; Si No se encuentra en 0 incrementar R16
+0000d3 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX3:		; Delay de multiplexeo
-0000d6 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0000d7 300a                      	CPI R16, 10				; Compara el registro 16 con 10
-0000d8 f7e9                      	BRNE DELAY_MULTIPLEX3	; Si no es igual Regresar a dicha subrutina
-0000d9 2422                      	CLR R2					; Limpiar el registro R2
+0000d4 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0000d5 3005                      	CPI R16, 5				; Compara el registro 16 con 10
+0000d6 f7e9                      	BRNE DELAY_MULTIPLEX3	; Si no es igual Regresar a dicha subrutina
+0000d7 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	; -------------------------------------COMPARAR RELOJ CON ALARMA------------------------------
                                  	COMPARACION_CON_ALARMA:
-0000da 1748                      			CP CntMinUnidades, AlarmaMinUnidad		; Comparar el registro CntMinUnidades con AlarmaMinUnidad
-0000db f009                      			BREQ EQUAL_DECENA_MINUTO				; Si hay igualdad saltar a dicha subrutina
-0000dc cf96                      			RJMP LOOP								; Si no es igual regresar al LOOP
+0000d8 1748                      			CP CntMinUnidades, AlarmaMinUnidad		; Comparar el registro CntMinUnidades con AlarmaMinUnidad
+0000d9 f009                      			BREQ EQUAL_DECENA_MINUTO				; Si hay igualdad saltar a dicha subrutina
+0000da cf98                      			RJMP LOOP								; Si no es igual regresar al LOOP
                                  
                                  		EQUAL_DECENA_MINUTO:
-0000dd 175b                      			CP CntMinDecenas, AlarmaMinDecena		; Comparar el registro CntMinDecenas con AlarmaMinDecenas
-0000de f009                      			BREQ EQUAL_UNIDAD_HORA					; Si hay igualdad saltar a dicha subrutina
-0000df cf93                      			RJMP LOOP								; Si no es igual regresar al LOOP
+0000db 175b                      			CP CntMinDecenas, AlarmaMinDecena		; Comparar el registro CntMinDecenas con AlarmaMinDecenas
+0000dc f009                      			BREQ EQUAL_UNIDAD_HORA					; Si hay igualdad saltar a dicha subrutina
+0000dd cf95                      			RJMP LOOP								; Si no es igual regresar al LOOP
                                  			
                                  		EQUAL_UNIDAD_HORA:
-0000e0 176c                      			CP CntHrsUnidades, AlarmaHrsUnidad
-0000e1 f009                      			BREQ EQUAL_DECENA_HORA					; Si hay igualdad saltar a dicha subrutina
-0000e2 cf90                      			RJMP LOOP								; Si no es igual regresar al LOOP
+0000de 176c                      			CP CntHrsUnidades, AlarmaHrsUnidad
+0000df f009                      			BREQ EQUAL_DECENA_HORA					; Si hay igualdad saltar a dicha subrutina
+0000e0 cf92                      			RJMP LOOP								; Si no es igual regresar al LOOP
                                  
                                  		EQUAL_DECENA_HORA:
-0000e3 177d                      			CP CntHrsDecenas, AlarmaHrsDecena
-0000e4 f009                      			BREQ PRENDER_ALARMA						; Si hay igualdad saltar a dicha subrutina
-0000e5 cf8d                      			RJMP LOOP								; Si no es igual regresar al LOOP
+0000e1 177d                      			CP CntHrsDecenas, AlarmaHrsDecena
+0000e2 f009                      			BREQ PRENDER_ALARMA						; Si hay igualdad saltar a dicha subrutina
+0000e3 cf8f                      			RJMP LOOP								; Si no es igual regresar al LOOP
                                  	
                                  		PRENDER_ALARMA:
-0000e6 9a2d                      			SBI PORTB, PB5							; Prender la alarma
+0000e4 9a2d                      			SBI PORTB, PB5							; Prender la alarma
                                  
-0000e7 cf8b                      	RJMP LOOP				; Salta de regreso al LOOP
+0000e5 cf8d                      	RJMP LOOP				; Salta de regreso al LOOP
                                  
                                  ; ------------------------------------------ CONFIGURAR HORA --------------------------------------
                                  
                                  ESTADO001:
                                  ; Prende LEDS para indicar el estado
-0000e8 982d                      	CBI PORTB, PB5
-0000e9 9840                      	CBI PORTC, PC0
-0000ea 9a41                      	SBI PORTC, PC1
-0000eb 2422                      	CLR R2			; Limpia el registro 2
+0000e6 982d                      	CBI PORTB, PB5
+0000e7 9840                      	CBI PORTC, PC0
+0000e8 9a41                      	SBI PORTC, PC1
+0000e9 2422                      	CLR R2			; Limpia el registro 2
                                  
                                  ; Multiplexacion para mostrar la configuracion de hora
                                  	U_MINUTOS:
-0000ec 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
-0000ed 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-0000ee 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0000ef 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0000f0 e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-0000f1 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-0000f2 0fe4                      	ADD ZL, CntMinUnidades		; Se desplaza el pointer
-0000f3 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0000f4 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0000f5 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-0000f6 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0000ea 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
+0000eb 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+0000ec 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0000ed 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0000ee e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0000ef e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0000f0 0fe4                      	ADD ZL, CntMinUnidades		; Se desplaza el pointer
+0000f1 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0000f2 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+0000f3 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+0000f4 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX4:		; Delay de multiplexeo
-0000f7 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0000f8 300a                      	CPI R16, 10			; Compara el registro 16 con 10
-0000f9 f7e9                      	BRNE DELAY_MULTIPLEX4	; Si no es igual Regresar a dicha subrutina
-0000fa 2422                      	CLR R2					; Limpiar el registro R2
+0000f5 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0000f6 3005                      	CPI R16, 5			; Compara el registro 16 con 10
+0000f7 f7e9                      	BRNE DELAY_MULTIPLEX4	; Si no es igual Regresar a dicha subrutina
+0000f8 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	D_MINUTOS:
-0000fb 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-0000fc 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
-0000fd 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0000fe 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0000ff e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-000100 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-000101 0fe5                      	ADD ZL, CntMinDecenas		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000102 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000103 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000104 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000105 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0000f9 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+0000fa 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
+0000fb 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0000fc 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0000fd e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0000fe e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0000ff 0fe5                      	ADD ZL, CntMinDecenas		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+000100 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000101 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+000102 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+000103 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX5:		; Delay de multiplexeo
-000106 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000107 300a                      	CPI R16, 10			; Compara el registro 16 con 10
-000108 f7e9                      	BRNE DELAY_MULTIPLEX5	; Si no es igual Regresar a dicha subrutina
-000109 2422                      	CLR R2					; Limpiar el registro R2
+000104 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+000105 3005                      	CPI R16, 5			; Compara el registro 16 con 10
+000106 f7e9                      	BRNE DELAY_MULTIPLEX5	; Si no es igual Regresar a dicha subrutina
+000107 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	U_HORAS:
-00010a 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-00010b 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-00010c 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-00010d 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
-00010e e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-00010f e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
-000110 0fe6                      	ADD ZL, CntHrsUnidades			; Se desplaza el pointer
-000111 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000112 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000113 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000114 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+000108 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+000109 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+00010a 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+00010b 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
+00010c e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+00010d e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
+00010e 0fe6                      	ADD ZL, CntHrsUnidades			; Se desplaza el pointer
+00010f 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000110 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+000111 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+000112 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX6:		; Delay de multiplexeo
-000115 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000116 300a                      	CPI R16, 10				; Compara el registro 16 con 10
-000117 f7e9                      	BRNE DELAY_MULTIPLEX6	; Si no es igual Regresar a dicha subrutina
-000118 2422                      	CLR R2					; Limpiar el registro R2
+000113 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+000114 3005                      	CPI R16, 5				; Compara el registro 16 con 10
+000115 f7e9                      	BRNE DELAY_MULTIPLEX6	; Si no es igual Regresar a dicha subrutina
+000116 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	D_HORAS:
-000119 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-00011a 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-00011b 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
-00011c 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-00011d e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-00011e 0fe7                      	ADD ZL, CntHrsDecenas			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00011f 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000120 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000121 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000122 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+000117 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+000118 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+000119 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
+00011a 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+00011b e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+00011c 0fe7                      	ADD ZL, CntHrsDecenas			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00011d 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00011e 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+00011f 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+000120 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX7:		; Delay de multiplexeo
-000123 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000124 300a                      	CPI R16, 10				; Compara el registro 16 con 10
-000125 f7e9                      	BRNE DELAY_MULTIPLEX7	; Si no es igual Regresar a dicha subrutina
-000126 2422                      	CLR R2					; Limpiar el registro R2
+000121 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+000122 3005                      	CPI R16, 5				; Compara el registro 16 con 10
+000123 f7e9                      	BRNE DELAY_MULTIPLEX7	; Si no es igual Regresar a dicha subrutina
+000124 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  ;COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
                                  	U_MIN_CONF_HORA:
-000127 304a                      		CPI CntMinUnidades, 0x0A			; Compara si el contador es 10
-000128 f051                      		BREQ D_MIN_CONF_HORA				; Si el contador es cero salta 
-000129 3f4f                      		CPI CntMinUnidades, -1				; Compara si el registro es -1
-00012a f019                      		BREQ DEC_D_MIN_CONF_HORA			; Si si lo es, saltar a la subrutina
-00012b 3f4e                      		CPI CntMinUnidades, -2				; Compara si el registro es -1
-00012c f009                      		BREQ DEC_D_MIN_CONF_HORA			; Si si lo es, saltar a la subrutina
-00012d c010                      		RJMP U_HRS_CONF_HORA
+000125 304a                      		CPI CntMinUnidades, 0x0A			; Compara si el contador es 10
+000126 f051                      		BREQ D_MIN_CONF_HORA				; Si el contador es cero salta 
+000127 3f4f                      		CPI CntMinUnidades, -1				; Compara si el registro es -1
+000128 f019                      		BREQ DEC_D_MIN_CONF_HORA			; Si si lo es, saltar a la subrutina
+000129 3f4e                      		CPI CntMinUnidades, -2				; Compara si el registro es -1
+00012a f009                      		BREQ DEC_D_MIN_CONF_HORA			; Si si lo es, saltar a la subrutina
+00012b c010                      		RJMP U_HRS_CONF_HORA
                                  
                                  	DEC_D_MIN_CONF_HORA:
-00012e 955a                      		DEC CntMinDecenas					; Decrementar las decenas en el display de los minutos
-00012f 3f5f                      		CPI CntMinDecenas, -1				; Compara si las decenas de minuto es igual a -1
-000130 f039                      		BREQ UNDERFLOW_MINUTOS				; Si son iguales saltar a la subrutina
-000131 e049                      		LDI CntMinUnidades, 0x09			; Carga el valor 9 en el registro de las unidades de minuto
-000132 cff4                      		RJMP U_MIN_CONF_HORA				; Salta de regreso a la subrutina principal
+00012c 955a                      		DEC CntMinDecenas					; Decrementar las decenas en el display de los minutos
+00012d 3f5f                      		CPI CntMinDecenas, -1				; Compara si las decenas de minuto es igual a -1
+00012e f039                      		BREQ UNDERFLOW_MINUTOS				; Si son iguales saltar a la subrutina
+00012f e049                      		LDI CntMinUnidades, 0x09			; Carga el valor 9 en el registro de las unidades de minuto
+000130 cff4                      		RJMP U_MIN_CONF_HORA				; Salta de regreso a la subrutina principal
                                  		
                                  	D_MIN_CONF_HORA:
-000133 3055                      		CPI CntMinDecenas, 0x05		; Compara si el contador de decenas es 5
-000134 f031                      		BREQ RESET_CONF_HORA_MINS		; Si el contador es cero salta 
-000135 9553                      		INC CntMinDecenas				; Aumenta las decenas de los minutos
-000136 2744                      		CLR CntMinUnidades				; Limpia el registro 
-000137 cfef                      		RJMP U_MIN_CONF_HORA			; Regresa a la subrutina principal
+000131 3055                      		CPI CntMinDecenas, 0x05		; Compara si el contador de decenas es 5
+000132 f031                      		BREQ RESET_CONF_HORA_MINS		; Si el contador es cero salta 
+000133 9553                      		INC CntMinDecenas				; Aumenta las decenas de los minutos
+000134 2744                      		CLR CntMinUnidades				; Limpia el registro 
+000135 cfef                      		RJMP U_MIN_CONF_HORA			; Regresa a la subrutina principal
                                  
                                  	UNDERFLOW_MINUTOS:				; Cuando exista Underflow lo que va a hacer es cargar 59
-000138 e049                      		LDI CntMinUnidades, 0x09	; Cargar 9 en CntMinUnidades
-000139 e055                      		LDI CntMinDecenas, 0x05		; Cargar 5 en CntMinDecenas
-00013a cfec                      		RJMP U_MIN_CONF_HORA		; Regresa a la subrutina principal
+000136 e049                      		LDI CntMinUnidades, 0x09	; Cargar 9 en CntMinUnidades
+000137 e055                      		LDI CntMinDecenas, 0x05		; Cargar 5 en CntMinDecenas
+000138 cfec                      		RJMP U_MIN_CONF_HORA		; Regresa a la subrutina principal
                                  
                                  	 RESET_CONF_HORA_MINS:			
-00013b 2755                      		CLR CntMinDecenas			; Limpiar registro
-00013c 2744                      		CLR CntMinUnidades			; Limpiar registro
-00013d cfe9                      		RJMP U_MIN_CONF_HORA		; Regresa a la subrutina principal
+000139 2755                      		CLR CntMinDecenas			; Limpiar registro
+00013a 2744                      		CLR CntMinUnidades			; Limpiar registro
+00013b cfe9                      		RJMP U_MIN_CONF_HORA		; Regresa a la subrutina principal
                                  
                                  ;COMPARACION DE CONFIGURACION DISPLAYS DE HORAS EN HORA
                                  	U_HRS_CONF_HORA:
                                  
-00013e 306a                      		CPI CntHrsUnidades, 0x0A			; Compara si el contador es 10
-00013f f061                      		BREQ D_HRS_CONF_HORA				; Si el contador es cero salta 
-000140 3064                      		CPI CntHrsUnidades, 0x04			; Compara si CntHrsUnidades es 4
-000141 f081                      		BREQ RESET_2359_TO_0				; Si lo es, saltar a dicha subruitna
-000142 3f6f                      		CPI CntHrsUnidades, -1				; Compara si el registro es -1
-000143 f019                      		BREQ DEC_D_HRS_CONF_HORA			; Si si lo es, saltar a la subrutina
-000144 3f6e                      		CPI CntHrsUnidades, -2				; Compara si el registro es -1
-000145 f009                      		BREQ DEC_D_HRS_CONF_HORA			; Si si lo es, saltar a la subrutina
-000146 cf2c                      		RJMP LOOP							; Regresa al loop
+00013c 306a                      		CPI CntHrsUnidades, 0x0A			; Compara si el contador es 10
+00013d f061                      		BREQ D_HRS_CONF_HORA				; Si el contador es cero salta 
+00013e 3064                      		CPI CntHrsUnidades, 0x04			; Compara si CntHrsUnidades es 4
+00013f f081                      		BREQ RESET_2359_TO_0				; Si lo es, saltar a dicha subruitna
+000140 3f6f                      		CPI CntHrsUnidades, -1				; Compara si el registro es -1
+000141 f019                      		BREQ DEC_D_HRS_CONF_HORA			; Si si lo es, saltar a la subrutina
+000142 3f6e                      		CPI CntHrsUnidades, -2				; Compara si el registro es -1
+000143 f009                      		BREQ DEC_D_HRS_CONF_HORA			; Si si lo es, saltar a la subrutina
+000144 cf2e                      		RJMP LOOP							; Regresa al loop
                                  
                                  	DEC_D_HRS_CONF_HORA:
-000147 957a                      		DEC CntHrsDecenas			; Decrementar el registro CntHrsDecenas
-000148 3f7f                      		CPI CntHrsDecenas, -1		; Comparar el registro CntHrsDecenas -1
-000149 f029                      		BREQ UNDERFLOW_HORAS		; Saltar a dicho registro en caso exista igualdad arriba
-00014a e069                      		LDI CntHrsUnidades, 0x09	; Cargar 9 en el registro CntHrsUnidades
-00014b cff2                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
+000145 957a                      		DEC CntHrsDecenas			; Decrementar el registro CntHrsDecenas
+000146 3f7f                      		CPI CntHrsDecenas, -1		; Comparar el registro CntHrsDecenas -1
+000147 f029                      		BREQ UNDERFLOW_HORAS		; Saltar a dicho registro en caso exista igualdad arriba
+000148 e069                      		LDI CntHrsUnidades, 0x09	; Cargar 9 en el registro CntHrsUnidades
+000149 cff2                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
                                  		
                                  	D_HRS_CONF_HORA:
-00014c 9573                      		INC CntHrsDecenas			; Incrementar el registro CntHrsDecenas
-00014d 2766                      		CLR CntHrsUnidades			; Limpiar el registro
-00014e cfef                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
+00014a 9573                      		INC CntHrsDecenas			; Incrementar el registro CntHrsDecenas
+00014b 2766                      		CLR CntHrsUnidades			; Limpiar el registro
+00014c cfef                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
                                  
                                  	UNDERFLOW_HORAS:
-00014f e063                      		LDI CntHrsUnidades, 0x03	; Cargar 3 en el registro CntHrsUnidades
-000150 e072                      		LDI CntHrsDecenas, 0x02		; Cargar 2 en el registro CntHrsDecenas
-000151 cfec                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
+00014d e063                      		LDI CntHrsUnidades, 0x03	; Cargar 3 en el registro CntHrsUnidades
+00014e e072                      		LDI CntHrsDecenas, 0x02		; Cargar 2 en el registro CntHrsDecenas
+00014f cfec                      		RJMP U_HRS_CONF_HORA		; Regresar a la subrutina principal
                                  
                                  	RESET_2359_TO_0:	
-000152 3072                      		CPI CntHrsDecenas, 0x02			; Compara si el contador es 2
-000153 f009                      		BREQ RESET_CONF_HORA_HRS		; Si el contador es cero salta	
-000154 cf1e                      		RJMP LOOP					; Saltar de vuelta al inicio del estado
+000150 3072                      		CPI CntHrsDecenas, 0x02			; Compara si el contador es 2
+000151 f009                      		BREQ RESET_CONF_HORA_HRS		; Si el contador es cero salta	
+000152 cf20                      		RJMP LOOP					; Saltar de vuelta al inicio del estado
                                  
                                  	 RESET_CONF_HORA_HRS:
-000155 2777                      		CLR CntHrsDecenas		; Limpiar el registro
-000156 2766                      		CLR CntHrsUnidades		; Limpiar el registro
+000153 2777                      		CLR CntHrsDecenas		; Limpiar el registro
+000154 2766                      		CLR CntHrsUnidades		; Limpiar el registro
                                  
-000157 cf1b                      	RJMP LOOP	; Regresar al Loop
+000155 cf1d                      	RJMP LOOP	; Regresar al Loop
                                  
                                  ; -------------------------------------------MOSTRAR FECHA-----------------------------------------
                                  
                                  ESTADO010:
-000158 982d                      	CBI PORTB, PB5		; Apagar PB5
-000159 9a40                      	SBI PORTC, PC0		; Prender PC0
-00015a 9841                      	CBI PORTC, PC1		; Apagar PC1
-00015b 2422                      	CLR R2				; Limpiar el registro
+000156 982d                      	CBI PORTB, PB5		; Apagar PB5
+000157 9a40                      	SBI PORTC, PC0		; Prender PC0
+000158 9841                      	CBI PORTC, PC1		; Apagar PC1
+000159 2422                      	CLR R2				; Limpiar el registro
                                  	
                                  	U_MES:
-00015c 9a42                      		SBI PORTC, PC2			; Activa display de unidades minutos
-00015d 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
-00015e 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
-00015f 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
-000160 e6e8                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-000161 e0f8                      		LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
-000162 0de6                      		ADD ZL, CntMesUnidad			; Se desplaza el pointer
-000163 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000164 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
-000165 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
-000166 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+00015a 9a42                      		SBI PORTC, PC2			; Activa display de unidades minutos
+00015b 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
+00015c 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
+00015d 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
+00015e e4ea                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+00015f e0f8                      		LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
+000160 0de6                      		ADD ZL, CntMesUnidad			; Se desplaza el pointer
+000161 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000162 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
+000163 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
+000164 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX8:		; Delay de multiplexeo
-000167 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-000168 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000169 f7e9                      		BRNE DELAY_MULTIPLEX8	; Si no es igual Regresar a dicha subrutina
-00016a 2422                      		CLR R2					; Limpiar el registro R2
+000165 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+000166 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+000167 f7e9                      		BRNE DELAY_MULTIPLEX8	; Si no es igual Regresar a dicha subrutina
+000168 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	D_MES:
-00016b 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
-00016c 9a43                      		SBI PORTC, PC3			; Desactiva display de decenas minutos
-00016d 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
-00016e 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
-00016f e6e8                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-000170 0de7                      		ADD ZL, CntMesDecena			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000171 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000172 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
-000173 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
-000174 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000169 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
+00016a 9a43                      		SBI PORTC, PC3			; Desactiva display de decenas minutos
+00016b 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
+00016c 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
+00016d e4ea                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+00016e 0de7                      		ADD ZL, CntMesDecena			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00016f 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000170 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
+000171 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
+000172 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX9:		; Delay de multiplexeo
-000175 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-000176 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000177 f7e9                      		BRNE DELAY_MULTIPLEX9	; Si no es igual Regresar a dicha subrutina
-000178 2422                      		CLR R2					; Limpiar el registro R2
+000173 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+000174 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+000175 f7e9                      		BRNE DELAY_MULTIPLEX9	; Si no es igual Regresar a dicha subrutina
+000176 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	U_DIA:
-000179 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
-00017a 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
-00017b 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
-00017c 9a45                      		SBI PORTC, PC5			; Desactiva display de unidade horas
-00017d e6e8                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-00017e e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-00017f 0de4                      		ADD ZL, CntDiaUnidad		; Se desplaza el pointer
-000180 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000181 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
-000182 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
-000183 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000177 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
+000178 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
+000179 9844                      		CBI PORTC, PC4			; Activa display de decenas horas 
+00017a 9a45                      		SBI PORTC, PC5			; Desactiva display de unidade horas
+00017b e4ea                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+00017c e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+00017d 0de4                      		ADD ZL, CntDiaUnidad		; Se desplaza el pointer
+00017e 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00017f 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
+000180 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
+000181 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX10:		; Delay de multiplexeo
-000184 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-000185 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000186 f7e9                      		BRNE DELAY_MULTIPLEX10	; Si no es igual Regresar a dicha subrutina
-000187 2422                      		CLR R2					; Limpiar el registro R2
+000182 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+000183 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+000184 f7e9                      		BRNE DELAY_MULTIPLEX10	; Si no es igual Regresar a dicha subrutina
+000185 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	D_DIA:
-000188 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
-000189 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
-00018a 9a44                      		SBI PORTC, PC4			; Activa display de decenas horas 
-00018b 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
-00018c e6e8                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-00018d e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-00018e 0de5                      		ADD ZL, CntDiaDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00018f 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000190 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
-000191 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
-000192 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000186 9842                      		CBI PORTC, PC2			; Activa display de unidades minutos
+000187 9843                      		CBI PORTC, PC3			; Desactiva display de decenas minutos
+000188 9a44                      		SBI PORTC, PC4			; Activa display de decenas horas 
+000189 9845                      		CBI PORTC, PC5			; Desactiva display de unidade horas
+00018a e4ea                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+00018b e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+00018c 0de5                      		ADD ZL, CntDiaDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00018d 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00018e 9948                      		SBIC PIND, PD0			; Salta la siguiente linea si esta en cero 
+00018f 6001                      		ORI R16, 0x01			; Realiza un or para activar pd0 siempre
+000190 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX11:		; Delay de multiplexeo
-000193 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-000194 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000195 f7e9                      		BRNE DELAY_MULTIPLEX11	; Si no es igual Regresar a dicha subrutina
-000196 2422                      		CLR R2					; Limpiar el registro R2
+000191 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+000192 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+000193 f7e9                      		BRNE DELAY_MULTIPLEX11	; Si no es igual Regresar a dicha subrutina
+000194 2422                      		CLR R2					; Limpiar el registro R2
                                  	
                                  	;------------------------------COMPARACION DE CONFIGURACION DISPLAYS DE DIA------------------------ 
                                  
                                  	SHOW_UNIDAD_DIA:
-000197 2d04                      		MOV R16, CntDiaUnidad	; Copiar el registro CntDiaunidad en R16
-000198 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
-000199 f1c9                      		BREQ D_DIA_SHOW			; Si el contador es cero salta 
+000195 2d04                      		MOV R16, CntDiaUnidad	; Copiar el registro CntDiaunidad en R16
+000196 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
+000197 f1c9                      		BREQ D_DIA_SHOW			; Si el contador es cero salta 
                                  
-00019a 2d07                      		MOV R16, CntMesDecena		; Copiar el registro CntMesDecena en R16
-00019b 3001                      		CPI R16, 0x01				; Compara R16 con 1
-00019c f081                      		BREQ AUMENTO_POINTER_POR_DECENA_SHOW  ;Se dirigie a una subrutina para aumentar al pointer más alla de 0
+000198 2d07                      		MOV R16, CntMesDecena		; Copiar el registro CntMesDecena en R16
+000199 3001                      		CPI R16, 0x01				; Compara R16 con 1
+00019a f081                      		BREQ AUMENTO_POINTER_POR_DECENA_SHOW  ;Se dirigie a una subrutina para aumentar al pointer más alla de 0
                                  
                                  		; MOV PointerMes, CntMesUnidad	; Copia el registro CntMes Unidad en PointerMes
-00019d e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-00019e e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-00019f 0de6                      		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001a0 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0001a1 e011                      		LDI R17, 0x01			; Carga 1 en R29
-0001a2 0f0d                      		ADD R16, R29			; Suma el registro 16 con el 19
-0001a3 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
-0001a4 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
-0001a5 f1b9                      		BREQ COMPROBAR_DECENA_MES_SHOW	; Se dirige a la subruita si ambos registros de arriba son iguales
+00019b e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+00019c e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+00019d 0de6                      		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00019e 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00019f e011                      		LDI R17, 0x01			; Carga 1 en R17
+0001a0 0f01                      		ADD R16, R17			; Suma el registro 16 con el 19
+0001a1 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
+0001a2 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
+0001a3 f1b9                      		BREQ COMPROBAR_DECENA_MES_SHOW	; Se dirige a la subruita si ambos registros de arriba son iguales
                                  
-0001a6 2d04                      		MOV R16, CntDiaUnidad	; Copia el registro CntDiaUnidad en R16
-0001a7 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-0001a8 f111                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
-0001a9 2d03                      		MOV R16, PointerMes	; Copia el registro CntDiaUnidad en R16
-0001aa 3f0e                      		CPI R16, -2				; Compara si el registro es -2
-0001ab f0f9                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
-0001ac c112                      		RJMP U_MES_CONF_FECHA	; Regresa a la subrutina principal
+0001a4 2d04                      		MOV R16, CntDiaUnidad	; Copia el registro CntDiaUnidad en R16
+0001a5 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+0001a6 f111                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
+0001a7 2d03                      		MOV R16, PointerMes	; Copia el registro CntDiaUnidad en R16
+0001a8 3f0e                      		CPI R16, -2				; Compara si el registro es -2
+0001a9 f0f9                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
+0001aa c112                      		RJMP U_MES_CONF_FECHA	; Regresa a la subrutina principal
                                  
                                  	AUMENTO_POINTER_POR_DECENA_SHOW:		; Subrutina para 
-0001ad e00a                      		LDI R16, 0x0A				; cargar 10 a r16
-0001ae 0d06                      		ADD R16, CntMesUnidad		; Sumar ambos registros R16 y CntMesUnidad
-0001af 2e30                      		MOV PointerMes, R16			; Copiar el registro R16 a PointerMes
-0001b0 300d                      		CPI R16, 0x0D				; Comparar si el registro es 13
-0001b1 f081                      		BREQ RESET_FECHA_LUEGO_DE_365_DIAS_SHOW	; Si hay igualdad saltar a dicha subrutina
+0001ab e00a                      		LDI R16, 0x0A				; cargar 10 a r16
+0001ac 0d06                      		ADD R16, CntMesUnidad		; Sumar ambos registros R16 y CntMesUnidad
+0001ad 2e30                      		MOV PointerMes, R16			; Copiar el registro R16 a PointerMes
+0001ae 300d                      		CPI R16, 0x0D				; Comparar si el registro es 13
+0001af f081                      		BREQ RESET_FECHA_LUEGO_DE_365_DIAS_SHOW	; Si hay igualdad saltar a dicha subrutina
                                  
-0001b2 e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-0001b3 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-0001b4 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001b5 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0001b6 e0d1                      		LDI R29, 0x01			; Carga 1 en R29
-0001b7 0f0d                      		ADD R16, R29			; Suma el registro 16 con el 19
-0001b8 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
-0001b9 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
-0001ba f111                      		BREQ COMPROBAR_DECENA_MES_SHOW
+0001b0 e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+0001b1 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+0001b2 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0001b3 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0001b4 e011                      		LDI R17, 0x01			; Carga 1 en R17
+0001b5 0f01                      		ADD R16, R17			; Suma el registro 16 con el 19
+0001b6 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
+0001b7 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
+0001b8 f111                      		BREQ COMPROBAR_DECENA_MES_SHOW
                                  
-0001bb 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
-0001bc 3f0f                      		CPI R16, -1					; Compara si el registro es -1
-0001bd f069                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
-0001be 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
-0001bf 3f0e                      		CPI R16, -2					; Compara si el registro es -2
-0001c0 f051                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
+0001b9 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
+0001ba 3f0f                      		CPI R16, -1					; Compara si el registro es -1
+0001bb f069                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
+0001bc 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
+0001bd 3f0e                      		CPI R16, -2					; Compara si el registro es -2
+0001be f051                      		BREQ DEC_D_DIA_SHOW_FECHA			; Si si lo es, saltar a la subrutina
                                  		
-0001c1 c0fd                      		RJMP U_MES_CONF_FECHA		; Saltar a la subrutina Pincipal
+0001bf c0fd                      		RJMP U_MES_CONF_FECHA		; Saltar a la subrutina Pincipal
                                  
                                  	RESET_FECHA_LUEGO_DE_365_DIAS_SHOW:	; Si pasaron los 12 meses empezar desde el 01/01
-0001c2 2444                      		CLR CntDiaUnidad			; Limpia el registro
-0001c3 2455                      		CLR CntDiaDecena			; Limpia el registro
-0001c4 2466                      		CLR CntMesUnidad			; Limpia el registro
-0001c5 2477                      		CLR CntMesDecena			; Limpia el registro
-0001c6 2433                      		CLR PointerMes				; Limpia el registro
-0001c7 e001                      		LDI R16, 0x01				; Carga 1 al registro R16
-0001c8 0e40                      		ADD CntDiaUnidad, R16		; Al registro CntDiaUnidad se le suma 1
-0001c9 0e60                      		ADD CntMesUnidad, R16		; Al registro CntMesUnidad se le suma 1
-0001ca cfcc                      		RJMP SHOW_UNIDAD_DIA		; Regresa a la subrutina principal
+0001c0 2444                      		CLR CntDiaUnidad			; Limpia el registro
+0001c1 2455                      		CLR CntDiaDecena			; Limpia el registro
+0001c2 2466                      		CLR CntMesUnidad			; Limpia el registro
+0001c3 2477                      		CLR CntMesDecena			; Limpia el registro
+0001c4 2433                      		CLR PointerMes				; Limpia el registro
+0001c5 e001                      		LDI R16, 0x01				; Carga 1 al registro R16
+0001c6 0e40                      		ADD CntDiaUnidad, R16		; Al registro CntDiaUnidad se le suma 1
+0001c7 0e60                      		ADD CntMesUnidad, R16		; Al registro CntMesUnidad se le suma 1
+0001c8 cfcc                      		RJMP SHOW_UNIDAD_DIA		; Regresa a la subrutina principal
                                  
                                  	DEC_D_DIA_SHOW_FECHA:	; Decrementar Decena Dia
-0001cb 945a                      		DEC CntDiaDecena		; Decrementar registro CntDiaDecena
-0001cc 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
-0001cd 3f1f                      		CPI R17, -1				; Compararar el registro R17 con -1
-0001ce f0b1                      		BREQ UNDERFLOW_DIAS_SHOW		; Si hay igualdad dirigirse a dicha subrutina
-0001cf e009                      		LDI R16, 0x09			; Cargar el registro 9 con r16
-0001d0 2444                      		CLR CntDiaUnidad		; Limpiar el registro
-0001d1 0e40                      		ADD CntDiaUnidad, R16	; Sumar CntDiaUnidad con R16
-0001d2 cfc4                      		RJMP SHOW_UNIDAD_DIA		; Saltar de vuelta a la subrutina principal
+0001c9 945a                      		DEC CntDiaDecena		; Decrementar registro CntDiaDecena
+0001ca 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
+0001cb 3f1f                      		CPI R17, -1				; Compararar el registro R17 con -1
+0001cc f0b1                      		BREQ UNDERFLOW_DIAS_SHOW		; Si hay igualdad dirigirse a dicha subrutina
+0001cd e009                      		LDI R16, 0x09			; Cargar el registro 9 con r16
+0001ce 2444                      		CLR CntDiaUnidad		; Limpiar el registro
+0001cf 0e40                      		ADD CntDiaUnidad, R16	; Sumar CntDiaUnidad con R16
+0001d0 cfc4                      		RJMP SHOW_UNIDAD_DIA		; Saltar de vuelta a la subrutina principal
                                  		
                                  	D_DIA_SHOW:				; Incrementar Decena Dia
-0001d3 e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-0001d4 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-0001d5 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001d6 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0001d7 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
-0001d8 1701                      		CP R16, R17				; Comparar R16 con R17
-0001d9 f0b1                      		BREQ RESET_CONF_FECHA_SHOW	; Si hay igualdad dirigirse a dicha subrutina
+0001d1 e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+0001d2 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+0001d3 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0001d4 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0001d5 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
+0001d6 1701                      		CP R16, R17				; Comparar R16 con R17
+0001d7 f0b1                      		BREQ RESET_CONF_FECHA_SHOW	; Si hay igualdad dirigirse a dicha subrutina
                                  
-0001da 9453                      		INC CntDiaDecena				; Aumenta las decenas de los dias
-0001db 2444                      		CLR CntDiaUnidad				; Limpia el registro 
-0001dc cfba                      		RJMP SHOW_UNIDAD_DIA
+0001d8 9453                      		INC CntDiaDecena				; Aumenta las decenas de los dias
+0001d9 2444                      		CLR CntDiaUnidad				; Limpia el registro 
+0001da cfba                      		RJMP SHOW_UNIDAD_DIA
                                  	
                                  	COMPROBAR_DECENA_MES_SHOW:
-0001dd e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-0001de e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-0001df 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001e0 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0001db e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+0001dc e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+0001dd 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0001de 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
                                  		;SBI PORTB, PB5			; Prender PB5
-0001e1 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro cntdiadecena en r17
-0001e2 1701                      		CP R16, R17				; Comparar R16 con R17
-0001e3 f061                      		BREQ RESET_CONF_FECHA_SHOW	; Si hay igualdad dirigirse a dicha subrutina
-0001e4 cfb2                      		RJMP SHOW_UNIDAD_DIA	; Saltar de vuelta a la subrutina principal
+0001df 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro cntdiadecena en r17
+0001e0 1701                      		CP R16, R17				; Comparar R16 con R17
+0001e1 f061                      		BREQ RESET_CONF_FECHA_SHOW	; Si hay igualdad dirigirse a dicha subrutina
+0001e2 cfb2                      		RJMP SHOW_UNIDAD_DIA	; Saltar de vuelta a la subrutina principal
                                  
                                  	UNDERFLOW_DIAS_SHOW:
-0001e5 e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-0001e6 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-0001e7 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001e8 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
-0001e9 2e40                      		MOV CntDiaUnidad, R16
-0001ea e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-0001eb e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-0001ec 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0001ed 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
-0001ee 2e50                      		MOV CntDiaDecena, R16
-0001ef cfa7                      		RJMP SHOW_UNIDAD_DIA
+0001e3 e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+0001e4 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+0001e5 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0001e6 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
+0001e7 2e40                      		MOV CntDiaUnidad, R16
+0001e8 e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+0001e9 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+0001ea 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0001eb 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
+0001ec 2e50                      		MOV CntDiaDecena, R16
+0001ed cfa7                      		RJMP SHOW_UNIDAD_DIA
                                  
                                  	 RESET_CONF_FECHA_SHOW:					; Realizar reset de ambos registros del Dia
-0001f0 9463                      		INC CntMesUnidad
-0001f1 2455                      		CLR CntDiaDecena				; Limpia el registro CntDiaDecena
-0001f2 2444                      		CLR CntDiaUnidad				; Limpia el registor CntDiaUnidad
-0001f3 e001                      		LDI R16, 0x01
-0001f4 0e40                      		ADD CntDiaUnidad, R16
-0001f5 cfa1                      		RJMP SHOW_UNIDAD_DIA			; Salta a la subrutina general123
+0001ee 9463                      		INC CntMesUnidad
+0001ef 2455                      		CLR CntDiaDecena				; Limpia el registro CntDiaDecena
+0001f0 2444                      		CLR CntDiaUnidad				; Limpia el registor CntDiaUnidad
+0001f1 e001                      		LDI R16, 0x01
+0001f2 0e40                      		ADD CntDiaUnidad, R16
+0001f3 cfa1                      		RJMP SHOW_UNIDAD_DIA			; Salta a la subrutina general123
                                  
                                  ; ----------------COMPARACION DE CONFIGURACION DISPLAYS DE MES EN FECHA----------------------------
                                  	U_MES_CONF_FECHA_SHOW:
-0001f6 2c36                      		MOV PointerMes, CntMesUnidad
-0001f7 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0001f8 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
-0001f9 f0a9                      		BREQ D_MES_SHOW				; Si el contador es cero salta
+0001f4 2c36                      		MOV PointerMes, CntMesUnidad
+0001f5 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0001f6 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
+0001f7 f0a9                      		BREQ D_MES_SHOW				; Si el contador es cero salta
                                  		 
-0001fa 2d06                      		MOV R16, CntMesUnidad   ; Copia el registro CntMesUnidad en R16
-0001fb 3003                      		CPI R16, 0x03			; Compara si el contador es 3
-0001fc f0a9                      		BREQ VERIFICACION_MES_SHOW	; Si el contador es cero salta a la subrutina de verificacion
+0001f8 2d06                      		MOV R16, CntMesUnidad   ; Copia el registro CntMesUnidad en R16
+0001f9 3003                      		CPI R16, 0x03			; Compara si el contador es 3
+0001fa f0a9                      		BREQ VERIFICACION_MES_SHOW	; Si el contador es cero salta a la subrutina de verificacion
                                  
-0001fd 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0001fe 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-0001ff f039                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
+0001fb 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0001fc 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+0001fd f039                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
                                  
-000200 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-000201 3f0e                      		CPI R16, -2				; Compara si el registro es -2
-000202 f021                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
+0001fe 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0001ff 3f0e                      		CPI R16, -2				; Compara si el registro es -2
+000200 f021                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
                                  
-000203 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-000204 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-000205 f009                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
+000201 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+000202 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+000203 f009                      		BREQ DEC_D_MES_SHOW_FECHA		; Si si lo es, saltar a la subrutina
                                  
-000206 ce6c                      		RJMP LOOP ; Saltar de vuelta  loop
+000204 ce6e                      		RJMP LOOP ; Saltar de vuelta  loop
                                  
                                  
                                  	DEC_D_MES_SHOW_FECHA:	; Decremento
-000207 947a                      		DEC CntMesDecena	; Decrementar el registro cntmesdecena
-000208 2d17                      		MOV R17, CntMesDecena	; Copiar cntmesdecena a r17
-000209 3f1f                      		CPI R17, -1				; comparar r17 con -1
-00020a f059                      		BREQ UNDERFLOW_MES_SHOW		; Saltar a dicha subrutina
-00020b e009                      		LDI R16, 0x09			; Cargar 9 en R16
-00020c 2466                      		CLR CntMesUnidad		; Limpiar el registro
-00020d 0e60                      		ADD CntMesUnidad, R16	; Sumar CntMesUnidad con R16
-00020e cfe7                      		RJMP U_MES_CONF_FECHA_SHOW	; Saltar de vuelta  a la subrutina principal	
+000205 947a                      		DEC CntMesDecena	; Decrementar el registro cntmesdecena
+000206 2d17                      		MOV R17, CntMesDecena	; Copiar cntmesdecena a r17
+000207 3f1f                      		CPI R17, -1				; comparar r17 con -1
+000208 f059                      		BREQ UNDERFLOW_MES_SHOW		; Saltar a dicha subrutina
+000209 e009                      		LDI R16, 0x09			; Cargar 9 en R16
+00020a 2466                      		CLR CntMesUnidad		; Limpiar el registro
+00020b 0e60                      		ADD CntMesUnidad, R16	; Sumar CntMesUnidad con R16
+00020c cfe7                      		RJMP U_MES_CONF_FECHA_SHOW	; Saltar de vuelta  a la subrutina principal	
                                  		
                                  	D_MES_SHOW:  ; INCREMENTO
-00020f 9473                      		INC CntMesDecena			; Incrementar el contador
-000210 2466                      		CLR CntMesUnidad			; Limpiar el registro
-000211 cfe4                      		RJMP U_MES_CONF_FECHA_SHOW		; Saltar de vuelta  a la subrutina principal	
+00020d 9473                      		INC CntMesDecena			; Incrementar el contador
+00020e 2466                      		CLR CntMesUnidad			; Limpiar el registro
+00020f cfe4                      		RJMP U_MES_CONF_FECHA_SHOW		; Saltar de vuelta  a la subrutina principal	
                                  
                                  	VERIFICACION_MES_SHOW:	; Verifica el mes para reiniciar
-000212 2d07                      		MOV R16, CntMesDecena			; Copiar el registro r16 a CntMesDecena
-000213 3001                      		CPI R16, 0x01					; Compara si el contador es 1
-000214 f041                      		BREQ RESET_CONF_MES_FECHA_SHOW		; Si resultado es cero salta 
-000215 cfe0                      		RJMP U_MES_CONF_FECHA_SHOW			; Saltar a la subrutina principal
+000210 2d07                      		MOV R16, CntMesDecena			; Copiar el registro r16 a CntMesDecena
+000211 3001                      		CPI R16, 0x01					; Compara si el contador es 1
+000212 f041                      		BREQ RESET_CONF_MES_FECHA_SHOW		; Si resultado es cero salta 
+000213 cfe0                      		RJMP U_MES_CONF_FECHA_SHOW			; Saltar a la subrutina principal
                                  
                                  	UNDERFLOW_MES_SHOW:		; Realizar underflow en los display de mes
-000216 e002                      		LDI R16, 0x02			; Cargar el valor 0x02 en R16
-000217 2466                      		CLR CntMesUnidad		; Limpiar el registro
-000218 0e60                      		ADD CntMesUnidad, R16	; Sumar R 16 con el registro CntMesUnidad
-000219 e001                      		LDI R16, 0x01			; Cargar 1 en R16
-00021a 2477                      		CLR CntMesDecena		; Limpiar el registro
-00021b 0e70                      		ADD CntMesDecena, R16	; Sumar CntMesDecena con R16
-00021c cfd9                      		RJMP U_MES_CONF_FECHA_SHOW	; Saltar de vuelta  a la subrutina principal
+000214 e002                      		LDI R16, 0x02			; Cargar el valor 0x02 en R16
+000215 2466                      		CLR CntMesUnidad		; Limpiar el registro
+000216 0e60                      		ADD CntMesUnidad, R16	; Sumar R 16 con el registro CntMesUnidad
+000217 e001                      		LDI R16, 0x01			; Cargar 1 en R16
+000218 2477                      		CLR CntMesDecena		; Limpiar el registro
+000219 0e70                      		ADD CntMesDecena, R16	; Sumar CntMesDecena con R16
+00021a cfd9                      		RJMP U_MES_CONF_FECHA_SHOW	; Saltar de vuelta  a la subrutina principal
                                  
                                  	 RESET_CONF_MES_FECHA_SHOW:
-00021d 2477                      		CLR CntMesDecena		; Limpiar registro
-00021e 2466                      		CLR CntMesUnidad		; Limpiar registro
+00021b 2477                      		CLR CntMesDecena		; Limpiar registro
+00021c 2466                      		CLR CntMesUnidad		; Limpiar registro
                                  
-00021f ce53                      	RJMP LOOP		; Saltar de vuelta al loop
+00021d ce55                      	RJMP LOOP		; Saltar de vuelta al loop
                                  
                                  ; ----------------------------------CONFIGURAR FECHA-----------------------------------------------
                                  
                                  ESTADO011:
-000220 982d                      	CBI PORTB, PB5		; Prender el PB5
-000221 9a40                      	SBI PORTC, PC0		; Apagar PC0
-000222 9a41                      	SBI PORTC, PC1		; Apagar PC1
-000223 2422                      	CLR R2				; Limpiar R2
-000224 9858                      	CBI PORTD, PD0		; Apagar PD0
+00021e 982d                      	CBI PORTB, PB5		; Prender el PB5
+00021f 9a40                      	SBI PORTC, PC0		; Apagar PC0
+000220 9a41                      	SBI PORTC, PC1		; Apagar PC1
+000221 2422                      	CLR R2				; Limpiar R2
+000222 9858                      	CBI PORTD, PD0		; Apagar PD0
                                  
                                  	U_MES_C:
-000225 9a42                      		SBI PORTC, PC2			; Activa display de unidades mes
-000226 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
-000227 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
-000228 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dia
-000229 e6e8                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-00022a e0f8                      		LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
-00022b 0de6                      		ADD ZL, CntMesUnidad			; Se desplaza el pointer
-00022c 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-00022d 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-00022e 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-00022f b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000223 9a42                      		SBI PORTC, PC2			; Activa display de unidades mes
+000224 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
+000225 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
+000226 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dia
+000227 e4ea                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+000228 e0f8                      		LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
+000229 0de6                      		ADD ZL, CntMesUnidad			; Se desplaza el pointer
+00022a 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00022b 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+00022c 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+00022d b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX12:		; Delay de multiplexeo
-000230 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-000231 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000232 f7e9                      		BRNE DELAY_MULTIPLEX12	; Si no es igual Regresar a dicha subrutina
-000233 2422                      		CLR R2					; Limpiar el registro R2
+00022e 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+00022f 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+000230 f7e9                      		BRNE DELAY_MULTIPLEX12	; Si no es igual Regresar a dicha subrutina
+000231 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	D_MES_C:
-000234 9842                      		CBI PORTC, PC2			; Activa display de unidades mes
-000235 9a43                      		SBI PORTC, PC3			; Desactiva display de decenas mes
-000236 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
-000237 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dia
-000238 e6e8                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-000239 0de7                      		ADD ZL, CntMesDecena			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00023a 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-00023b 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-00023c 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-00023d b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000232 9842                      		CBI PORTC, PC2			; Activa display de unidades mes
+000233 9a43                      		SBI PORTC, PC3			; Desactiva display de decenas mes
+000234 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
+000235 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dia
+000236 e4ea                      		LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+000237 0de7                      		ADD ZL, CntMesDecena			; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+000238 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000239 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+00023a 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+00023b b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX13:		; Delay de multiplexeo
-00023e 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-00023f 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-000240 f7e9                      		BRNE DELAY_MULTIPLEX13	; Si no es igual Regresar a dicha subrutina
-000241 2422                      		CLR R2					; Limpiar el registro R2
+00023c 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+00023d 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+00023e f7e9                      		BRNE DELAY_MULTIPLEX13	; Si no es igual Regresar a dicha subrutina
+00023f 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	U_DIA_C:
-000242 9842                      		CBI PORTC, PC2			; Activa display de unidades mes
-000243 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
-000244 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
-000245 9a45                      		SBI PORTC, PC5			; Desactiva display de unidades dia
-000246 e6e8                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-000247 e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-000248 0de4                      		ADD ZL, CntDiaUnidad		; Se desplaza el pointer
-000249 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-00024a 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-00024b 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-00024c b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+000240 9842                      		CBI PORTC, PC2			; Activa display de unidades mes
+000241 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
+000242 9844                      		CBI PORTC, PC4			; Activa display de decenas dia 
+000243 9a45                      		SBI PORTC, PC5			; Desactiva display de unidades dia
+000244 e4ea                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+000245 e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+000246 0de4                      		ADD ZL, CntDiaUnidad		; Se desplaza el pointer
+000247 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000248 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+000249 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+00024a b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX14:		; Delay de multiplexeo
-00024d 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-00024e 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-00024f f7e9                      		BRNE DELAY_MULTIPLEX14	; Si no es igual Regresar a dicha subrutina
-000250 2422                      		CLR R2					; Limpiar el registro R2
+00024b 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+00024c 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+00024d f7e9                      		BRNE DELAY_MULTIPLEX14	; Si no es igual Regresar a dicha subrutina
+00024e 2422                      		CLR R2					; Limpiar el registro R2
                                  
                                  	D_DIA_C:
-000251 9842                      		CBI PORTC, PC2			; Desactiva display de unidades mes
-000252 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
-000253 9a44                      		SBI PORTC, PC4			; Activa display de decenas dias 
-000254 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dias
-000255 e6e8                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-000256 e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-000257 0de5                      		ADD ZL, CntDiaDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000258 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000259 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-00025a 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-00025b b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
+00024f 9842                      		CBI PORTC, PC2			; Desactiva display de unidades mes
+000250 9843                      		CBI PORTC, PC3			; Desactiva display de decenas mes
+000251 9a44                      		SBI PORTC, PC4			; Activa display de decenas dias 
+000252 9845                      		CBI PORTC, PC5			; Desactiva display de unidade dias
+000253 e4ea                      		LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+000254 e0f8                      		LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+000255 0de5                      		ADD ZL, CntDiaDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+000256 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000257 9948                      		SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
+000258 7f0e                      		ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
+000259 b90b                      		OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  		DELAY_MULTIPLEX15:		; Delay de multiplexeo
-00025c 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
-00025d 300a                      		CPI R16, 10				; Compara el registro 16 con 10
-00025e f7e9                      		BRNE DELAY_MULTIPLEX15	; Si no es igual Regresar a dicha subrutina
-00025f 2422                      		CLR R2	
+00025a 2d02                      		MOV R16, R2				; Copia el registro 2 en el 16
+00025b 3005                      		CPI R16, 5				; Compara el registro 16 con 10
+00025c f7e9                      		BRNE DELAY_MULTIPLEX15	; Si no es igual Regresar a dicha subrutina
+00025d 2422                      		CLR R2	
                                  
                                  	
                                  ;------------------------------COMPARACION DE CONFIGURACION DISPLAYS DE DIA------------------------ 
                                  
                                  	CONF_UNIDAD_DIA:
-000260 2d04                      		MOV R16, CntDiaUnidad	; Copiar el registro CntDiaunidad en R16
-000261 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
-000262 f1c9                      		BREQ D_DIA_CONF			; Si el contador es cero salta 
+00025e 2d04                      		MOV R16, CntDiaUnidad	; Copiar el registro CntDiaunidad en R16
+00025f 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
+000260 f1c9                      		BREQ D_DIA_CONF			; Si el contador es cero salta 
                                  
-000263 2d07                      		MOV R16, CntMesDecena		; Copiar el registro CntMesDecena en R16
-000264 3001                      		CPI R16, 0x01				; Compara R16 con 1
-000265 f081                      		BREQ AUMENTO_POINTER_POR_DECENA  ;Se dirigie a una subrutina para aumentar al pointer más alla de 0
+000261 2d07                      		MOV R16, CntMesDecena		; Copiar el registro CntMesDecena en R16
+000262 3001                      		CPI R16, 0x01				; Compara R16 con 1
+000263 f081                      		BREQ AUMENTO_POINTER_POR_DECENA  ;Se dirigie a una subrutina para aumentar al pointer más alla de 0
                                  
                                  		; MOV PointerMes, CntMesUnidad	; Copia el registro CntMes Unidad en PointerMes
-000266 e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-000267 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-000268 0de6                      		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000269 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-00026a e0d1                      		LDI R29, 0x01			; Carga 1 en R29
-00026b 0f0d                      		ADD R16, R29			; Suma el registro 16 con el 19
-00026c 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
-00026d 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
-00026e f1b9                      		BREQ COMPROBAR_DECENA_MES	; Se dirige a la subruita si ambos registros de arriba son iguales
+000264 e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+000265 e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+000266 0de6                      		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+000267 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000268 e011                      		LDI R17, 0x01			; Carga 1 en R17
+000269 0f01                      		ADD R16, R17			; Suma el registro 16 con el 19
+00026a 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
+00026b 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
+00026c f1b9                      		BREQ COMPROBAR_DECENA_MES	; Se dirige a la subruita si ambos registros de arriba son iguales
                                  
-00026f 2d04                      		MOV R16, CntDiaUnidad	; Copia el registro CntDiaUnidad en R16
-000270 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-000271 f111                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
-000272 2d03                      		MOV R16, PointerMes	; Copia el registro CntDiaUnidad en R16
-000273 3f0e                      		CPI R16, -2				; Compara si el registro es -2
-000274 f0f9                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
-000275 c049                      		RJMP U_MES_CONF_FECHA	; Regresa a la subrutina principal
+00026d 2d04                      		MOV R16, CntDiaUnidad	; Copia el registro CntDiaUnidad en R16
+00026e 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+00026f f111                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
+000270 2d03                      		MOV R16, PointerMes	; Copia el registro CntDiaUnidad en R16
+000271 3f0e                      		CPI R16, -2				; Compara si el registro es -2
+000272 f0f9                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
+000273 c049                      		RJMP U_MES_CONF_FECHA	; Regresa a la subrutina principal
                                  
                                  	AUMENTO_POINTER_POR_DECENA:		; Subrutina para 
-000276 e00a                      		LDI R16, 0x0A				; cargar 10 a r16
-000277 0d06                      		ADD R16, CntMesUnidad		; Sumar ambos registros R16 y CntMesUnidad
-000278 2e30                      		MOV PointerMes, R16			; Copiar el registro R16 a PointerMes
-000279 300d                      		CPI R16, 0x0D				; Comparar si el registro es 13
-00027a f081                      		BREQ RESET_FECHA_LUEGO_DE_365_DIAS	; Si hay igualdad saltar a dicha subrutina
+000274 e00a                      		LDI R16, 0x0A				; cargar 10 a r16
+000275 0d06                      		ADD R16, CntMesUnidad		; Sumar ambos registros R16 y CntMesUnidad
+000276 2e30                      		MOV PointerMes, R16			; Copiar el registro R16 a PointerMes
+000277 300d                      		CPI R16, 0x0D				; Comparar si el registro es 13
+000278 f081                      		BREQ RESET_FECHA_LUEGO_DE_365_DIAS	; Si hay igualdad saltar a dicha subrutina
                                  
-00027b e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-00027c e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-00027d 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00027e 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-00027f e0d1                      		LDI R29, 0x01			; Carga 1 en R29
-000280 0f0d                      		ADD R16, R29			; Suma el registro 16 con el 19
-000281 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
-000282 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
-000283 f111                      		BREQ COMPROBAR_DECENA_MES
+000279 e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+00027a e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+00027b 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00027c 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00027d e011                      		LDI R17, 0x01			; Carga 1 en R17
+00027e 0f01                      		ADD R16, R17			; Suma el registro 16 con el 19
+00027f 2d14                      		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
+000280 1701                      		CP R16, R17				;	Compara el registro R16 con el R17
+000281 f111                      		BREQ COMPROBAR_DECENA_MES
                                  
-000284 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
-000285 3f0f                      		CPI R16, -1					; Compara si el registro es -1
-000286 f069                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
-000287 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
-000288 3f0e                      		CPI R16, -2					; Compara si el registro es -2
-000289 f051                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
+000282 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
+000283 3f0f                      		CPI R16, -1					; Compara si el registro es -1
+000284 f069                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
+000285 2d04                      		MOV R16, CntDiaUnidad		; Copiar el registro CntDiaUnidad en R16
+000286 3f0e                      		CPI R16, -2					; Compara si el registro es -2
+000287 f051                      		BREQ DEC_D_DIA_CONF_FECHA			; Si si lo es, saltar a la subrutina
                                  		
-00028a c034                      		RJMP U_MES_CONF_FECHA		; Saltar a la subrutina Pincipal
+000288 c034                      		RJMP U_MES_CONF_FECHA		; Saltar a la subrutina Pincipal
                                  
                                  	RESET_FECHA_LUEGO_DE_365_DIAS:	; Si pasaron los 12 meses empezar desde el 01/01
-00028b 2444                      		CLR CntDiaUnidad			; Limpia el registro
-00028c 2455                      		CLR CntDiaDecena			; Limpia el registro
-00028d 2466                      		CLR CntMesUnidad			; Limpia el registro
-00028e 2477                      		CLR CntMesDecena			; Limpia el registro
-00028f 2433                      		CLR PointerMes				; Limpia el registro
-000290 e001                      		LDI R16, 0x01				; Carga 1 al registro R16
-000291 0e40                      		ADD CntDiaUnidad, R16		; Al registro CntDiaUnidad se le suma 1
-000292 0e60                      		ADD CntMesUnidad, R16		; Al registro CntMesUnidad se le suma 1
-000293 cfcc                      		RJMP CONF_UNIDAD_DIA		; Regresa a la subrutina principal
+000289 2444                      		CLR CntDiaUnidad			; Limpia el registro
+00028a 2455                      		CLR CntDiaDecena			; Limpia el registro
+00028b 2466                      		CLR CntMesUnidad			; Limpia el registro
+00028c 2477                      		CLR CntMesDecena			; Limpia el registro
+00028d 2433                      		CLR PointerMes				; Limpia el registro
+00028e e001                      		LDI R16, 0x01				; Carga 1 al registro R16
+00028f 0e40                      		ADD CntDiaUnidad, R16		; Al registro CntDiaUnidad se le suma 1
+000290 0e60                      		ADD CntMesUnidad, R16		; Al registro CntMesUnidad se le suma 1
+000291 cfcc                      		RJMP CONF_UNIDAD_DIA		; Regresa a la subrutina principal
                                  
                                  	DEC_D_DIA_CONF_FECHA:	; Decrementar Decena Dia
-000294 945a                      		DEC CntDiaDecena		; Decrementar registro CntDiaDecena
-000295 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
-000296 3f1f                      		CPI R17, -1				; Compararar el registro R17 con -1
-000297 f0b1                      		BREQ UNDERFLOW_DIAS		; Si hay igualdad dirigirse a dicha subrutina
-000298 e009                      		LDI R16, 0x09			; Cargar el registro 9 con r16
-000299 2444                      		CLR CntDiaUnidad		; Limpiar el registro
-00029a 0e40                      		ADD CntDiaUnidad, R16	; Sumar CntDiaUnidad con R16
-00029b cfc4                      		RJMP CONF_UNIDAD_DIA		; Saltar de vuelta a la subrutina principal
+000292 945a                      		DEC CntDiaDecena		; Decrementar registro CntDiaDecena
+000293 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
+000294 3f1f                      		CPI R17, -1				; Compararar el registro R17 con -1
+000295 f0b1                      		BREQ UNDERFLOW_DIAS		; Si hay igualdad dirigirse a dicha subrutina
+000296 e009                      		LDI R16, 0x09			; Cargar el registro 9 con r16
+000297 2444                      		CLR CntDiaUnidad		; Limpiar el registro
+000298 0e40                      		ADD CntDiaUnidad, R16	; Sumar CntDiaUnidad con R16
+000299 cfc4                      		RJMP CONF_UNIDAD_DIA		; Saltar de vuelta a la subrutina principal
                                  		
                                  	D_DIA_CONF:				; Incrementar Decena Dia
-00029c e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-00029d e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-00029e 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00029f 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0002a0 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
-0002a1 1701                      		CP R16, R17				; Comparar R16 con R17
-0002a2 f0b1                      		BREQ RESET_CONF_FECHA	; Si hay igualdad dirigirse a dicha subrutina
+00029a e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+00029b e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+00029c 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+00029d 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00029e 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro CntDiaDecena en R17
+00029f 1701                      		CP R16, R17				; Comparar R16 con R17
+0002a0 f0b1                      		BREQ RESET_CONF_FECHA	; Si hay igualdad dirigirse a dicha subrutina
                                  
-0002a3 9453                      		INC CntDiaDecena				; Aumenta las decenas de los dias
-0002a4 2444                      		CLR CntDiaUnidad				; Limpia el registro 
-0002a5 cfba                      		RJMP CONF_UNIDAD_DIA
+0002a1 9453                      		INC CntDiaDecena				; Aumenta las decenas de los dias
+0002a2 2444                      		CLR CntDiaUnidad				; Limpia el registro 
+0002a3 cfba                      		RJMP CONF_UNIDAD_DIA
                                  	
                                  	COMPROBAR_DECENA_MES:
-0002a6 e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-0002a7 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-0002a8 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0002a9 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0002a4 e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+0002a5 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+0002a6 0de3                      		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0002a7 9104                      		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
                                  		;SBI PORTB, PB5			; Prender PB5
-0002aa 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro cntdiadecena en r17
-0002ab 1701                      		CP R16, R17				; Comparar R16 con R17
-0002ac f061                      		BREQ RESET_CONF_FECHA	; Si hay igualdad dirigirse a dicha subrutina
-0002ad cfb2                      		RJMP CONF_UNIDAD_DIA	; Saltar de vuelta a la subrutina principal
+0002a8 2d15                      		MOV R17, CntDiaDecena	; Copiar el registro cntdiadecena en r17
+0002a9 1701                      		CP R16, R17				; Comparar R16 con R17
+0002aa f061                      		BREQ RESET_CONF_FECHA	; Si hay igualdad dirigirse a dicha subrutina
+0002ab cfb2                      		RJMP CONF_UNIDAD_DIA	; Saltar de vuelta a la subrutina principal
                                  
                                  	UNDERFLOW_DIAS:
-0002ae e7e8                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
-0002af e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
-0002b0 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0002b1 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
-0002b2 2e40                      		MOV CntDiaUnidad, R16
-0002b3 e8e6                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
-0002b4 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
-0002b5 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-0002b6 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
-0002b7 2e50                      		MOV CntDiaDecena, R16
-0002b8 cfa7                      		RJMP CONF_UNIDAD_DIA
+0002ac e5ea                      		LDI ZL, LOW(DIASxMesU << 1)		; Se obtiene la dirección menos significativa del registro Z
+0002ad e0f8                      		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
+0002ae 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0002af 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
+0002b0 2e40                      		MOV CntDiaUnidad, R16
+0002b1 e6e8                      		LDI ZL, LOW(DIASxMesD << 1)		; Se obtiene la dirección menos significativa del registro Z
+0002b2 e0f8                      		LDI ZH, HIGH(DIASxMesD << 1)	; Se obtiene la dirección más significativa del registro Z
+0002b3 0de3                      		ADD ZL, PointerMes				; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0002b4 9104                      		LPM R16, Z						; Carga el valor que existe en Z en el registro R 16
+0002b5 2e50                      		MOV CntDiaDecena, R16
+0002b6 cfa7                      		RJMP CONF_UNIDAD_DIA
                                  
                                  	 RESET_CONF_FECHA:					; Realizar reset de ambos registros del Dia
-0002b9 9463                      		INC CntMesUnidad
-0002ba 2455                      		CLR CntDiaDecena				; Limpia el registro CntDiaDecena
-0002bb 2444                      		CLR CntDiaUnidad				; Limpia el registor CntDiaUnidad
-0002bc e001                      		LDI R16, 0x01
-0002bd 0e40                      		ADD CntDiaUnidad, R16
-0002be cfa1                      		RJMP CONF_UNIDAD_DIA			; Salta a la subrutina general123
+0002b7 9463                      		INC CntMesUnidad
+0002b8 2455                      		CLR CntDiaDecena				; Limpia el registro CntDiaDecena
+0002b9 2444                      		CLR CntDiaUnidad				; Limpia el registor CntDiaUnidad
+0002ba e001                      		LDI R16, 0x01
+0002bb 0e40                      		ADD CntDiaUnidad, R16
+0002bc cfa1                      		RJMP CONF_UNIDAD_DIA			; Salta a la subrutina general123
                                  
                                  ; ----------------COMPARACION DE CONFIGURACION DISPLAYS DE MES EN FECHA----------------------------
                                  	U_MES_CONF_FECHA:
-0002bf 2c36                      		MOV PointerMes, CntMesUnidad
-0002c0 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0002c1 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
-0002c2 f0a9                      		BREQ D_MES_CONF				; Si el contador es cero salta
+0002bd 2c36                      		MOV PointerMes, CntMesUnidad
+0002be 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0002bf 300a                      		CPI R16, 0x0A			; Compara si el contador es 10
+0002c0 f0a9                      		BREQ D_MES_CONF				; Si el contador es cero salta
                                  		 
-0002c3 2d06                      		MOV R16, CntMesUnidad   ; Copia el registro CntMesUnidad en R16
-0002c4 3003                      		CPI R16, 0x03			; Compara si el contador es 3
-0002c5 f0a9                      		BREQ VERIFICACION_MES	; Si el contador es cero salta a la subrutina de verificacion
+0002c1 2d06                      		MOV R16, CntMesUnidad   ; Copia el registro CntMesUnidad en R16
+0002c2 3003                      		CPI R16, 0x03			; Compara si el contador es 3
+0002c3 f0a9                      		BREQ VERIFICACION_MES	; Si el contador es cero salta a la subrutina de verificacion
                                  
-0002c6 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0002c7 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-0002c8 f039                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
+0002c4 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0002c5 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+0002c6 f039                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
                                  
-0002c9 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0002ca 3f0e                      		CPI R16, -2				; Compara si el registro es -2
-0002cb f021                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
+0002c7 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0002c8 3f0e                      		CPI R16, -2				; Compara si el registro es -2
+0002c9 f021                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
                                  
-0002cc 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
-0002cd 3f0f                      		CPI R16, -1				; Compara si el registro es -1
-0002ce f009                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
+0002ca 2d06                      		MOV R16, CntMesUnidad	; Copia el registro CntMesUnidad en R16
+0002cb 3f0f                      		CPI R16, -1				; Compara si el registro es -1
+0002cc f009                      		BREQ DEC_D_MES_CONF_FECHA		; Si si lo es, saltar a la subrutina
                                  
-0002cf cda3                      		RJMP LOOP ; Saltar de vuelta  loop
+0002cd cda5                      		RJMP LOOP ; Saltar de vuelta  loop
                                  
                                  
                                  	DEC_D_MES_CONF_FECHA:	; Decremento
-0002d0 947a                      		DEC CntMesDecena	; Decrementar el registro cntmesdecena
-0002d1 2d17                      		MOV R17, CntMesDecena	; Copiar cntmesdecena a r17
-0002d2 3f1f                      		CPI R17, -1				; comparar r17 con -1
-0002d3 f059                      		BREQ UNDERFLOW_MES		; Saltar a dicha subrutina
-0002d4 e009                      		LDI R16, 0x09			; Cargar 9 en R16
-0002d5 2466                      		CLR CntMesUnidad		; Limpiar el registro
-0002d6 0e60                      		ADD CntMesUnidad, R16	; Sumar CntMesUnidad con R16
-0002d7 cfe7                      		RJMP U_MES_CONF_FECHA	; Saltar de vuelta  a la subrutina principal	
+0002ce 947a                      		DEC CntMesDecena	; Decrementar el registro cntmesdecena
+0002cf 2d17                      		MOV R17, CntMesDecena	; Copiar cntmesdecena a r17
+0002d0 3f1f                      		CPI R17, -1				; comparar r17 con -1
+0002d1 f059                      		BREQ UNDERFLOW_MES		; Saltar a dicha subrutina
+0002d2 e009                      		LDI R16, 0x09			; Cargar 9 en R16
+0002d3 2466                      		CLR CntMesUnidad		; Limpiar el registro
+0002d4 0e60                      		ADD CntMesUnidad, R16	; Sumar CntMesUnidad con R16
+0002d5 cfe7                      		RJMP U_MES_CONF_FECHA	; Saltar de vuelta  a la subrutina principal	
                                  		
                                  	D_MES_CONF:  ; INCREMENTO
-0002d8 9473                      		INC CntMesDecena			; Incrementar el contador
-0002d9 2466                      		CLR CntMesUnidad			; Limpiar el registro
-0002da cfe4                      		RJMP U_MES_CONF_FECHA		; Saltar de vuelta  a la subrutina principal	
+0002d6 9473                      		INC CntMesDecena			; Incrementar el contador
+0002d7 2466                      		CLR CntMesUnidad			; Limpiar el registro
+0002d8 cfe4                      		RJMP U_MES_CONF_FECHA		; Saltar de vuelta  a la subrutina principal	
                                  
                                  	VERIFICACION_MES:	; Verifica el mes para reiniciar
-0002db 2d07                      		MOV R16, CntMesDecena			; Copiar el registro r16 a CntMesDecena
-0002dc 3001                      		CPI R16, 0x01					; Compara si el contador es 1
-0002dd f041                      		BREQ RESET_CONF_MES_FECHA		; Si resultado es cero salta 
-0002de cfe0                      		RJMP U_MES_CONF_FECHA			; Saltar a la subrutina principal
+0002d9 2d07                      		MOV R16, CntMesDecena			; Copiar el registro r16 a CntMesDecena
+0002da 3001                      		CPI R16, 0x01					; Compara si el contador es 1
+0002db f041                      		BREQ RESET_CONF_MES_FECHA		; Si resultado es cero salta 
+0002dc cfe0                      		RJMP U_MES_CONF_FECHA			; Saltar a la subrutina principal
                                  
                                  	UNDERFLOW_MES:		; Realizar underflow en los display de mes
-0002df e002                      		LDI R16, 0x02			; Cargar el valor 0x02 en R16
-0002e0 2466                      		CLR CntMesUnidad		; Limpiar el registro
-0002e1 0e60                      		ADD CntMesUnidad, R16	; Sumar R 16 con el registro CntMesUnidad
-0002e2 e001                      		LDI R16, 0x01			; Cargar 1 en R16
-0002e3 2477                      		CLR CntMesDecena		; Limpiar el registro
-0002e4 0e70                      		ADD CntMesDecena, R16	; Sumar CntMesDecena con R16
-0002e5 cfd9                      		RJMP U_MES_CONF_FECHA	; Saltar de vuelta  a la subrutina principal
+0002dd e002                      		LDI R16, 0x02			; Cargar el valor 0x02 en R16
+0002de 2466                      		CLR CntMesUnidad		; Limpiar el registro
+0002df 0e60                      		ADD CntMesUnidad, R16	; Sumar R 16 con el registro CntMesUnidad
+0002e0 e001                      		LDI R16, 0x01			; Cargar 1 en R16
+0002e1 2477                      		CLR CntMesDecena		; Limpiar el registro
+0002e2 0e70                      		ADD CntMesDecena, R16	; Sumar CntMesDecena con R16
+0002e3 cfd9                      		RJMP U_MES_CONF_FECHA	; Saltar de vuelta  a la subrutina principal
                                  
                                  	 RESET_CONF_MES_FECHA:
-0002e6 2477                      		CLR CntMesDecena		; Limpiar registro
-0002e7 2466                      		CLR CntMesUnidad		; Limpiar registro
+0002e4 2477                      		CLR CntMesDecena		; Limpiar registro
+0002e5 2466                      		CLR CntMesUnidad		; Limpiar registro
                                  
-0002e8 cd8a                      	RJMP LOOP		; Saltar de vuelta a loop
+0002e6 cd8c                      	RJMP LOOP		; Saltar de vuelta a loop
                                  
                                  ; -----------------------------------------Configuración alarma--------------------------------------------
                                  ESTADO100:
-0002e9 9840                      	CBI PORTC, PC0	; Apagar PC2
-0002ea 9841                      	CBI PORTC, PC1	; Apagar PC1
-0002eb 2422                      	CLR R2			; Limpia el registro 2
+0002e7 9840                      	CBI PORTC, PC0	; Apagar PC2
+0002e8 9841                      	CBI PORTC, PC1	; Apagar PC1
+0002e9 2422                      	CLR R2			; Limpia el registro 2
                                  
                                  ; Multiplexacion para mostrar la configuracion de alarma
                                  	ALARMA_U_MINUTOS:
-0002ec 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
-0002ed 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-0002ee 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0002ef 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0002f0 e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-0002f1 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-0002f2 0fe8                      	ADD ZL, AlarmaMinUnidad		; Se desplaza el pointer
-0002f3 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-0002f4 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-0002f5 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-0002f6 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0002ea 9a42                      	SBI PORTC, PC2			; Activa display de unidades minutos
+0002eb 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+0002ec 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0002ed 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0002ee e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0002ef e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0002f0 0fe8                      	ADD ZL, AlarmaMinUnidad		; Se desplaza el pointer
+0002f1 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0002f2 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX16:		; Delay de multiplexeo
-0002f7 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-0002f8 3109                      	CPI R16, 25			; Compara el registro 16 con 10
-0002f9 f7e9                      	BRNE DELAY_MULTIPLEX16	; Si no es igual Regresar a dicha subrutina
-0002fa 2422                      	CLR R2					; Limpiar el registro R2
+0002f3 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+0002f4 3002                      	CPI R16, 2			; Compara el registro 16 con 10
+0002f5 f7e9                      	BRNE DELAY_MULTIPLEX16	; Si no es igual Regresar a dicha subrutina
+0002f6 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	ALARMA_D_MINUTOS:
-0002fb 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-0002fc 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
-0002fd 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-0002fe 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-0002ff e6e8                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
-000300 e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
-000301 0feb                      	ADD ZL, AlarmaMinDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-000302 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000303 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000304 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000305 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+0002f7 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+0002f8 9a43                      	SBI PORTC, PC3			; Desactiva display de decenas minutos
+0002f9 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+0002fa 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+0002fb e4ea                      	LDI ZL, LOW(TABLE << 1)		; Se obtiene la dirección menos significativa del registro Z
+0002fc e0f8                      	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
+0002fd 0feb                      	ADD ZL, AlarmaMinDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+0002fe 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+0002ff b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX17:		; Delay de multiplexeo
-000306 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000307 3109                      	CPI R16, 25			; Compara el registro 16 con 10
-000308 f7e9                      	BRNE DELAY_MULTIPLEX17	; Si no es igual Regresar a dicha subrutina
-000309 2422                      	CLR R2					; Limpiar el registro R2
+000300 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+000301 3002                      	CPI R16, 2			; Compara el registro 16 con 10
+000302 f7e9                      	BRNE DELAY_MULTIPLEX17	; Si no es igual Regresar a dicha subrutina
+000303 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	ALARMA_U_HORAS:
-00030a 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-00030b 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-00030c 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
-00030d 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
-00030e e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-00030f e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
-000310 0fec                      	ADD ZL, AlarmaHrsUnidad			; Se desplaza el pointer
-000311 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000312 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000313 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000314 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+000304 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+000305 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+000306 9844                      	CBI PORTC, PC4			; Activa display de decenas horas 
+000307 9a45                      	SBI PORTC, PC5			; Desactiva display de unidade horas
+000308 e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+000309 e0f8                      	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
+00030a 0fec                      	ADD ZL, AlarmaHrsUnidad			; Se desplaza el pointer
+00030b 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+00030c b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX18:		; Delay de multiplexeo
-000315 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000316 3109                      	CPI R16, 25				; Compara el registro 16 con 10
-000317 f7e9                      	BRNE DELAY_MULTIPLEX18	; Si no es igual Regresar a dicha subrutina
-000318 2422                      	CLR R2					; Limpiar el registro R2
+00030d 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+00030e 3002                      	CPI R16, 2 			; Compara el registro 16 con 10
+00030f f7e9                      	BRNE DELAY_MULTIPLEX18	; Si no es igual Regresar a dicha subrutina
+000310 2422                      	CLR R2					; Limpiar el registro R2
                                  
                                  	ALARMA_D_HORAS:
-000319 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
-00031a 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
-00031b 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
-00031c 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
-00031d e6e8                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
-00031e 0fed                      	ADD ZL, AlarmaHrsDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
-00031f 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-000320 9948                      	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-000321 7f0e                      	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
-000322 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
+000311 9842                      	CBI PORTC, PC2			; Activa display de unidades minutos
+000312 9843                      	CBI PORTC, PC3			; Desactiva display de decenas minutos
+000313 9a44                      	SBI PORTC, PC4			; Activa display de decenas horas 
+000314 9845                      	CBI PORTC, PC5			; Desactiva display de unidade horas
+000315 e4ea                      	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
+000316 0fed                      	ADD ZL, AlarmaHrsDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
+000317 9104                      	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
+000318 b90b                      	OUT PORTD, R16			; Carga el registro R16 al puerto D
                                  	DELAY_MULTIPLEX19:		; Delay de multiplexeo
-000323 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
-000324 3109                      	CPI R16, 25				; Compara el registro 16 con 10
-000325 f7e9                      	BRNE DELAY_MULTIPLEX19	; Si no es igual Regresar a dicha subrutina
-000326 2422                      	CLR R2					; Limpiar el registro R2
+000319 2d02                      	MOV R16, R2				; Copia el registro 2 en el 16
+00031a 3002                      	CPI R16, 2				; Compara el registro 16 con 10
+00031b f7e9                      	BRNE DELAY_MULTIPLEX19	; Si no es igual Regresar a dicha subrutina
+00031c 2422                      	CLR R2					; Limpiar el registro R2
                                  
-                                 ;COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
+                                 
+                                 	;COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
                                  	U_MIN_CONF_ALARMA:
-000327 308a                      		CPI AlarmaMinUnidad, 0x0A			; Compara si el contador es 10
-000328 f051                      		BREQ D_MIN_CONF_ALARMA				; Si el contador es cero salta 
-000329 3f8f                      		CPI AlarmaMinUnidad, -1				; Compara si el registro es -1
-00032a f019                      		BREQ DEC_D_MIN_ALM_HORA			; Si si lo es, saltar a la subrutina
-00032b 3f8e                      		CPI AlarmaMinUnidad, -2				; Compara si el registro es -1
-00032c f009                      		BREQ DEC_D_MIN_ALM_HORA			; Si si lo es, saltar a la subrutina
-00032d c010                      		RJMP U_HRS_CONF_ALARMA
+00031d 308a                      		CPI AlarmaMinUnidad, 0x0A			; Compara si el contador es 10
+00031e f041                      		BREQ D_MIN_CONF_ALARMA				; Si el contador es cero salta
+                                 		 
+00031f 3f8f                      		CPI AlarmaMinUnidad, -1				; Compara si el registro es -1
+000320 f009                      		BREQ DEC_D_MIN_ALM_HORA			; Si si lo es, saltar a la subrutina
+                                 
+000321 c010                      		RJMP U_HRS_CONF_ALARMA
                                  
                                  	DEC_D_MIN_ALM_HORA:
-00032e 95ba                      		DEC AlarmaMinDecena					; Decrementar las decenas en el display de los minutos
-00032f 3fbf                      		CPI AlarmaMinDecena, -1				; Compara si las decenas de minuto es igual a -1
-000330 f039                      		BREQ UNDERFLOW_MINUTOS_ALARMA				; Si son iguales saltar a la subrutina
-000331 e089                      		LDI AlarmaMinUnidad, 0x09			; Carga el valor 9 en el registro de las unidades de minuto
-000332 cff4                      		RJMP U_MIN_CONF_ALARMA				; Salta de regreso a la subrutina principal
+000322 95ba                      		DEC AlarmaMinDecena					; Decrementar las decenas en el display de los minutos
+000323 3fbf                      		CPI AlarmaMinDecena, -1				; Compara si las decenas de minuto es igual a -1
+000324 f039                      		BREQ UNDERFLOW_MINUTOS_ALARMA				; Si son iguales saltar a la subrutina
+000325 e089                      		LDI AlarmaMinUnidad, 0x09			; Carga el valor 9 en el registro de las unidades de minuto
+000326 cff6                      		RJMP U_MIN_CONF_ALARMA				; Salta de regreso a la subrutina principal
                                  		
                                  	D_MIN_CONF_ALARMA:	; Incrementar la decena del minuto
-000333 30b5                      		CPI AlarmaMinDecena, 0x05		; Compara si el contador de decenas es 5
-000334 f031                      		BREQ RESET_CONF_ALM_MINS		; Si el contador es cero salta 
-000335 95b3                      		INC AlarmaMinDecena				; Aumenta las decenas de los minutos
-000336 2788                      		CLR AlarmaMinUnidad				; Limpia el registro 
-000337 cfef                      		RJMP U_MIN_CONF_ALARMA			; Regresa a la subrutina principal
+000327 30b5                      		CPI AlarmaMinDecena, 0x05		; Compara si el contador de decenas es 5
+000328 f031                      		BREQ RESET_CONF_ALM_MINS		; Si el contador es cero salta 
+000329 95b3                      		INC AlarmaMinDecena				; Aumenta las decenas de los minutos
+00032a 2788                      		CLR AlarmaMinUnidad				; Limpia el registro 
+00032b cff1                      		RJMP U_MIN_CONF_ALARMA			; Regresa a la subrutina principal
                                  
                                  	UNDERFLOW_MINUTOS_ALARMA:				; Cuando exista Underflow lo que va a hacer es cargar 59
-000338 e089                      		LDI AlarmaMinUnidad, 0x09	; Cargar 9 en CntMinUnidades
-000339 e0b5                      		LDI AlarmaMinDecena, 0x05		; Cargar 5 en CntMinDecenas
-00033a cfec                      		RJMP U_MIN_CONF_ALARMA		; Regresa a la subrutina principal
+00032c e089                      		LDI AlarmaMinUnidad, 0x09	; Cargar 9 en CntMinUnidades
+00032d e0b5                      		LDI AlarmaMinDecena, 0x05		; Cargar 5 en CntMinDecenas
+00032e cfee                      		RJMP U_MIN_CONF_ALARMA		; Regresa a la subrutina principal
                                  
                                  	 RESET_CONF_ALM_MINS:			
-00033b 2788                      		CLR AlarmaMinUnidad			; Limpiar registro
-00033c 27bb                      		CLR AlarmaMinDecena			; Limpiar registro
-00033d cfe9                      		RJMP U_MIN_CONF_ALARMA		; Regresa a la subrutina principal
+00032f 2788                      		CLR AlarmaMinUnidad			; Limpiar registro
+000330 27bb                      		CLR AlarmaMinDecena			; Limpiar registro
+000331 cfeb                      		RJMP U_MIN_CONF_ALARMA		; Regresa a la subrutina principal
                                  
                                  ;COMPARACION DE CONFIGURACION DISPLAYS DE HORAS EN HORA
                                  	U_HRS_CONF_ALARMA:
-00033e 30ca                      		CPI AlarmaHrsUnidad, 0x0A			; Compara si el contador es 10
-00033f f061                      		BREQ D_HRS_ALARMA_HORA				; Si el contador es cero salta 
-000340 30c4                      		CPI AlarmaHrsUnidad, 0x04			; Compara si CntHrsUnidades es 4
-000341 f081                      		BREQ RESET_2359_TO_0_ALARMA				; Si lo es, saltar a dicha subruitna
-000342 3fcf                      		CPI AlarmaHrsUnidad, -1				; Compara si el registro es -1
-000343 f019                      		BREQ DEC_D_HRS_ALM_HORA			; Si si lo es, saltar a la subrutina
-000344 3fce                      		CPI AlarmaHrsUnidad, -2				; Compara si el registro es -1
-000345 f009                      		BREQ DEC_D_HRS_ALM_HORA			; Si si lo es, saltar a la subrutina
-000346 cd2c                      		RJMP LOOP							; Regresa al loop
+000332 30ca                      		CPI AlarmaHrsUnidad, 0x0A			; Compara si el contador es 10
+000333 f051                      		BREQ D_HRS_ALARMA_HORA				; Si el contador es cero salta 
+000334 30c4                      		CPI AlarmaHrsUnidad, 0x04			; Compara si CntHrsUnidades es 4
+000335 f071                      		BREQ RESET_2359_TO_0_ALARMA				; Si lo es, saltar a dicha subruitna
+000336 3fcf                      		CPI AlarmaHrsUnidad, -1				; Compara si el registro es -1
+000337 f009                      		BREQ DEC_D_HRS_ALM_HORA			; Si si lo es, saltar a la subrutina
+                                 
+000338 cd3a                      		RJMP LOOP							; Regresa al loop
                                  
                                  	DEC_D_HRS_ALM_HORA:
-000347 95da                      		DEC AlarmaHrsDecena			; Decrementar el registro CntHrsDecenas
-000348 3fdf                      		CPI AlarmaHrsDecena, -1		; Comparar el registro CntHrsDecenas -1
-000349 f029                      		BREQ UNDERFLOW_HORAS_ALARMA		; Saltar a dicho registro en caso exista igualdad arriba
-00034a e0c9                      		LDI AlarmaHrsUnidad, 0x09	; Cargar 9 en el registro CntHrsUnidades
-00034b cff2                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
+000339 95da                      		DEC AlarmaHrsDecena			; Decrementar el registro CntHrsDecenas
+00033a 3fdf                      		CPI AlarmaHrsDecena, -1		; Comparar el registro CntHrsDecenas -1
+00033b f029                      		BREQ UNDERFLOW_HORAS_ALARMA		; Saltar a dicho registro en caso exista igualdad arriba
+00033c e0c9                      		LDI AlarmaHrsUnidad, 0x09	; Cargar 9 en el registro CntHrsUnidades
+00033d cff4                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
                                  		
                                  	D_HRS_ALARMA_HORA:
-00034c 95d3                      		INC AlarmaHrsDecena			; Incrementar el registro CntHrsDecenas
-00034d 27cc                      		CLR AlarmaHrsUnidad			; Limpiar el registro
-00034e cfef                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
+00033e 95d3                      		INC AlarmaHrsDecena			; Incrementar el registro CntHrsDecenas
+00033f 27cc                      		CLR AlarmaHrsUnidad			; Limpiar el registro
+000340 cff1                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
                                  
                                  	UNDERFLOW_HORAS_ALARMA:
-00034f e0c3                      		LDI AlarmaHrsUnidad, 0x03	; Cargar 3 en el registro CntHrsUnidades
-000350 e0d2                      		LDI AlarmaHrsDecena, 0x02		; Cargar 2 en el registro CntHrsDecenas
-000351 cfec                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
+000341 e0c3                      		LDI AlarmaHrsUnidad, 0x03	; Cargar 3 en el registro CntHrsUnidades
+000342 e0d2                      		LDI AlarmaHrsDecena, 0x02		; Cargar 2 en el registro CntHrsDecenas
+000343 cfee                      		RJMP U_HRS_CONF_ALARMA		; Regresar a la subrutina principal
                                  
                                  	RESET_2359_TO_0_ALARMA:	
-000352 30d2                      		CPI AlarmaHrsDecena, 0x02			; Compara si el contador es 2
-000353 f009                      		BREQ RESET_CONF_ALM_HRS		; Si el contador es cero salta	
-000354 cd1e                      		RJMP LOOP					; Saltar de vuelta al inicio del estado
+000344 30d2                      		CPI AlarmaHrsDecena, 0x02			; Compara si el contador es 2
+000345 f009                      		BREQ RESET_CONF_ALM_HRS		; Si el contador es cero salta	
+000346 cd2c                      		RJMP LOOP					; Saltar de vuelta al inicio del estado
                                  
                                  	 RESET_CONF_ALM_HRS:
-000355 27cc                      		CLR AlarmaHrsUnidad		; Limpiar el registro
-000356 27dd                      		CLR AlarmaHrsDecena		; Limpiar el registro
+000347 27cc                      		CLR AlarmaHrsUnidad		; Limpiar el registro
+000348 27dd                      		CLR AlarmaHrsDecena		; Limpiar el registro
                                  
-000357 cd1b                      	RJMP LOOP ; Regresar al loop
+000349 cd29                      	RJMP LOOP ; Regresar al loop
                                  
                                  ESTADO101:
                                  	; ESTE ESTADO NO SE UTILIZA
-000358 cd1a                      	RJMP LOOP
+00034a cd28                      	RJMP LOOP
                                  
                                  ESTADO110: 
                                  	; ESTE ESTADO NO SE UTILIZA
-000359 cd19                      	RJMP LOOP
+00034b cd27                      	RJMP LOOP
                                  
                                  ESTADO111:
                                  	; ESTE ESTADO NO SE UTILIZA
-00035a cd18                      	RJMP LOOP
+00034c cd26                      	RJMP LOOP
                                  
                                  ;******************************************************************************
                                  ; SUBRUTINA PARA INICIALIZAR TIMER 0
                                  ;******************************************************************************
                                  Init_T0:
-00035b e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
-00035c bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
-00035d ee0c                          LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
-00035e bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
-00035f e001                      	LDI	R16, (1 << TOIE0)	; Habilita la interrupción del overflow - timer 1
-000360 9300 006e                 	STS	TIMSK0, R16
-000362 9508                      	RET
+00034d e005                      	LDI R16, (1<< CS02)|(1<<CS00) ; Carga el siguiente byte a R16 0x04
+00034e bd05                      	OUT TCCR0B, R16 ; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+00034f ee0c                          LDI R16, 236 ; CARGA VALOR DE DESBORDAMIENTO
+000350 bd06                      	OUT TCNT0, R16 ; CARGA EL VALOR INICIAL DEL CONTADOR
+000351 e001                      	LDI	R16, (1 << TOIE0)	; Habilita la interrupción del overflow - timer 1
+000352 9300 006e                 	STS	TIMSK0, R16
+000354 9508                      	RET
                                  ;******************************************************************************
                                  ; SUBRUTINA PARA INICIALIZAR TIMER 1
                                  ;******************************************************************************
                                  Init_T1:
-000363 e003                      	LDI R16, (0<< CS12)|(1<< CS11)|(1<<CS10) ; Carga el siguiente byte a R16 0x04
-000364 9300 0081                 	STS TCCR1B, R16			; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
-000366 ec02                          LDI R16, 0xC2			; CARGA VALOR DE DESBORDAMIENTO
-000367 ef17                      	LDI R17, 0xF7			; CARGA VALOR DE DESBORDAMIENTO
-000368 9300 0085                 	STS TCNT1H, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
-00036a 9310 0084                 	STS TCNT1L, R17			; CARGA EL VALOR INICIAL DEL CONTADOR		
-00036c e001                      	LDI	R16, (1 << TOIE1)	; Habilita la interrupción del overflow en el timer 2
-00036d 9300 006f                 	STS	TIMSK1, R16
-00036f 9508                      	RET
+000355 e003                      	LDI R16, (0<< CS12)|(1<< CS11)|(1<<CS10) ; Carga el siguiente byte a R16 0x04
+000356 9300 0081                 	STS TCCR1B, R16			; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+000358 ec02                          LDI R16, 0xC2			; CARGA VALOR DE DESBORDAMIENTO
+000359 ef17                      	LDI R17, 0xF7			; CARGA VALOR DE DESBORDAMIENTO
+00035a 9300 0085                 	STS TCNT1H, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
+00035c 9310 0084                 	STS TCNT1L, R17			; CARGA EL VALOR INICIAL DEL CONTADOR		
+00035e e001                      	LDI	R16, (1 << TOIE1)	; Habilita la interrupción del overflow en el timer 2
+00035f 9300 006f                 	STS	TIMSK1, R16
+000361 9508                      	RET
                                  ;******************************************************************************
                                  ; SUBRUTINA PARA INICIALIZAR TIMER 2
                                  ;******************************************************************************
                                  Init_T2:
-000370 e007                      	LDI R16, (1<< CS22)|(1<< CS21)|(1<<CS20) ; Carga el siguiente byte a R16 0x04
-000371 9300 00b1                 	STS TCCR2B, R16			; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
-000373 ef0f                          LDI R16, 255			; CARGA VALOR DE DESBORDAMIENTO
-000374 9300 00b2                 	STS TCNT2, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
-000376 e001                      	LDI	R16, (1 << TOIE2)	; Habilita la interrupción del overflow en el timer 2
-000377 9300 0070                 	STS	TIMSK2, R16
-000379 9508                      	RET
+000362 e007                      	LDI R16, (1<< CS22)|(1<< CS21)|(1<<CS20) ; Carga el siguiente byte a R16 0x04
+000363 9300 00b1                 	STS TCCR2B, R16			; CONFIGURA EL PRESCALER A 1024 PARA UN RELOJ DE 2MHZ
+000365 ef0f                          LDI R16, 255			; CARGA VALOR DE DESBORDAMIENTO
+000366 9300 00b2                 	STS TCNT2, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
+000368 e001                      	LDI	R16, (1 << TOIE2)	; Habilita la interrupción del overflow en el timer 2
+000369 9300 0070                 	STS	TIMSK2, R16
+00036b 9508                      	RET
                                  ;******************************************************************************
                                  ; SUBRUTINA PARA INICIALIZAR AUMENTAR EL CONTADOR HEXADECIMAL COMO RELOJ
                                  ;******************************************************************************
                                  AUMENTO_UNIDADES_SEGUNDOS:
-00037a 302a                      	CPI CntSegUnidades, 0x0A		; Compara si el contador es 10
-00037b f011                      	BREQ AUMENTO_DECENAS_SEGUNDOS		; Si el contador es cero salta 
-00037c 9523                      	INC CntSegUnidades				; Incrementa 
-00037d 9508                      	RET
+00036c 302a                      	CPI CntSegUnidades, 0x0A		; Compara si el contador es 10
+00036d f011                      	BREQ AUMENTO_DECENAS_SEGUNDOS		; Si el contador es cero salta 
+00036e 9523                      	INC CntSegUnidades				; Incrementa 
+00036f 9508                      	RET
                                  
                                  AUMENTO_DECENAS_SEGUNDOS:
-00037e 3035                      	CPI CntSegDecenas, 0x05			; Compara si el contador de decenas es 5
-00037f f019                      	BREQ AUMENTO_UNIDADES_MINUTOS		; Si el contador es cero salta 
-000380 9533                      	INC CntSegDecenas				; Incrementa Contador de decenas
-000381 2722                      	CLR CntSegUnidades				; Limpia el registro 
-000382 cff7                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+000370 3035                      	CPI CntSegDecenas, 0x05			; Compara si el contador de decenas es 5
+000371 f019                      	BREQ AUMENTO_UNIDADES_MINUTOS		; Si el contador es cero salta 
+000372 9533                      	INC CntSegDecenas				; Incrementa Contador de decenas
+000373 2722                      	CLR CntSegUnidades				; Limpia el registro 
+000374 cff7                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  AUMENTO_UNIDADES_MINUTOS:
-000383 2733                      	CLR CntSegDecenas			; Limpia el registro 
-000384 2722                      	CLR CntSegUnidades			; Limpia el registro 
-000385 9543                      	INC CntMinUnidades			; Incrementa el registro
-000386 304a                      	CPI CntMinUnidades, 0x0A		; Compara si el contador de unidades es 9
-000387 f009                      	BREQ AUMENTO_DECENAS_MINUTOS		; Si el contador es cero salta al reset
-000388 cff1                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+000375 2733                      	CLR CntSegDecenas			; Limpia el registro 
+000376 2722                      	CLR CntSegUnidades			; Limpia el registro 
+000377 9543                      	INC CntMinUnidades			; Incrementa el registro
+000378 304a                      	CPI CntMinUnidades, 0x0A		; Compara si el contador de unidades es 9
+000379 f009                      	BREQ AUMENTO_DECENAS_MINUTOS		; Si el contador es cero salta al reset
+00037a cff1                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  AUMENTO_DECENAS_MINUTOS:
-000389 2744                      	CLR CntMinUnidades			; Limpia el registro 
-00038a 3055                      	CPI CntMinDecenas, 0x05		; Compara si el contador de decenas es 5
-00038b f011                      	BREQ AUMENTO_UNIDADES_HORAS	; Si el contador es cero salta al reset
-00038c 9553                      	INC CntMinDecenas			; Incrementa el registro
-00038d cfec                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+00037b 2744                      	CLR CntMinUnidades			; Limpia el registro 
+00037c 3055                      	CPI CntMinDecenas, 0x05		; Compara si el contador de decenas es 5
+00037d f011                      	BREQ AUMENTO_UNIDADES_HORAS	; Si el contador es cero salta al reset
+00037e 9553                      	INC CntMinDecenas			; Incrementa el registro
+00037f cfec                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  AUMENTO_UNIDADES_HORAS:
-00038e 2755                      	CLR CntMinDecenas			; Limpia el registro 
-00038f 2744                      	CLR CntMinUnidades			; Limpia el registro
-000390 9563                      	INC CntHrsUnidades
-000391 3064                      	CPI CntHrsUnidades, 0x04		; Compara si el contador de unidades es 9
-000392 f031                      	BREQ RESET_AFTER23				; Si el contador es cero salta al reset
-000393 306a                      	CPI CntHrsUnidades, 0x0A		; Compara si el contador de unidades es 9
-000394 f009                      	BREQ AUMENTO_DECENAS_HORAS		; Si el contador es cero salta al reset
-000395 cfe4                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+000380 2755                      	CLR CntMinDecenas			; Limpia el registro 
+000381 2744                      	CLR CntMinUnidades			; Limpia el registro
+000382 9563                      	INC CntHrsUnidades
+000383 3064                      	CPI CntHrsUnidades, 0x04		; Compara si el contador de unidades es 9
+000384 f031                      	BREQ RESET_AFTER23				; Si el contador es cero salta al reset
+000385 306a                      	CPI CntHrsUnidades, 0x0A		; Compara si el contador de unidades es 9
+000386 f009                      	BREQ AUMENTO_DECENAS_HORAS		; Si el contador es cero salta al reset
+000387 cfe4                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  AUMENTO_DECENAS_HORAS:
-000396 2766                      	CLR CntHrsUnidades				; Limpiar el registro
-000397 9573                      	INC CntHrsDecenas				; Incrementar el registro
-000398 cfe1                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+000388 2766                      	CLR CntHrsUnidades				; Limpiar el registro
+000389 9573                      	INC CntHrsDecenas				; Incrementar el registro
+00038a cfe1                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  RESET_AFTER23:
-000399 9443                      	INC CntDiaUnidad				; Incrementar el registro	
-00039a 3072                      	CPI CntHrsDecenas, 2			; Comparar el registro CntHrsDecenas
-00039b f009                      	BREQ RESET_ALL					; Limpiar todos los registros
-00039c cfdd                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+00038b 9443                      	INC CntDiaUnidad				; Incrementar el registro	
+00038c 3072                      	CPI CntHrsDecenas, 2			; Comparar el registro CntHrsDecenas
+00038d f009                      	BREQ RESET_ALL					; Limpiar todos los registros
+00038e cfdd                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  RESET_ALL:
-00039d 2722                      	CLR CntSegUnidades			; Limpia el registro 
-00039e 2733                      	CLR CntSegDecenas			; Limpia el registro 
-00039f 2744                      	CLR CntMinUnidades			; Limpia el registro
-0003a0 2755                      	CLR CntMinDecenas			; Limpia el registro 
-0003a1 2766                      	CLR CntHrsUnidades			; Limpia el registro
-0003a2 2777                      	CLR CntHrsDecenas			; Limpia el registro
-0003a3 cfd6                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
+00038f 2722                      	CLR CntSegUnidades			; Limpia el registro 
+000390 2733                      	CLR CntSegDecenas			; Limpia el registro 
+000391 2744                      	CLR CntMinUnidades			; Limpia el registro
+000392 2755                      	CLR CntMinDecenas			; Limpia el registro 
+000393 2766                      	CLR CntHrsUnidades			; Limpia el registro
+000394 2777                      	CLR CntHrsDecenas			; Limpia el registro
+000395 cfd6                      	RJMP AUMENTO_UNIDADES_SEGUNDOS
                                  
                                  ;*****************************************************************************
                                  ; Subrutina de ISR_TIMER0_OVF
                                  ;*****************************************************************************
                                  ISR_TIMER0_OVF:
-0003a4 931f                      	PUSH R17 ; Guardamos en pila el registro R16
-0003a5 b71f                      	IN R17, SREG
-0003a6 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
+000396 931f                      	PUSH R17 ; Guardamos en pila el registro R16
+000397 b71f                      	IN R17, SREG
+000398 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
                                  
-0003a7 ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
-0003a8 bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
-0003a9 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
+000399 ee0c                      	LDI R16, 236		; Cargar el valor de desbordamiento
+00039a bd06                      	OUT TCNT0, R16		; Cargar el valor inicial al contador
+00039b 9aa8                      	SBI TIFR0, TOV0		; Borramos la bandera de TOV0
                                  
-0003aa 9403                      	INC R0				; Incrementamos contador de 10 ms
-0003ab 9413                      	INC R1 				; Incrementamos contador de 10 ms
-0003ac 94a3                      	INC R10				; Incrementamos contador para toggle de display cada 2ms
+00039c 9403                      	INC R0				; Incrementamos contador de 10 ms
+00039d 9413                      	INC R1 				; Incrementamos contador de 10 ms
+                                 
+00039e 911f                      	POP R17				; Obtener el valor de SREG
+00039f bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
+0003a0 911f                      	POP R17				; OBTENER EL VALOR DE r16
+0003a1 9518                      	RETI				; Retornamos a la ISR
+                                 ;******************************************************************************
+                                 ;*****************************************************************************
+                                 ; Subrutina de ISR_TIMER1_OVF
+                                 ;*****************************************************************************
+                                 ISR_TIMER1_OVF:
+0003a2 931f                      	PUSH R17 ; Guardamos en pila el registro R16
+0003a3 b71f                      	IN R17, SREG
+0003a4 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
+                                 
+0003a5 ec02                      	LDI R16, 0xC2			; CARGA VALOR DE DESBORDAMIENTO
+0003a6 ef17                      	LDI R17, 0xF7			; CARGA VALOR DE DESBORDAMIENTO
+0003a7 9300 0085                 	STS TCNT1H, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
+0003a9 9310 0084                 	STS TCNT1L, R17			; CARGA EL VALOR INICIAL DEL CONTADOR	
+0003ab 9ab0                      	SBI TIFR1, TOV1		; Borramos la bandera de TOV0
+                                 
+0003ac 9a48                      	SBI PIND, PD0		; Hacer toggle en PD0
                                  
 0003ad 911f                      	POP R17				; Obtener el valor de SREG
 0003ae bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
@@ -2305,219 +2320,198 @@ D:\GIOLESS\Documents\PrograDeMicros1\ProyectoConMaquinaDeEstados\ProyectoConMaqu
 0003b0 9518                      	RETI				; Retornamos a la ISR
                                  ;******************************************************************************
                                  ;*****************************************************************************
-                                 ; Subrutina de ISR_TIMER1_OVF
+                                 ; Subrutina de ISR_TIMER2_OVF
                                  ;*****************************************************************************
-                                 ISR_TIMER1_OVF:
+                                 ISR_TIMER2_OVF:
 0003b1 931f                      	PUSH R17 ; Guardamos en pila el registro R16
 0003b2 b71f                      	IN R17, SREG
 0003b3 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
                                  
-0003b4 ec02                      	LDI R16, 0xC2			; CARGA VALOR DE DESBORDAMIENTO
-0003b5 ef17                      	LDI R17, 0xF7			; CARGA VALOR DE DESBORDAMIENTO
-0003b6 9300 0085                 	STS TCNT1H, R16			; CARGA EL VALOR INICIAL DEL CONTADOR
-0003b8 9310 0084                 	STS TCNT1L, R17			; CARGA EL VALOR INICIAL DEL CONTADOR	
-0003ba 9ab0                      	SBI TIFR1, TOV1		; Borramos la bandera de TOV0
+0003b4 ef0f                      	LDI R16, 255		; Cargar el valor de desbordamiento
+0003b5 9300 00b2                 	STS TCNT2, R16		; Cargar el valor inicial al contador
+0003b7 9ab8                      	SBI TIFR2, TOV2		; Borramos la bandera de TOV2
                                  
-0003bb 9a48                      	SBI PIND, PD0		; Hacer toggle en PD0
+0003b8 9423                      	INC R2				; Incrementamos contador para toggle de display cada 1ms
                                  
-0003bc 911f                      	POP R17				; Obtener el valor de SREG
-0003bd bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
-0003be 911f                      	POP R17				; OBTENER EL VALOR DE r16
-0003bf 9518                      	RETI				; Retornamos a la ISR
-                                 ;******************************************************************************
-                                 ;*****************************************************************************
-                                 ; Subrutina de ISR_TIMER2_OVF
-                                 ;*****************************************************************************
-                                 ISR_TIMER2_OVF:
-0003c0 931f                      	PUSH R17 ; Guardamos en pila el registro R16
-0003c1 b71f                      	IN R17, SREG
-0003c2 931f                      	PUSH R17 ; Guardamos en pila el registro SREG
-                                 
-0003c3 ef0f                      	LDI R16, 255		; Cargar el valor de desbordamiento
-0003c4 9300 00b2                 	STS TCNT2, R16		; Cargar el valor inicial al contador
-0003c6 9ab8                      	SBI TIFR2, TOV2		; Borramos la bandera de TOV2
-                                 
-0003c7 9423                      	INC R2				; Incrementamos contador para toggle de display cada 1ms
-                                 
-0003c8 911f                      	POP R17				; Obtener el valor de SREG
-0003c9 bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
-0003ca 911f                      	POP R17				; OBTENER EL VALOR DE r16
-0003cb 9518                      	RETI				; Retornamos a la ISR
+0003b9 911f                      	POP R17				; Obtener el valor de SREG
+0003ba bf1f                      	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
+0003bb 911f                      	POP R17				; OBTENER EL VALOR DE r16
+0003bc 9518                      	RETI				; Retornamos a la ISR
                                  ;******************************************************************************
                                  
                                  ;*****************************************************************************
                                  ; Subrutina de ISR_TIMER0_OVF
                                  ;*****************************************************************************
                                  ISR_PCINT0:
-0003cc 930f                      	PUSH R16 ; Guardamos en pila el registro R16
-0003cd b70f                      	IN R16, SREG
-0003ce 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
+0003bd 930f                      	PUSH R16 ; Guardamos en pila el registro R16
+0003be b70f                      	IN R16, SREG
+0003bf 930f                      	PUSH R16 ; Guardamos en pila el registro SREG
                                  
-0003cf ffa0                      	SBRS ESTADO, 0		;ESTADO 0 = 1?
-0003d0 940c 03d4                 	JMP ESTADOXX0_ISR	;ESTADO 0 = 0
-0003d2 940c 03e3                 	JMP ESTADOXX1_ISR	;ESTADO 0 = 1
+0003c0 ffa0                      	SBRS ESTADO, 0		;ESTADO 0 = 1?
+0003c1 940c 03c5                 	JMP ESTADOXX0_ISR	;ESTADO 0 = 0
+0003c3 940c 03d4                 	JMP ESTADOXX1_ISR	;ESTADO 0 = 1
                                  
                                  ESTADOXX0_ISR:
-0003d4 ffa1                      	SBRS ESTADO, 1		;ESTADO 1 = 1?
-0003d5 940c 03d9                 	JMP ESTADOX00_ISR	;ESTADO 1 = 0
-0003d7 940c 03de                 	JMP ESTADOX10_ISR	;ESTADO 1 = 1
+0003c5 ffa1                      	SBRS ESTADO, 1		;ESTADO 1 = 1?
+0003c6 940c 03ca                 	JMP ESTADOX00_ISR	;ESTADO 1 = 0
+0003c8 940c 03cf                 	JMP ESTADOX10_ISR	;ESTADO 1 = 1
                                  
                                  ESTADOX00_ISR:
-0003d9 ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
-0003da 940c 03f2                 	JMP ESTADO000_ISR	;ESTADO 2 = 0
-0003dc 940c 0414                 	JMP ESTADO100_ISR	;ESTADO 2 = 1
+0003ca ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
+0003cb 940c 03e3                 	JMP ESTADO000_ISR	;ESTADO 2 = 0
+0003cd 940c 0405                 	JMP ESTADO100_ISR	;ESTADO 2 = 1
                                  
                                  ESTADOX10_ISR:
-0003de ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
-0003df 940c 0404                 	JMP ESTADO010_ISR	;ESTADO 2 = 0
-0003e1 940c 0424                 	JMP ESTADO110_ISR	;ESTADO 2 = 1
+0003cf ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
+0003d0 940c 03f5                 	JMP ESTADO010_ISR	;ESTADO 2 = 0
+0003d2 940c 0415                 	JMP ESTADO110_ISR	;ESTADO 2 = 1
                                  
                                  ESTADOXX1_ISR:
-0003e3 ffa1                      	SBRS ESTADO, 1		;ESTADO 1 = 1?
-0003e4 940c 03e8                 	JMP ESTADOX01_ISR	;ESTADO 1 = 0
-0003e6 940c 03ed                 	JMP ESTADOX11_ISR	;ESTADO	1 = 1
+0003d4 ffa1                      	SBRS ESTADO, 1		;ESTADO 1 = 1?
+0003d5 940c 03d9                 	JMP ESTADOX01_ISR	;ESTADO 1 = 0
+0003d7 940c 03de                 	JMP ESTADOX11_ISR	;ESTADO	1 = 1
                                  
                                  ESTADOX01_ISR:
-0003e8 ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
-0003e9 940c 03f8                 	JMP ESTADO001_ISR	;ESTADO 2 = 0
-0003eb 940c 0428                 	JMP ESTADO111_ISR	;ESTADO 2 = 1
+0003d9 ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
+0003da 940c 03e9                 	JMP ESTADO001_ISR	;ESTADO 2 = 0
+0003dc 940c 0419                 	JMP ESTADO111_ISR	;ESTADO 2 = 1
                                  
                                  ESTADOX11_ISR:
-0003ed ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
-0003ee 940c 0408                 	JMP ESTADO011_ISR	;ESTADO 2 = 0
-0003f0 940c 0428                 	JMP ESTADO111_ISR   ;ESTADO 2 = 1
+0003de ffa2                      	SBRS ESTADO, 2		;ESTADO 2 = 1?
+0003df 940c 03f9                 	JMP ESTADO011_ISR	;ESTADO 2 = 0
+0003e1 940c 0419                 	JMP ESTADO111_ISR   ;ESTADO 2 = 1
                                  	
                                  ESTADO000_ISR:
-0003f2 b103                      	IN R16, PINB		; Obtener los valores de PINB
-0003f3 ff00                      	SBRS R16, PB0		; PB0 = 1?
-0003f4 95a3                      	INC ESTADO			; PB0 = 0
+0003e3 b103                      	IN R16, PINB		; Obtener los valores de PINB
+0003e4 ff00                      	SBRS R16, PB0		; PB0 = 1?
+0003e5 95a3                      	INC ESTADO			; PB0 = 0
                                  						; PB0 = 1
-0003f5 ff01                      	SBRS R16, PB1	; PB1 = 1?
-0003f6 982d                      	CBI PORTB, PB5		; PB1 = 0, Incrementa registro
+0003e6 ff01                      	SBRS R16, PB1	; PB1 = 1?
+0003e7 982d                      	CBI PORTB, PB5		; PB1 = 0, Incrementa registro
                                  						; PB1 = 1
-0003f7 c033                      	RJMP ISR_POP_PCINT0
+0003e8 c033                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO001_ISR:
-0003f8 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-0003f9 ff00                      	SBRS R16, PB0	; PB0 = 1?
-0003fa 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
+0003e9 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+0003ea ff00                      	SBRS R16, PB0	; PB0 = 1?
+0003eb 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
                                  					; PB0 = 1
-0003fb ff01                      	SBRS R16, PB1	; PB1 = 1?
-0003fc 9563                      	INC CntHrsUnidades		; PB1 = 0, Incrementa registro
+0003ec ff01                      	SBRS R16, PB1	; PB1 = 1?
+0003ed 9563                      	INC CntHrsUnidades		; PB1 = 0, Incrementa registro
                                  							; PB1 = 1
-0003fd ff02                      	SBRS R16, PB2	; PB2 = 1?
-0003fe 956a                      	DEC CntHrsUnidades		; PB2 = 0, Decrementa registro
+0003ee ff02                      	SBRS R16, PB2	; PB2 = 1?
+0003ef 956a                      	DEC CntHrsUnidades		; PB2 = 0, Decrementa registro
                                  							; PB2 = 1
-0003ff ff03                      	SBRS R16, PB3	; PB3 = 1?
-000400 9543                      	INC CntMinUnidades		; PB3 = 0, Incrementa registro
+0003f0 ff03                      	SBRS R16, PB3	; PB3 = 1?
+0003f1 9543                      	INC CntMinUnidades		; PB3 = 0, Incrementa registro
                                  							; PB3 = 1
-000401 ff04                      	SBRS R16, PB4	; PB4 = 1?
-000402 954a                      	DEC CntMinUnidades		; PB4 = 0, Decrementa registro
+0003f2 ff04                      	SBRS R16, PB4	; PB4 = 1?
+0003f3 954a                      	DEC CntMinUnidades		; PB4 = 0, Decrementa registro
                                  							; PB4 = 1
-000403 c027                      	RJMP ISR_POP_PCINT0
+0003f4 c027                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO010_ISR:
-000404 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-000405 ff00                      	SBRS R16, PB0	; PB0 = 1?
-000406 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
+0003f5 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+0003f6 ff00                      	SBRS R16, PB0	; PB0 = 1?
+0003f7 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
                                  					; PB0 = 1
-000407 c023                      	RJMP ISR_POP_PCINT0
+0003f8 c023                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO011_ISR:
-000408 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-000409 ff00                      	SBRS R16, PB0	; PB0 = 1?
-00040a 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
+0003f9 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+0003fa ff00                      	SBRS R16, PB0	; PB0 = 1?
+0003fb 95a3                      	INC ESTADO		; PB0 = 0, Incrementa registro
                                  					; PB0 = 1
-00040b ff01                      	SBRS R16, PB1	; PB1 = 1?
-00040c 9443                      	INC CntDiaUnidad		; PB1 = 0, Incrementa registro
+0003fc ff01                      	SBRS R16, PB1	; PB1 = 1?
+0003fd 9443                      	INC CntDiaUnidad		; PB1 = 0, Incrementa registro
                                  							; PB1 = 1
-00040d ff02                      	SBRS R16, PB2	; PB2 = 1?
-00040e 944a                      	DEC CntDiaUnidad		; PB2 = 0, Decrementa registro
+0003fe ff02                      	SBRS R16, PB2	; PB2 = 1?
+0003ff 944a                      	DEC CntDiaUnidad		; PB2 = 0, Decrementa registro
                                  							; PB2 = 1
-00040f ff03                      	SBRS R16, PB3	; PB3 = 1?
-000410 9463                      	INC  CntMesUnidad		; PB3 = 0, Incrementa registro
+000400 ff03                      	SBRS R16, PB3	; PB3 = 1?
+000401 9463                      	INC  CntMesUnidad		; PB3 = 0, Incrementa registro
                                  							; PB3 = 1
-000411 ff04                      	SBRS R16, PB4	; PB4 = 1?
-000412 946a                      	DEC CntMesUnidad		; PB4 = 0, Decrementa registro
+000402 ff04                      	SBRS R16, PB4	; PB4 = 1?
+000403 946a                      	DEC CntMesUnidad		; PB4 = 0, Decrementa registro
                                  							; PB4 = 1
-000413 c017                      	RJMP ISR_POP_PCINT0
+000404 c017                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO100_ISR:
-000414 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-000415 ff00                      	SBRS R16, PB0	; PB0 = 1?
-000416 95a3                      	INC ESTADO		; PB0 = 0
+000405 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+000406 ff00                      	SBRS R16, PB0	; PB0 = 1?
+000407 95a3                      	INC ESTADO		; PB0 = 0
                                  					; PB0 = 1
-000417 ff01                      	SBRS R16, PB1	; PB1 = 1?
-000418 95c3                      	INC AlarmaHrsUnidad		; PB1 = 0, Incrementa registro
+000408 ff01                      	SBRS R16, PB1	; PB1 = 1?
+000409 95c3                      	INC AlarmaHrsUnidad		; PB1 = 0, Incrementa registro
                                  							; PB1 = 1
-000419 ff02                      	SBRS R16, PB2	; PB2 = 1?
-00041a 95ca                      	DEC AlarmaHrsUnidad		; PB2 = 0, Decrementa registro
+00040a ff02                      	SBRS R16, PB2	; PB2 = 1?
+00040b 95ca                      	DEC AlarmaHrsUnidad		; PB2 = 0, Decrementa registro
                                  							; PB2 = 1
-00041b ff03                      	SBRS R16, PB3	; PB3 = 1?
-00041c 9583                      	INC AlarmaMinUnidad		; PB3 = 0, Incrementa registro
+00040c ff03                      	SBRS R16, PB3	; PB3 = 1?
+00040d 9583                      	INC AlarmaMinUnidad		; PB3 = 0, Incrementa registro
                                  							; PB3 = 1
-00041d ff04                      	SBRS R16, PB4	; PB4 = 1?
-00041e 958a                      	DEC AlarmaMinUnidad		; PB4 = 0, Decrementa registro
+00040e ff04                      	SBRS R16, PB4	; PB4 = 1?
+00040f 958a                      	DEC AlarmaMinUnidad		; PB4 = 0, Decrementa registro
                                  							; PB4 = 1
-00041f c00b                      	RJMP ISR_POP_PCINT0
+000410 c00b                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO101_ISR:
-000420 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-000421 ff00                      	SBRS R16, PB0	; PB0 = 1?
-000422 95a3                      	INC ESTADO		; PB0 = 0
+000411 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+000412 ff00                      	SBRS R16, PB0	; PB0 = 1?
+000413 95a3                      	INC ESTADO		; PB0 = 0
                                  					; PB0 = 1
-000423 c007                      	RJMP ISR_POP_PCINT0
+000414 c007                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO110_ISR:		; Este registro no se utiliza, puesto que solo se necesito 6
-000424 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
-000425 ff00                      	SBRS R16, PB0	; PB0 = 1?
-000426 95a3                      	INC ESTADO		; PB0 = 0
+000415 b103                      	IN R16, PINB	; Obtiene la informacion de PINB
+000416 ff00                      	SBRS R16, PB0	; PB0 = 1?
+000417 95a3                      	INC ESTADO		; PB0 = 0
                                  					; PB0 = 1
-000427 c003                      	RJMP ISR_POP_PCINT0
+000418 c003                      	RJMP ISR_POP_PCINT0
                                  
                                  ESTADO111_ISR:		; Este registro no se utiliza, puesto que solo se necesito 6
-000428 b103                      	IN R16, PINB 
-000429 ff00                      	SBRS R16, PB0	; PB0 = 1?
-00042a 95a3                      	INC ESTADO		; PB0 = 0
+000419 b103                      	IN R16, PINB 
+00041a ff00                      	SBRS R16, PB0	; PB0 = 1?
+00041b 95a3                      	INC ESTADO		; PB0 = 0
                                  					; PB0 = 1
                                  
                                  ISR_POP_PCINT0:
-00042b 30a5                      	CPI ESTADO, 5		; Compara el estado con 6
-00042c f409                      	BRNE ISRPOPPCINT0	; Si no es igual, saltar a la siguiente subrutina
-00042d 27aa                      	CLR ESTADO			; Limpiar el estado si es igual
+00041c 30a5                      	CPI ESTADO, 5		; Compara el estado con 6
+00041d f409                      	BRNE ISRPOPPCINT0	; Si no es igual, saltar a la siguiente subrutina
+00041e 27aa                      	CLR ESTADO			; Limpiar el estado si es igual
                                  ISRPOPPCINT0:
-00042e 9ad8                      	SBI PCIFR, PCIF0    ; Apagar la bandera de ISR PCINT0  
-00042f 910f                      	POP R16 			; Obtener el valor de SREG
-000430 bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
-000431 910f                      	POP R16 			; OBTENER EL VALOR DE r16
-000432 9518                      	RETI				; Retornamos a la ISR
+00041f 9ad8                      	SBI PCIFR, PCIF0    ; Apagar la bandera de ISR PCINT0  
+000420 910f                      	POP R16 			; Obtener el valor de SREG
+000421 bf0f                      	OUT SREG, R16		; REstaurar los antiguos vlaores de SREG
+000422 910f                      	POP R16 			; OBTENER EL VALOR DE r16
+000423 9518                      	RETI				; Retornamos a la ISR
                                  
                                  ;******************************************************************************
                                  ;Tabla de valores
                                  ;******************************************************************************
-000433 1020                      	TABLADOS: .DB 0x20, 0x10
-000434 c0fc
-000435 ea6e
-000436 bad2
-000437 e2be
-000438 f2fe
-000439 9ef6
-00043a ce3c
-00043b 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
-00043c 0100
-00043d 0109
-00043e 0100
-00043f 0100
-000440 0001
-000441 0001
-000442 0001                      	DIASxMesU: .DB 0, 1, 9, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0
-000443 0300
-000444 0302
-000445 0303
-000446 0303
-000447 0303
-000448 0303
-000449 0003                      	DIASxMesD: .DB 0, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0
+000424 1020                      	TABLADOS: .DB 0x20, 0x10
+000425 c0fc
+000426 ea6e
+000427 bad2
+000428 e2be
+000429 f2fe
+00042a 9ef6
+00042b ce3c
+00042c 363e                      	TABLE: .DB  0xFC, 0xC0, 0x6E, 0xEA, 0xD2, 0xBA, 0xBE, 0xE2, 0xFE, 0xF2, 0xF6, 0x9E, 0x3C, 0xCE, 0x3E, 0x36
+00042d 0100
+00042e 0109
+00042f 0100
+000430 0100
+000431 0001
+000432 0001
+000433 0001                      	DIASxMesU: .DB 0, 1, 9, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0
+000434 0300
+000435 0302
+000436 0303
+000437 0303
+000438 0303
+000439 0303
+00043a 0003                      	DIASxMesD: .DB 0, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0
 
 
 RESOURCE USE INFORMATION
@@ -2536,28 +2530,28 @@ counted separately from r26..r31 here.
 
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :  32 r0 :   2 r1 :   4 r2 :  47 r3 :  19 r4 :  34 
-r5 :  19 r6 :  39 r7 :  21 r8 :   0 r9 :   0 r10:   1 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16: 303 r17:  52 r18:   8 r19:   5 r20:  19 
-r21:  15 r22:  20 r23:  14 r24:  13 r25:   0 r26:  25 r27:   9 r28:  14 
-r29:  16 r30:  65 r31:  28 
-Registers used: 25 out of 35 (71.4%)
+r5 :  19 r6 :  39 r7 :  21 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
+r13:   0 r14:   0 r15:   0 r16: 299 r17:  59 r18:   8 r19:   5 r20:  19 
+r21:  15 r22:  20 r23:  14 r24:  12 r25:   0 r26:  25 r27:   9 r28:  13 
+r29:   9 r30:  65 r31:  28 
+Registers used: 24 out of 35 (68.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :  52 adiw  :   0 and   :   0 
-andi  :  12 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :  71 brge  :   0 brhc  :   0 
+andi  :   8 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  69 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :  22 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   4 cbi   :  74 cbr   :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   4 cbi   :  72 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   : 104 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  12 cpc   :   0 
-cpi   :  81 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :  12 inc   :  35 jmp   :  33 
+cpi   :  79 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :  12 inc   :  34 jmp   :  33 
 ld    :   0 ldd   :   0 ldi   : 125 lds   :   0 lpm   :  64 lsl   :   0 
 lsr   :   0 mov   :  67 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   8 out   :  38 pop   :   8 
 push  :   8 rcall :   0 ret   :   4 reti  :   4 rjmp  :  72 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :  30 sbic  :  20 sbis  :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :  30 sbic  :  16 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :  35 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  18 
@@ -2567,7 +2561,7 @@ Instructions used: 28 out of 113 (24.8%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000894   2102     46   2148   32768   6.6%
+[.cseg] 0x000000 0x000876   2072     46   2118   32768   6.5%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

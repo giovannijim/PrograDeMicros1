@@ -140,10 +140,10 @@ MAIN:
 	
 	CLR PointerMes			; Limpiar el registro
 
-	LDI CntMinDecenas, 4	; Cargar valor inicial en el reloj
-	LDI CntMinUnidades, 0	; Cargar valor inicial en el reloj
-	LDI CntHrsDecenas, 1	; Cargar valor inicial en el reloj
-	LDI CntHrsUnidades, 5	; Cargar valor inicial en el reloj
+	LDI CntMinDecenas, 5	; Cargar valor inicial en el reloj
+	LDI CntMinUnidades, 8	; Cargar valor inicial en el reloj
+	LDI CntHrsDecenas, 2	; Cargar valor inicial en el reloj
+	LDI CntHrsUnidades, 3	; Cargar valor inicial en el reloj
 
 	
 	CBI PORTB, PB5		; Apagar PB5
@@ -202,10 +202,13 @@ LOOP:
 ; ----------------------------------------MOSTRAR HORA----------------------------------------
 
 ESTADO000:
-	CBI PORTC, PC0	; Apagar PC0	
-	CBI PORTC, PC1	; Apagar PC1
+	;LDI R16, 0
+	;CP R1, R16
+	;BREQ AUMENTO
+	;CLR R1
+
 	CLR R2			; Limpia el registro 2
-	
+
 ; ---------------------------------------MULTIPLEXACION--------------------------------------------
 	U_MINUTOS_000:
 	SBI PORTC, PC2			; Activa display de unidades minutos
@@ -221,7 +224,7 @@ ESTADO000:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX0:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10				; Compara el registro 16 con 10
+	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX0	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -239,7 +242,7 @@ ESTADO000:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX1:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10			; Compara el registro 16 con 10
+	CPI R16, 5			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX1	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -257,7 +260,7 @@ ESTADO000:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX2:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10				; Compara el registro 16 con 10
+	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX2	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -274,7 +277,7 @@ ESTADO000:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX3:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10				; Compara el registro 16 con 10
+	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX3	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -328,7 +331,7 @@ ESTADO001:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX4:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10			; Compara el registro 16 con 10
+	CPI R16, 5			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX4	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -346,7 +349,7 @@ ESTADO001:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX5:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10			; Compara el registro 16 con 10
+	CPI R16, 5			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX5	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -364,7 +367,7 @@ ESTADO001:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX6:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10				; Compara el registro 16 con 10
+	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX6	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -381,7 +384,7 @@ ESTADO001:
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX7:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 10				; Compara el registro 16 con 10
+	CPI R16, 5				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX7	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -482,7 +485,7 @@ ESTADO010:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX8:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX8	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -499,7 +502,7 @@ ESTADO010:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX9:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX9	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -517,7 +520,7 @@ ESTADO010:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX10:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX10	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -535,7 +538,7 @@ ESTADO010:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX11:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX11	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 	
@@ -555,8 +558,8 @@ ESTADO010:
 		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
 		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-		LDI R17, 0x01			; Carga 1 en R29
-		ADD R16, R29			; Suma el registro 16 con el 19
+		LDI R17, 0x01			; Carga 1 en R17
+		ADD R16, R17			; Suma el registro 16 con el 19
 		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
 		CP R16, R17				;	Compara el registro R16 con el R17
 		BREQ COMPROBAR_DECENA_MES_SHOW	; Se dirige a la subruita si ambos registros de arriba son iguales
@@ -580,8 +583,8 @@ ESTADO010:
 		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
 		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-		LDI R29, 0x01			; Carga 1 en R29
-		ADD R16, R29			; Suma el registro 16 con el 19
+		LDI R17, 0x01			; Carga 1 en R17
+		ADD R16, R17			; Suma el registro 16 con el 19
 		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
 		CP R16, R17				;	Compara el registro R16 con el R17
 		BREQ COMPROBAR_DECENA_MES_SHOW
@@ -746,7 +749,7 @@ ESTADO011:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX12:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX12	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -763,7 +766,7 @@ ESTADO011:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX13:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX13	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -781,7 +784,7 @@ ESTADO011:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX14:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX14	; Si no es igual Regresar a dicha subrutina
 		CLR R2					; Limpiar el registro R2
 
@@ -799,7 +802,7 @@ ESTADO011:
 		OUT PORTD, R16			; Carga el registro R16 al puerto D
 		DELAY_MULTIPLEX15:		; Delay de multiplexeo
 		MOV R16, R2				; Copia el registro 2 en el 16
-		CPI R16, 10				; Compara el registro 16 con 10
+		CPI R16, 5				; Compara el registro 16 con 10
 		BRNE DELAY_MULTIPLEX15	; Si no es igual Regresar a dicha subrutina
 		CLR R2	
 
@@ -820,8 +823,8 @@ ESTADO011:
 		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
 		ADD ZL, CntMesUnidad		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-		LDI R29, 0x01			; Carga 1 en R29
-		ADD R16, R29			; Suma el registro 16 con el 19
+		LDI R17, 0x01			; Carga 1 en R17
+		ADD R16, R17			; Suma el registro 16 con el 19
 		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
 		CP R16, R17				;	Compara el registro R16 con el R17
 		BREQ COMPROBAR_DECENA_MES	; Se dirige a la subruita si ambos registros de arriba son iguales
@@ -845,8 +848,8 @@ ESTADO011:
 		LDI ZH, HIGH(DIASxMesU << 1)	; Se obtiene la dirección más significativa del registro Z
 		ADD ZL, PointerMes		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 		LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-		LDI R29, 0x01			; Carga 1 en R29
-		ADD R16, R29			; Suma el registro 16 con el 19
+		LDI R17, 0x01			; Carga 1 en R17
+		ADD R16, R17			; Suma el registro 16 con el 19
 		MOV R17, CntDiaUnidad	; Copia el registro CntDiaUnidad R17
 		CP R16, R17				;	Compara el registro R16 con el R17
 		BREQ COMPROBAR_DECENA_MES
@@ -1004,12 +1007,10 @@ ESTADO100:
 	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
 	ADD ZL, AlarmaMinUnidad		; Se desplaza el pointer
 	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX16:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 25			; Compara el registro 16 con 10
+	CPI R16, 2			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX16	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -1022,12 +1023,10 @@ ESTADO100:
 	LDI ZH, HIGH(TABLE << 1)	; Se obtiene la dirección más significativa del registro Z
 	ADD ZL, AlarmaMinDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX17:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 25			; Compara el registro 16 con 10
+	CPI R16, 2			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX17	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -1040,12 +1039,10 @@ ESTADO100:
 	LDI ZH, HIGH(TABLE << 1)		; Se obtiene la dirección más significativa del registro Z
 	ADD ZL, AlarmaHrsUnidad			; Se desplaza el pointer
 	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX18:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 25				; Compara el registro 16 con 10
+	CPI R16, 2 			; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX18	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
@@ -1057,23 +1054,22 @@ ESTADO100:
 	LDI ZL, LOW(TABLE << 1)			; Se obtiene la dirección menos significativa del registro Z
 	ADD ZL, AlarmaHrsDecena		; Mueve ZL a donde se encuentra el pointer (la posición de R17)
 	LPM R16, Z				; Carga el valor que existe en Z en el registro R 16
-	SBIC PIND, PD0			; Saltar si PD0 se encuentra apagado (en 0)
-	ANDI R16, 0xFE			; Si No se encuentra en 0, apagar el bit 0
 	OUT PORTD, R16			; Carga el registro R16 al puerto D
 	DELAY_MULTIPLEX19:		; Delay de multiplexeo
 	MOV R16, R2				; Copia el registro 2 en el 16
-	CPI R16, 25				; Compara el registro 16 con 10
+	CPI R16, 2				; Compara el registro 16 con 10
 	BRNE DELAY_MULTIPLEX19	; Si no es igual Regresar a dicha subrutina
 	CLR R2					; Limpiar el registro R2
 
-;COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
+
+	;COMPARACION DE CONFIGURACION DISPLAYS DE MINUTOS EN HORA
 	U_MIN_CONF_ALARMA:
 		CPI AlarmaMinUnidad, 0x0A			; Compara si el contador es 10
-		BREQ D_MIN_CONF_ALARMA				; Si el contador es cero salta 
+		BREQ D_MIN_CONF_ALARMA				; Si el contador es cero salta
+		 
 		CPI AlarmaMinUnidad, -1				; Compara si el registro es -1
 		BREQ DEC_D_MIN_ALM_HORA			; Si si lo es, saltar a la subrutina
-		CPI AlarmaMinUnidad, -2				; Compara si el registro es -1
-		BREQ DEC_D_MIN_ALM_HORA			; Si si lo es, saltar a la subrutina
+
 		RJMP U_HRS_CONF_ALARMA
 
 	DEC_D_MIN_ALM_HORA:
@@ -1108,8 +1104,7 @@ ESTADO100:
 		BREQ RESET_2359_TO_0_ALARMA				; Si lo es, saltar a dicha subruitna
 		CPI AlarmaHrsUnidad, -1				; Compara si el registro es -1
 		BREQ DEC_D_HRS_ALM_HORA			; Si si lo es, saltar a la subrutina
-		CPI AlarmaHrsUnidad, -2				; Compara si el registro es -1
-		BREQ DEC_D_HRS_ALM_HORA			; Si si lo es, saltar a la subrutina
+
 		RJMP LOOP							; Regresa al loop
 
 	DEC_D_HRS_ALM_HORA:
@@ -1262,7 +1257,6 @@ ISR_TIMER0_OVF:
 
 	INC R0				; Incrementamos contador de 10 ms
 	INC R1 				; Incrementamos contador de 10 ms
-	INC R10				; Incrementamos contador para toggle de display cada 2ms
 
 	POP R17				; Obtener el valor de SREG
 	OUT SREG, R17		; REstaurar los antiguos vlaores de SREG
