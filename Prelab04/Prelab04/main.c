@@ -1,6 +1,5 @@
 /*
  * Prelab04.c
- *
  * Created: 4/4/2024 10:05:52 AM
  * Author : GIOLESS
  */ 
@@ -11,18 +10,13 @@
 
 void setup(void);
 
-char contador;
-
 int main(void)
 {
 	cli();
 	setup();
 	sei();
 	while(1)
-	{
-		contador ++;
-		PORTD = contador;
-		_delay_ms(200);
+	{	
 	}
 }
 
@@ -41,10 +35,25 @@ void setup(void)
 	PORTC |= (1<<PORTC4);
 	PORTC |= (1<<PORTC5);
 	
+	//Habilitar la interrupción puerto C
+	PCICR |= (1<<PCIE1);
+	// Habilitar mascara para pines PC5 Y PC4
+	PCMSK1 |= 0xFF;
 	
 }
 
 ISR (PCINT1_vect) 
 {
-	
-}
+	if(!(PINC&(1<<PINC4)))
+	{
+		_delay_ms(100);
+		PORTD ++;
+	}
+	else if(!(PINC&(1<<PINC5)))
+	{
+		_delay_ms(100);
+		PORTD --;
+	}
+	PINB |= (1<<PORTB5);
+	PCIFR |= (1<<PCIF1);
+}	
