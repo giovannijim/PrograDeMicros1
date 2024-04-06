@@ -1,19 +1,19 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.8</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\Debug</WORKING_DIR>
  <INCLUDE_PATH>
-  <DIR>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
-  <DIR>D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
-  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
-  <FILE>D:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\Debug\LAB02.obj</FILE>
+  <FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\Debug\LAB02.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>LAB02.hex</FILE>
@@ -23,22 +23,22 @@
   <FILE>LAB02.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <MAIN><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>21</LINE></MAIN>
-  <table><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>183</LINE></table>
-  <SETUP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>29</LINE></SETUP>
-  <Init_T0><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>103</LINE></Init_T0>
-  <LOOP><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>67</LINE></LOOP>
-  <CheckB1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>84</LINE></CheckB1>
-  <Timer><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>74</LINE></Timer>
-  <AUMENTONIBBLE><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>110</LINE></AUMENTONIBBLE>
-  <AumentoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>122</LINE></AumentoSevSeg>
-  <CheckB2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>91</LINE></CheckB2>
-  <DecrementoSevSeg><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>142</LINE></DecrementoSevSeg>
-  <ResetWithLimit><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>175</LINE></ResetWithLimit>
-  <RESET1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>170</LINE></RESET1>
-  <delay><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>127</LINE></delay>
-  <RESET><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>162</LINE></RESET>
-  <delay1><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>147</LINE></delay1>
-  <RESET2><FILE>D:\GIOLESS\Documents\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>166</LINE></RESET2>
+  <MAIN><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>21</LINE></MAIN>
+  <table><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>183</LINE></table>
+  <SETUP><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>29</LINE></SETUP>
+  <Init_T0><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>103</LINE></Init_T0>
+  <LOOP><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>67</LINE></LOOP>
+  <CheckB1><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>84</LINE></CheckB1>
+  <Timer><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>74</LINE></Timer>
+  <AUMENTONIBBLE><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>110</LINE></AUMENTONIBBLE>
+  <AumentoSevSeg><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>122</LINE></AumentoSevSeg>
+  <CheckB2><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>91</LINE></CheckB2>
+  <DecrementoSevSeg><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>142</LINE></DecrementoSevSeg>
+  <ResetWithLimit><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>175</LINE></ResetWithLimit>
+  <RESET1><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>170</LINE></RESET1>
+  <delay><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>127</LINE></delay>
+  <RESET><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>162</LINE></RESET>
+  <delay1><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>147</LINE></delay1>
+  <RESET2><FILE>C:\Users\alesa\OneDrive\Documentos\GitHub\PrograDeMicros1\LAB02\LAB02\main.asm</FILE><LINE>166</LINE></RESET2>
  </LABELS>
 </ASSEMBLER_INFO>

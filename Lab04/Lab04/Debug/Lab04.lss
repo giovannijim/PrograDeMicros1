@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  000000a0  00000000  00000000  00001688  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003e6  00000000  00000000  00001728  2**0
+ 10 .debug_str    000003fb  00000000  00000000  00001728  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000011e  00000000  00000000  00001b0e  2**0
+ 11 .debug_loc    0000011e  00000000  00000000  00001b23  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000038  00000000  00000000  00001c2c  2**0
+ 12 .debug_ranges 00000038  00000000  00000000  00001c41  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -295,16 +295,16 @@ void alarma(void){
  19a:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <__data_end>
  19e:	89 17       	cp	r24, r25
  1a0:	20 f4       	brcc	.+8      	; 0x1aa <alarma+0x14>
-			PORTD |= (1<<PORTD1);
+			PORTD |= (1<<PORTD0);
  1a2:	8b b1       	in	r24, 0x0b	; 11
- 1a4:	82 60       	ori	r24, 0x02	; 2
+ 1a4:	81 60       	ori	r24, 0x01	; 1
  1a6:	8b b9       	out	0x0b, r24	; 11
  1a8:	08 95       	ret
 	}
 	else {
-		PORTD &= ~(1<<PORTD1);
+		PORTD &= ~(1<<PORTD0);
  1aa:	8b b1       	in	r24, 0x0b	; 11
- 1ac:	8d 7f       	andi	r24, 0xFD	; 253
+ 1ac:	8e 7f       	andi	r24, 0xFE	; 254
  1ae:	8b b9       	out	0x0b, r24	; 11
  1b0:	08 95       	ret
 

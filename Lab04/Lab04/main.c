@@ -113,11 +113,12 @@ ISR(PCINT1_vect)
 	PCIFR |= (1<<PCIF1); // Apagar la bandera de interrupción
 }
 
+// Rutina para verificar que el valor de lectura del ADC es mayor al contador
 void alarma(void){
 	if( ADCH > contador){
-			PORTD |= (1<<PORTD1);
+			PORTD |= (1<<PORTD0);
 	}
 	else {
-		PORTD &= ~(1<<PORTD1);
+		PORTD &= ~(1<<PORTD0);
 	}
 }
