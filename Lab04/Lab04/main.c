@@ -22,34 +22,39 @@ void initADC(void);
 void setup(void);
 void alarma(void);
 
+// Rutina Principal -----------------------------------------------------------
 int main(void)
 {	
-	cli();
-    setup();
-	initADC();
-	sei();
+	cli();								// Deshabilitar interrupciones globales
+    setup();							// Dirigirse a la subrutina setup
+	initADC();							// Dirigirse a la subrutina initADC
+	sei();								// Habilitar interrupciones globales
 	
     while (1) 
     {
 		// Multiplexacion
-		_delay_ms(4);
-		PORTC &= !(1<<PORTC5);
-		PORTC |= (1<<PORTC4);
-		PORTD = mylist[pointer1];
-		_delay_ms(4);
-		PORTC &= !(1<<PORTC4);
-		PORTC |= (1<<PORTC5);
-		PORTD = mylist[pointer2];
+		_delay_ms(4);					// Delay de 4 ms
+		PORTC &= !(1<<PORTC5);			// Apaga el puerto PC5
+		PORTC |= (1<<PORTC4);			// Prende el puerto PC4
+		PORTD = mylist[pointer1];		// Cargar al puerto D el valor de la lista mylist en la posicion pointer 1
+		_delay_ms(4);					// Delay de 4 ms
+		PORTC &= !(1<<PORTC4);			// Apaga el puerto PC4
+		PORTC |= (1<<PORTC5);			// Prende el puerto PC5
+		PORTD = mylist[pointer2];		// Cargar al puerto D el valor de la lista mylist en la posicion pointer 2
+		
 		// Se comienza la conversion en ADC
 		ADCSRA |= (1<< ADSC);
-		PORTB = contador;
-		contador_desp = contador  >> 6;
-		PORTC = PORTC | contador_desp;
-		alarma();
+		
+		PORTB = contador;				// Cargar el valor del contador al puerto B
+		contador_desp = contador  >> 6;	// Desplazar los bits del contador 6 veces a la derecha
+		PORTC = PORTC | contador_desp;	// Cargar con un OR el contador desplazado (para no afectar los otros bits)
+		alarma();						// Dirigirse a la subruitna Alarma
     }
 }
 
+// Subrutina setup ------------------------------------------------------------
 void setup(void){
+	// Establecer la variable contador en 0
 	contador = 0;
 	// Se apaga tx y rx
 	UCSR0B = 0;
@@ -72,6 +77,7 @@ void setup(void){
 	PCMSK1 |= 0x0C;
 }
 
+// INIT ADC -------------------------------------------------------------------
 void initADC(void){
 	// Se selecciona el canal 6 ADC
 	ADMUX = 0;
@@ -89,6 +95,7 @@ void initADC(void){
 	ADCSRA |= (1<< ADEN);
 }
 
+// Vector de interrupcion ADC -------------------------------------------------
 ISR(ADC_vect)
 { 
 	// Se realiza una selección de los bits que nos importan
@@ -100,6 +107,7 @@ ISR(ADC_vect)
 	ADCSRA |= (1<<ADIF);
 }
 
+// Vector de interrupcion PCINT1 ----------------------------------------------
 ISR(PCINT1_vect)
 {
 	if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado ejecutar instrucción
@@ -115,9 +123,11 @@ ISR(PCINT1_vect)
 
 // Rutina para verificar que el valor de lectura del ADC es mayor al contador
 void alarma(void){
+	// Si el byte ADCH es mayor al contador prender el bit PD1
 	if( ADCH > contador){
 			PORTD |= (1<<PORTD0);
 	}
+	// Si no es igual apagar el bit PD0
 	else {
 		PORTD &= ~(1<<PORTD0);
 	}
