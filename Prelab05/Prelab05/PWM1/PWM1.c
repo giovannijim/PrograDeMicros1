@@ -62,7 +62,7 @@ void initPWM1FastB(uint8_t inverted, uint16_t prescaler){
 }
 
 void updateDutyCyclePWM1A(uint8_t duty){
-	//mapeado = duty * 12.85 + 3277;
+	//mapeado = duty * 13 + 3277;
 	//mapeadoH = mapeado & 0xFF00;
 	//mapeadoL = mapeado & 0x00FF;
 	//OCR1AH = mapeadoH >> 8;
