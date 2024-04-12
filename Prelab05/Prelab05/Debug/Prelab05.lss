@@ -3,29 +3,31 @@ Prelab05.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000200  2**0
+  0 .data         00000000  00800100  00800100  00000242  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001ac  00000000  00000000  00000054  2**1
+  1 .text         000001ce  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000200  2**0
+  2 .bss          00000006  00800100  00800100  00000242  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000242  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000230  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000274  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000088  00000000  00000000  00000270  2**0
+  5 .debug_aranges 00000088  00000000  00000000  000002b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000009a5  00000000  00000000  000002f8  2**0
+  6 .debug_info   000009b7  00000000  00000000  0000033c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000007aa  00000000  00000000  00000c9d  2**0
+  7 .debug_abbrev 000007aa  00000000  00000000  00000cf3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000506  00000000  00000000  00001447  2**0
+  8 .debug_line   00000519  00000000  00000000  0000149d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000d8  00000000  00000000  00001950  2**2
+  9 .debug_frame  000000d8  00000000  00000000  000019b8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000044c  00000000  00000000  00001a28  2**0
+ 10 .debug_str    0000046b  00000000  00000000  00001a90  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000133  00000000  00000000  00001e74  2**0
+ 11 .debug_loc    00000133  00000000  00000000  00001efb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000058  00000000  00000000  00001fa7  2**0
+ 12 .debug_ranges 00000058  00000000  00000000  0000202e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -76,11 +78,11 @@ Disassembly of section .text:
   7c:	1d 92       	st	X+, r1
 
 0000007e <.do_clear_bss_start>:
-  7e:	a0 30       	cpi	r26, 0x00	; 0
+  7e:	a6 30       	cpi	r26, 0x06	; 6
   80:	b2 07       	cpc	r27, r18
   82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
   84:	0e 94 7b 00 	call	0xf6	; 0xf6 <main>
-  88:	0c 94 d4 00 	jmp	0x1a8	; 0x1a8 <_exit>
+  88:	0c 94 e5 00 	jmp	0x1ca	; 0x1ca <_exit>
 
 0000008c <__bad_interrupt>:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -220,7 +222,7 @@ int main(void)
 		updateDutyCyclePWM1A(ADCH);
  12a:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
  12e:	90 e0       	ldi	r25, 0x00	; 0
- 130:	0e 94 cf 00 	call	0x19e	; 0x19e <updateDutyCyclePWM1A>
+ 130:	0e 94 cc 00 	call	0x198	; 0x198 <updateDutyCyclePWM1A>
  134:	ec cf       	rjmp	.-40     	; 0x10e <main+0x18>
 
 00000136 <__vector_21>:
@@ -277,35 +279,49 @@ ISR(ADC_vect)
  17c:	e0 e8       	ldi	r30, 0x80	; 128
  17e:	f0 e0       	ldi	r31, 0x00	; 0
  180:	80 81       	ld	r24, Z
- 182:	83 60       	ori	r24, 0x03	; 3
+ 182:	81 60       	ori	r24, 0x01	; 1
  184:	80 83       	st	Z, r24
- 186:	e1 e8       	ldi	r30, 0x81	; 129
- 188:	f0 e0       	ldi	r31, 0x00	; 0
- 18a:	80 81       	ld	r24, Z
- 18c:	88 61       	ori	r24, 0x18	; 24
- 18e:	80 83       	st	Z, r24
- 190:	61 15       	cp	r22, r1
- 192:	74 40       	sbci	r23, 0x04	; 4
- 194:	19 f4       	brne	.+6      	; 0x19c <initPWM1FastA+0x3c>
- 196:	80 81       	ld	r24, Z
- 198:	85 60       	ori	r24, 0x05	; 5
- 19a:	80 83       	st	Z, r24
- 19c:	08 95       	ret
+ 186:	61 15       	cp	r22, r1
+ 188:	74 40       	sbci	r23, 0x04	; 4
+ 18a:	29 f4       	brne	.+10     	; 0x196 <initPWM1FastA+0x36>
+ 18c:	e1 e8       	ldi	r30, 0x81	; 129
+ 18e:	f0 e0       	ldi	r31, 0x00	; 0
+ 190:	80 81       	ld	r24, Z
+ 192:	85 60       	ori	r24, 0x05	; 5
+ 194:	80 83       	st	Z, r24
+ 196:	08 95       	ret
 
-0000019e <updateDutyCyclePWM1A>:
+00000198 <updateDutyCyclePWM1A>:
+	}
+}
+
 void updateDutyCyclePWM1A(uint8_t duty){
-	//mapeado = duty * 12.85 + 3277;
-	//mapeadoH = mapeado & 0xFF00;
-	//mapeadoL = mapeado & 0x00FF;
-	//OCR1AH = mapeadoH >> 8;
+	mapeado = (duty * 13) + 3277;
+ 198:	9d e0       	ldi	r25, 0x0D	; 13
+ 19a:	89 9f       	mul	r24, r25
+ 19c:	90 01       	movw	r18, r0
+ 19e:	11 24       	eor	r1, r1
+ 1a0:	23 53       	subi	r18, 0x33	; 51
+ 1a2:	33 4f       	sbci	r19, 0xF3	; 243
+ 1a4:	30 93 04 01 	sts	0x0104, r19	; 0x800104 <mapeado+0x1>
+ 1a8:	20 93 03 01 	sts	0x0103, r18	; 0x800103 <mapeado>
+	mapeadoH = mapeado & 0xFF00;
+ 1ac:	a9 01       	movw	r20, r18
+ 1ae:	44 27       	eor	r20, r20
+ 1b0:	50 93 02 01 	sts	0x0102, r21	; 0x800102 <mapeadoH+0x1>
+ 1b4:	40 93 01 01 	sts	0x0101, r20	; 0x800101 <mapeadoH>
+	mapeadodH = mapeadoH >>8;
+ 1b8:	50 93 05 01 	sts	0x0105, r21	; 0x800105 <mapeadodH>
+	mapeadoL = mapeado & 0x00FF;
+ 1bc:	20 93 00 01 	sts	0x0100, r18	; 0x800100 <__DATA_REGION_ORIGIN__>
 	OCR1AH = 0;
- 19e:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 1c0:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
 	OCR1AL = duty;
- 1a2:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
- 1a6:	08 95       	ret
+ 1c4:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ 1c8:	08 95       	ret
 
-000001a8 <_exit>:
- 1a8:	f8 94       	cli
+000001ca <_exit>:
+ 1ca:	f8 94       	cli
 
-000001aa <__stop_program>:
- 1aa:	ff cf       	rjmp	.-2      	; 0x1aa <__stop_program>
+000001cc <__stop_program>:
+ 1cc:	ff cf       	rjmp	.-2      	; 0x1cc <__stop_program>
