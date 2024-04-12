@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  000000a0  00000000  00000000  00001688  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003fb  00000000  00000000  00001728  2**0
+ 10 .debug_str    000003e6  00000000  00000000  00001728  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000011e  00000000  00000000  00001b23  2**0
+ 11 .debug_loc    0000011e  00000000  00000000  00001b0e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000038  00000000  00000000  00001c41  2**0
+ 12 .debug_ranges 00000038  00000000  00000000  00001c2c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -101,11 +101,11 @@ Disassembly of section .text:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <setup>:
-		alarma();
-    }
 }
 
+// Subrutina setup ------------------------------------------------------------
 void setup(void){
+	// Establecer la variable contador en 0
 	contador = 0;
   a6:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <__data_end>
 	// Se apaga tx y rx
@@ -159,6 +159,7 @@ void setup(void){
 000000e4 <initADC>:
 }
 
+// INIT ADC -------------------------------------------------------------------
 void initADC(void){
 	// Se selecciona el canal 6 ADC
 	ADMUX = 0;
@@ -205,6 +206,7 @@ void initADC(void){
 0000011a <__vector_21>:
 }
 
+// Vector de interrupcion ADC -------------------------------------------------
 ISR(ADC_vect)
 { 
  11a:	1f 92       	push	r1
@@ -248,6 +250,7 @@ ISR(ADC_vect)
 
 0000015a <__vector_4>:
 
+// Vector de interrupcion PCINT1 ----------------------------------------------
 ISR(PCINT1_vect)
 {
  15a:	1f 92       	push	r1
@@ -289,7 +292,9 @@ ISR(PCINT1_vect)
 
 00000196 <alarma>:
 
+// Rutina para verificar que el valor de lectura del ADC es mayor al contador
 void alarma(void){
+	// Si el byte ADCH es mayor al contador prender el bit PD1
 	if( ADCH > contador){
  196:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
  19a:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <__data_end>
@@ -301,6 +306,7 @@ void alarma(void){
  1a6:	8b b9       	out	0x0b, r24	; 11
  1a8:	08 95       	ret
 	}
+	// Si no es igual apagar el bit PD0
 	else {
 		PORTD &= ~(1<<PORTD0);
  1aa:	8b b1       	in	r24, 0x0b	; 11
@@ -309,18 +315,18 @@ void alarma(void){
  1b0:	08 95       	ret
 
 000001b2 <main>:
-void setup(void);
 void alarma(void);
 
+// Rutina Principal -----------------------------------------------------------
 int main(void)
 {	
-	cli();
+	cli();								// Deshabilitar interrupciones globales
  1b2:	f8 94       	cli
-    setup();
+    setup();							// Dirigirse a la subrutina setup
  1b4:	0e 94 53 00 	call	0xa6	; 0xa6 <setup>
-	initADC();
+	initADC();							// Dirigirse a la subrutina initADC
  1b8:	0e 94 72 00 	call	0xe4	; 0xe4 <initADC>
-	sei();
+	sei();								// Habilitar interrupciones globales
  1bc:	78 94       	sei
 	#else
 		//round up by default
@@ -338,15 +344,15 @@ int main(void)
     while (1) 
     {
 		// Multiplexacion
-		_delay_ms(4);
-		PORTC &= !(1<<PORTC5);
+		_delay_ms(4);					// Delay de 4 ms
+		PORTC &= !(1<<PORTC5);			// Apaga el puerto PC5
  1ca:	88 b1       	in	r24, 0x08	; 8
  1cc:	18 b8       	out	0x08, r1	; 8
-		PORTC |= (1<<PORTC4);
+		PORTC |= (1<<PORTC4);			// Prende el puerto PC4
  1ce:	88 b1       	in	r24, 0x08	; 8
  1d0:	80 61       	ori	r24, 0x10	; 16
  1d2:	88 b9       	out	0x08, r24	; 8
-		PORTD = mylist[pointer1];
+		PORTD = mylist[pointer1];		// Cargar al puerto D el valor de la lista mylist en la posicion pointer 1
  1d4:	e0 91 12 01 	lds	r30, 0x0112	; 0x800112 <pointer1>
  1d8:	f0 e0       	ldi	r31, 0x00	; 0
  1da:	e0 50       	subi	r30, 0x00	; 0
@@ -359,21 +365,22 @@ int main(void)
  1e8:	f1 f7       	brne	.-4      	; 0x1e6 <main+0x34>
  1ea:	00 c0       	rjmp	.+0      	; 0x1ec <main+0x3a>
  1ec:	00 00       	nop
-		_delay_ms(4);
-		PORTC &= !(1<<PORTC4);
+		_delay_ms(4);					// Delay de 4 ms
+		PORTC &= !(1<<PORTC4);			// Apaga el puerto PC4
  1ee:	88 b1       	in	r24, 0x08	; 8
  1f0:	18 b8       	out	0x08, r1	; 8
-		PORTC |= (1<<PORTC5);
+		PORTC |= (1<<PORTC5);			// Prende el puerto PC5
  1f2:	88 b1       	in	r24, 0x08	; 8
  1f4:	80 62       	ori	r24, 0x20	; 32
  1f6:	88 b9       	out	0x08, r24	; 8
-		PORTD = mylist[pointer2];
+		PORTD = mylist[pointer2];		// Cargar al puerto D el valor de la lista mylist en la posicion pointer 2
  1f8:	e0 91 11 01 	lds	r30, 0x0111	; 0x800111 <pointer2>
  1fc:	f0 e0       	ldi	r31, 0x00	; 0
  1fe:	e0 50       	subi	r30, 0x00	; 0
  200:	ff 4f       	sbci	r31, 0xFF	; 255
  202:	80 81       	ld	r24, Z
  204:	8b b9       	out	0x0b, r24	; 11
+		
 		// Se comienza la conversion en ADC
 		ADCSRA |= (1<< ADSC);
  206:	ea e7       	ldi	r30, 0x7A	; 122
@@ -381,21 +388,22 @@ int main(void)
  20a:	80 81       	ld	r24, Z
  20c:	80 64       	ori	r24, 0x40	; 64
  20e:	80 83       	st	Z, r24
-		PORTB = contador;
+		
+		PORTB = contador;				// Cargar el valor del contador al puerto B
  210:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <__data_end>
  214:	85 b9       	out	0x05, r24	; 5
-		contador_desp = contador  >> 6;
+		contador_desp = contador  >> 6;	// Desplazar los bits del contador 6 veces a la derecha
  216:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <__data_end>
  21a:	82 95       	swap	r24
  21c:	86 95       	lsr	r24
  21e:	86 95       	lsr	r24
  220:	83 70       	andi	r24, 0x03	; 3
  222:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <contador_desp>
-		PORTC = PORTC | contador_desp;
+		PORTC = PORTC | contador_desp;	// Cargar con un OR el contador desplazado (para no afectar los otros bits)
  226:	98 b1       	in	r25, 0x08	; 8
  228:	89 2b       	or	r24, r25
  22a:	88 b9       	out	0x08, r24	; 8
-		alarma();
+		alarma();						// Dirigirse a la subruitna Alarma
  22c:	0e 94 cb 00 	call	0x196	; 0x196 <alarma>
  230:	c6 cf       	rjmp	.-116    	; 0x1be <main+0xc>
 
