@@ -9,7 +9,16 @@
 void initADC(uint8_t puertoADC){
 	
 	// Se selecciona un canal
-	ADMUX = puertoADC;
+	ADMUX = 0;
+	if(puertoADC == 5){
+		ADMUX |= (1<<MUX3)|(1<<MUX1);
+	}	
+	else if(puertoADC == 6){
+		ADMUX |= (1<<MUX2)|(1<<MUX1);
+	} 
+	else if(puertoADC == 7){
+		ADMUX |= (1<<MUX3)|(1<<MUX2)|(1<<MUX1);
+	} 
 	
 	// Se selecciona el voltaje VREF 5V
 	ADMUX |= (1<<REFS0);

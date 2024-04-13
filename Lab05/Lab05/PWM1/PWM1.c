@@ -30,9 +30,9 @@ void initPWM1FastA(uint8_t inverted, uint16_t prescaler){
 		TCCR1A |= (1<<COM1A1);
 	}
 	// Configurando modo FAST PWM1 16-bit TOP OCR1A
-	TCCR1A |= (1<<WGM10);
-	//TCCR1A |= (1<<WGM11);
-	//TCCR1B |= (1<<WGM12)|(1<<WGM13);
+	//TCCR1A |= (1<<WGM10);
+	TCCR1A |= (1<<WGM11);
+	TCCR1B |= (1<<WGM12)|(1<<WGM13);
 	// Configurando prescaler de 1024
 	if (prescaler==1024){
 		TCCR1B |= (1<<CS12)|(1<<CS10);
@@ -63,13 +63,13 @@ void initPWM1FastB(uint8_t inverted, uint16_t prescaler){
 }
 
 void updateDutyCyclePWM1A(uint8_t duty){
-	//mapeado = (duty * 14) + 1199;
+	mapeado = (duty * 13) + 3277;
 	//mapeadoH = mapeado & 0xFF00;
 	//mapeadodH = mapeadoH >>8;
 	//mapeadoL = mapeado & 0x00FF;
-	OCR1AH = 0;
-	OCR1AL = duty;
-	//ICR1 = 0x9C3F;
+	//OCR1AH = 0;
+	OCR1A = mapeado;
+	ICR1 = 0x03FF;
 }
 
 void updateDutyCyclePWM1b(uint8_t duty){

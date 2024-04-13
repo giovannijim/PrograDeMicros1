@@ -3,31 +3,31 @@ Prelab05.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000242  2**0
+  0 .data         00000000  00800100  00800100  00000284  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001ce  00000000  00000000  00000074  2**1
+  1 .text         00000210  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000006  00800100  00800100  00000242  2**0
+  2 .bss          00000001  00800100  00800100  00000284  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000242  2**0
+  3 .comment      00000030  00000000  00000000  00000284  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000274  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002b4  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000088  00000000  00000000  000002b4  2**0
+  5 .debug_aranges 000000b0  00000000  00000000  000002f4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000009b7  00000000  00000000  0000033c  2**0
+  6 .debug_info   00000b2d  00000000  00000000  000003a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007aa  00000000  00000000  00000cf3  2**0
+  7 .debug_abbrev 00000872  00000000  00000000  00000ed1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000519  00000000  00000000  0000149d  2**0
+  8 .debug_line   000005f9  00000000  00000000  00001743  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d8  00000000  00000000  000019b8  2**2
+  9 .debug_frame  0000010c  00000000  00000000  00001d3c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000046b  00000000  00000000  00001a90  2**0
+ 10 .debug_str    000004a9  00000000  00000000  00001e48  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000133  00000000  00000000  00001efb  2**0
+ 11 .debug_loc    00000168  00000000  00000000  000022f1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000058  00000000  00000000  0000202e  2**0
+ 12 .debug_ranges 00000070  00000000  00000000  00002459  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -54,7 +54,7 @@ Disassembly of section .text:
   48:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   4c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   50:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
-  54:	0c 94 9b 00 	jmp	0x136	; 0x136 <__vector_21>
+  54:	0c 94 a5 00 	jmp	0x14a	; 0x14a <__vector_21>
   58:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   5c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   60:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
@@ -78,11 +78,11 @@ Disassembly of section .text:
   7c:	1d 92       	st	X+, r1
 
 0000007e <.do_clear_bss_start>:
-  7e:	a6 30       	cpi	r26, 0x06	; 6
+  7e:	a1 30       	cpi	r26, 0x01	; 1
   80:	b2 07       	cpc	r27, r18
   82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
-  84:	0e 94 7b 00 	call	0xf6	; 0xf6 <main>
-  88:	0c 94 e5 00 	jmp	0x1ca	; 0x1ca <_exit>
+  84:	0e 94 65 00 	call	0xca	; 0xca <main>
+  88:	0c 94 06 01 	jmp	0x20c	; 0x20c <_exit>
 
 0000008c <__bad_interrupt>:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -93,235 +93,294 @@ Disassembly of section .text:
 void initADC(uint8_t puertoADC){
 	
 	// Se selecciona un canal
-	ADMUX = 0;
-  90:	10 92 7c 00 	sts	0x007C, r1	; 0x80007c <__TEXT_REGION_LENGTH__+0x7f807c>
-	if(puertoADC == 5){
-  94:	85 30       	cpi	r24, 0x05	; 5
-  96:	31 f4       	brne	.+12     	; 0xa4 <initADC+0x14>
-		ADMUX |= (1<<MUX3)|(1<<MUX1);
-  98:	ec e7       	ldi	r30, 0x7C	; 124
-  9a:	f0 e0       	ldi	r31, 0x00	; 0
-  9c:	80 81       	ld	r24, Z
-  9e:	8a 60       	ori	r24, 0x0A	; 10
-  a0:	80 83       	st	Z, r24
-  a2:	0f c0       	rjmp	.+30     	; 0xc2 <initADC+0x32>
-	}	
-	else if(puertoADC == 6){
-  a4:	86 30       	cpi	r24, 0x06	; 6
-  a6:	31 f4       	brne	.+12     	; 0xb4 <initADC+0x24>
-		ADMUX |= (1<<MUX2)|(1<<MUX1);
-  a8:	ec e7       	ldi	r30, 0x7C	; 124
-  aa:	f0 e0       	ldi	r31, 0x00	; 0
-  ac:	80 81       	ld	r24, Z
-  ae:	86 60       	ori	r24, 0x06	; 6
-  b0:	80 83       	st	Z, r24
-  b2:	07 c0       	rjmp	.+14     	; 0xc2 <initADC+0x32>
-	} 
-	else if(puertoADC == 7){
-  b4:	87 30       	cpi	r24, 0x07	; 7
-  b6:	29 f4       	brne	.+10     	; 0xc2 <initADC+0x32>
-		ADMUX |= (1<<MUX3)|(1<<MUX2)|(1<<MUX1);
-  b8:	ec e7       	ldi	r30, 0x7C	; 124
-  ba:	f0 e0       	ldi	r31, 0x00	; 0
-  bc:	80 81       	ld	r24, Z
-  be:	8e 60       	ori	r24, 0x0E	; 14
-  c0:	80 83       	st	Z, r24
-	} 
+	ADMUX = puertoADC;
+  90:	ec e7       	ldi	r30, 0x7C	; 124
+  92:	f0 e0       	ldi	r31, 0x00	; 0
+  94:	80 83       	st	Z, r24
 	
 	// Se selecciona el voltaje VREF 5V
 	ADMUX |= (1<<REFS0);
-  c2:	ec e7       	ldi	r30, 0x7C	; 124
-  c4:	f0 e0       	ldi	r31, 0x00	; 0
-  c6:	80 81       	ld	r24, Z
-  c8:	80 64       	ori	r24, 0x40	; 64
-  ca:	80 83       	st	Z, r24
+  96:	80 81       	ld	r24, Z
+  98:	80 64       	ori	r24, 0x40	; 64
+  9a:	80 83       	st	Z, r24
 	ADMUX &= ~(1<<REFS1);
-  cc:	80 81       	ld	r24, Z
-  ce:	8f 77       	andi	r24, 0x7F	; 127
-  d0:	80 83       	st	Z, r24
+  9c:	80 81       	ld	r24, Z
+  9e:	8f 77       	andi	r24, 0x7F	; 127
+  a0:	80 83       	st	Z, r24
 	// Se justifica hacia la izquierda la salida del adc
 	ADMUX |= (1 << ADLAR);
-  d2:	80 81       	ld	r24, Z
-  d4:	80 62       	ori	r24, 0x20	; 32
-  d6:	80 83       	st	Z, r24
+  a2:	80 81       	ld	r24, Z
+  a4:	80 62       	ori	r24, 0x20	; 32
+  a6:	80 83       	st	Z, r24
 	// Habilitar prescaler de 16M/128 fadc = 125khz
 	ADCSRA |= (1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0);
-  d8:	ea e7       	ldi	r30, 0x7A	; 122
-  da:	f0 e0       	ldi	r31, 0x00	; 0
-  dc:	80 81       	ld	r24, Z
-  de:	87 60       	ori	r24, 0x07	; 7
-  e0:	80 83       	st	Z, r24
+  a8:	ea e7       	ldi	r30, 0x7A	; 122
+  aa:	f0 e0       	ldi	r31, 0x00	; 0
+  ac:	80 81       	ld	r24, Z
+  ae:	87 60       	ori	r24, 0x07	; 7
+  b0:	80 83       	st	Z, r24
 	// Activar la interrupcion del ADC
 	ADCSRA |= (1<<ADIE);
-  e2:	80 81       	ld	r24, Z
-  e4:	88 60       	ori	r24, 0x08	; 8
-  e6:	80 83       	st	Z, r24
+  b2:	80 81       	ld	r24, Z
+  b4:	88 60       	ori	r24, 0x08	; 8
+  b6:	80 83       	st	Z, r24
 	// Se activa el ADC
 	ADCSRA |= (1<< ADEN);
-  e8:	80 81       	ld	r24, Z
-  ea:	80 68       	ori	r24, 0x80	; 128
-  ec:	80 83       	st	Z, r24
-  ee:	08 95       	ret
+  b8:	80 81       	ld	r24, Z
+  ba:	80 68       	ori	r24, 0x80	; 128
+  bc:	80 83       	st	Z, r24
+  be:	08 95       	ret
 
-000000f0 <setup>:
+000000c0 <setup>:
 }
 
 // Subrutina setup ------------------------------------------------------------
 void setup(void){
 	// Se apaga tx y rx
 	UCSR0B = 0;
-  f0:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
-  f4:	08 95       	ret
+  c0:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7f80c1>
+	varad =0;
+  c4:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+  c8:	08 95       	ret
 
-000000f6 <main>:
+000000ca <main>:
 void setup(void);
 
 int main(void)
 {
 	
     cli();								// Deshabilitar interrupciones globales
-  f6:	f8 94       	cli
+  ca:	f8 94       	cli
     setup();							// Dirigirse a la subrutina setup
-  f8:	0e 94 78 00 	call	0xf0	; 0xf0 <setup>
-	initADC(6);
-  fc:	86 e0       	ldi	r24, 0x06	; 6
-  fe:	0e 94 48 00 	call	0x90	; 0x90 <initADC>
+  cc:	0e 94 60 00 	call	0xc0	; 0xc0 <setup>
+	
 	initPWM1FastA(invertido, 1024);
- 102:	60 e0       	ldi	r22, 0x00	; 0
- 104:	74 e0       	ldi	r23, 0x04	; 4
- 106:	81 e0       	ldi	r24, 0x01	; 1
- 108:	0e 94 b0 00 	call	0x160	; 0x160 <initPWM1FastA>
+  d0:	60 e0       	ldi	r22, 0x00	; 0
+  d2:	74 e0       	ldi	r23, 0x04	; 4
+  d4:	81 e0       	ldi	r24, 0x01	; 1
+  d6:	0e 94 ba 00 	call	0x174	; 0x174 <initPWM1FastA>
+	initPWM2FastA(no_invertido, 1024);
+  da:	60 e0       	ldi	r22, 0x00	; 0
+  dc:	74 e0       	ldi	r23, 0x04	; 4
+  de:	80 e0       	ldi	r24, 0x00	; 0
+  e0:	90 e0       	ldi	r25, 0x00	; 0
+  e2:	0e 94 db 00 	call	0x1b6	; 0x1b6 <initPWM2FastA>
     sei();								// Habilitar interrupciones globales
- 10c:	78 94       	sei
+  e6:	78 94       	sei
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 10e:	2f ef       	ldi	r18, 0xFF	; 255
- 110:	89 ef       	ldi	r24, 0xF9	; 249
- 112:	90 e0       	ldi	r25, 0x00	; 0
- 114:	21 50       	subi	r18, 0x01	; 1
- 116:	80 40       	sbci	r24, 0x00	; 0
- 118:	90 40       	sbci	r25, 0x00	; 0
- 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x1e>
- 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x28>
- 11e:	00 00       	nop
+  e8:	2f ef       	ldi	r18, 0xFF	; 255
+  ea:	89 ef       	ldi	r24, 0xF9	; 249
+  ec:	90 e0       	ldi	r25, 0x00	; 0
+  ee:	21 50       	subi	r18, 0x01	; 1
+  f0:	80 40       	sbci	r24, 0x00	; 0
+  f2:	90 40       	sbci	r25, 0x00	; 0
+  f4:	e1 f7       	brne	.-8      	; 0xee <main+0x24>
+  f6:	00 c0       	rjmp	.+0      	; 0xf8 <main+0x2e>
+  f8:	00 00       	nop
 	
     while (1)
     {
 	    _delay_ms(20);					// Delay de 20 ms
 	    // Se comienza la conversion en ADC
+		initADC(6);
+  fa:	86 e0       	ldi	r24, 0x06	; 6
+  fc:	0e 94 48 00 	call	0x90	; 0x90 <initADC>
 	    ADCSRA |= (1<< ADSC);
- 120:	ea e7       	ldi	r30, 0x7A	; 122
- 122:	f0 e0       	ldi	r31, 0x00	; 0
- 124:	80 81       	ld	r24, Z
- 126:	80 64       	ori	r24, 0x40	; 64
- 128:	80 83       	st	Z, r24
-		updateDutyCyclePWM1A(ADCH);
- 12a:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
- 12e:	90 e0       	ldi	r25, 0x00	; 0
- 130:	0e 94 cc 00 	call	0x198	; 0x198 <updateDutyCyclePWM1A>
- 134:	ec cf       	rjmp	.-40     	; 0x10e <main+0x18>
+ 100:	ea e7       	ldi	r30, 0x7A	; 122
+ 102:	f0 e0       	ldi	r31, 0x00	; 0
+ 104:	80 81       	ld	r24, Z
+ 106:	80 64       	ori	r24, 0x40	; 64
+ 108:	80 83       	st	Z, r24
+		while(ADCSRA&(1<<ADSC));
+ 10a:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
+ 10e:	86 fd       	sbrc	r24, 6
+ 110:	fc cf       	rjmp	.-8      	; 0x10a <main+0x40>
+		updateDutyCyclePWM1A(ADCH);	
+ 112:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
+ 116:	90 e0       	ldi	r25, 0x00	; 0
+ 118:	0e 94 d6 00 	call	0x1ac	; 0x1ac <updateDutyCyclePWM1A>
+		initADC(5);
+ 11c:	85 e0       	ldi	r24, 0x05	; 5
+ 11e:	0e 94 48 00 	call	0x90	; 0x90 <initADC>
+		ADCSRA |= (1<< ADSC);
+ 122:	ea e7       	ldi	r30, 0x7A	; 122
+ 124:	f0 e0       	ldi	r31, 0x00	; 0
+ 126:	80 81       	ld	r24, Z
+ 128:	80 64       	ori	r24, 0x40	; 64
+ 12a:	80 83       	st	Z, r24
+		varad ++;
+ 12c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 130:	8f 5f       	subi	r24, 0xFF	; 255
+ 132:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+		while(ADCSRA&(1<<ADSC));
+ 136:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
+ 13a:	86 fd       	sbrc	r24, 6
+ 13c:	fc cf       	rjmp	.-8      	; 0x136 <main+0x6c>
+		updateDutyCyclePWM2A(ADCH);
+ 13e:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
+ 142:	90 e0       	ldi	r25, 0x00	; 0
+ 144:	0e 94 fd 00 	call	0x1fa	; 0x1fa <updateDutyCyclePWM2A>
+    }
+ 148:	cf cf       	rjmp	.-98     	; 0xe8 <main+0x1e>
 
-00000136 <__vector_21>:
-	UCSR0B = 0;
+0000014a <__vector_21>:
+	varad =0;
 }
 
 // Vector de interrupcion ADC -------------------------------------------------
 ISR(ADC_vect)
 {
- 136:	1f 92       	push	r1
- 138:	0f 92       	push	r0
- 13a:	0f b6       	in	r0, 0x3f	; 63
- 13c:	0f 92       	push	r0
- 13e:	11 24       	eor	r1, r1
- 140:	8f 93       	push	r24
- 142:	ef 93       	push	r30
- 144:	ff 93       	push	r31
+ 14a:	1f 92       	push	r1
+ 14c:	0f 92       	push	r0
+ 14e:	0f b6       	in	r0, 0x3f	; 63
+ 150:	0f 92       	push	r0
+ 152:	11 24       	eor	r1, r1
+ 154:	8f 93       	push	r24
+ 156:	ef 93       	push	r30
+ 158:	ff 93       	push	r31
 	// Se escribe con un 1 lógico la bandera para apagarla
 	ADCSRA |= (1<<ADIF);
- 146:	ea e7       	ldi	r30, 0x7A	; 122
- 148:	f0 e0       	ldi	r31, 0x00	; 0
- 14a:	80 81       	ld	r24, Z
- 14c:	80 61       	ori	r24, 0x10	; 16
- 14e:	80 83       	st	Z, r24
+ 15a:	ea e7       	ldi	r30, 0x7A	; 122
+ 15c:	f0 e0       	ldi	r31, 0x00	; 0
+ 15e:	80 81       	ld	r24, Z
+ 160:	80 61       	ori	r24, 0x10	; 16
+ 162:	80 83       	st	Z, r24
 }
- 150:	ff 91       	pop	r31
- 152:	ef 91       	pop	r30
- 154:	8f 91       	pop	r24
- 156:	0f 90       	pop	r0
- 158:	0f be       	out	0x3f, r0	; 63
- 15a:	0f 90       	pop	r0
- 15c:	1f 90       	pop	r1
- 15e:	18 95       	reti
+ 164:	ff 91       	pop	r31
+ 166:	ef 91       	pop	r30
+ 168:	8f 91       	pop	r24
+ 16a:	0f 90       	pop	r0
+ 16c:	0f be       	out	0x3f, r0	; 63
+ 16e:	0f 90       	pop	r0
+ 170:	1f 90       	pop	r1
+ 172:	18 95       	reti
 
-00000160 <initPWM1FastA>:
+00000174 <initPWM1FastA>:
 	}
 	// Configurando modo FAST PWM1 8-bit TOP 0X00FF
 	TCCR1A |= (1<<WGM11)|(1<<WGM10);
 	// Configurando prescaler de 1024
 	if (prescaler==1024){
 		TCCR1B |= (1<<CS12)|(1<<CS10);
- 160:	94 b1       	in	r25, 0x04	; 4
- 162:	92 60       	ori	r25, 0x02	; 2
- 164:	94 b9       	out	0x04, r25	; 4
- 166:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
- 16a:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
- 16e:	88 23       	and	r24, r24
- 170:	29 f0       	breq	.+10     	; 0x17c <initPWM1FastA+0x1c>
- 172:	e0 e8       	ldi	r30, 0x80	; 128
- 174:	f0 e0       	ldi	r31, 0x00	; 0
- 176:	80 81       	ld	r24, Z
- 178:	80 6c       	ori	r24, 0xC0	; 192
- 17a:	80 83       	st	Z, r24
- 17c:	e0 e8       	ldi	r30, 0x80	; 128
- 17e:	f0 e0       	ldi	r31, 0x00	; 0
- 180:	80 81       	ld	r24, Z
- 182:	81 60       	ori	r24, 0x01	; 1
- 184:	80 83       	st	Z, r24
- 186:	61 15       	cp	r22, r1
- 188:	74 40       	sbci	r23, 0x04	; 4
- 18a:	29 f4       	brne	.+10     	; 0x196 <initPWM1FastA+0x36>
- 18c:	e1 e8       	ldi	r30, 0x81	; 129
- 18e:	f0 e0       	ldi	r31, 0x00	; 0
- 190:	80 81       	ld	r24, Z
- 192:	85 60       	ori	r24, 0x05	; 5
- 194:	80 83       	st	Z, r24
- 196:	08 95       	ret
+ 174:	94 b1       	in	r25, 0x04	; 4
+ 176:	92 60       	ori	r25, 0x02	; 2
+ 178:	94 b9       	out	0x04, r25	; 4
+ 17a:	10 92 80 00 	sts	0x0080, r1	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f8080>
+ 17e:	10 92 81 00 	sts	0x0081, r1	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f8081>
+ 182:	88 23       	and	r24, r24
+ 184:	29 f0       	breq	.+10     	; 0x190 <initPWM1FastA+0x1c>
+ 186:	e0 e8       	ldi	r30, 0x80	; 128
+ 188:	f0 e0       	ldi	r31, 0x00	; 0
+ 18a:	80 81       	ld	r24, Z
+ 18c:	80 6c       	ori	r24, 0xC0	; 192
+ 18e:	80 83       	st	Z, r24
+ 190:	e0 e8       	ldi	r30, 0x80	; 128
+ 192:	f0 e0       	ldi	r31, 0x00	; 0
+ 194:	80 81       	ld	r24, Z
+ 196:	81 60       	ori	r24, 0x01	; 1
+ 198:	80 83       	st	Z, r24
+ 19a:	61 15       	cp	r22, r1
+ 19c:	74 40       	sbci	r23, 0x04	; 4
+ 19e:	29 f4       	brne	.+10     	; 0x1aa <initPWM1FastA+0x36>
+ 1a0:	e1 e8       	ldi	r30, 0x81	; 129
+ 1a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a4:	80 81       	ld	r24, Z
+ 1a6:	85 60       	ori	r24, 0x05	; 5
+ 1a8:	80 83       	st	Z, r24
+ 1aa:	08 95       	ret
 
-00000198 <updateDutyCyclePWM1A>:
+000001ac <updateDutyCyclePWM1A>:
+void updateDutyCyclePWM1A(uint8_t duty){
+	//mapeado = (duty * 14) + 1199;
+	//mapeadoH = mapeado & 0xFF00;
+	//mapeadodH = mapeadoH >>8;
+	//mapeadoL = mapeado & 0x00FF;
+	OCR1AH = 0;
+ 1ac:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+	OCR1AL = duty;
+ 1b0:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ 1b4:	08 95       	ret
+
+000001b6 <initPWM2FastA>:
+#define invertido 1
+#define no_invertido 0
+
+void initPWM2FastA(uint8_t inverted, uint16_t prescaler){
+	//Configurando el pin PD6 como salida (OC2A)
+	DDRB |= (1<<DDB3);
+ 1b6:	94 b1       	in	r25, 0x04	; 4
+ 1b8:	98 60       	ori	r25, 0x08	; 8
+ 1ba:	94 b9       	out	0x04, r25	; 4
+	
+	TCCR2A = 0;
+ 1bc:	10 92 b0 00 	sts	0x00B0, r1	; 0x8000b0 <__TEXT_REGION_LENGTH__+0x7f80b0>
+	TCCR2B = 0;
+ 1c0:	10 92 b1 00 	sts	0x00B1, r1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7f80b1>
+	
+	if (inverted){
+ 1c4:	88 23       	and	r24, r24
+ 1c6:	31 f0       	breq	.+12     	; 0x1d4 <initPWM2FastA+0x1e>
+		//Configurando OC2A como invertido
+		TCCR2A |= (1<<COM2A1)|(1<<COM2A0);
+ 1c8:	e0 eb       	ldi	r30, 0xB0	; 176
+ 1ca:	f0 e0       	ldi	r31, 0x00	; 0
+ 1cc:	80 81       	ld	r24, Z
+ 1ce:	80 6c       	ori	r24, 0xC0	; 192
+ 1d0:	80 83       	st	Z, r24
+ 1d2:	05 c0       	rjmp	.+10     	; 0x1de <initPWM2FastA+0x28>
 	}
+	else {
+		//Configurando OC2A como no invertido
+		TCCR2A |= (1<<COM2A1);
+ 1d4:	e0 eb       	ldi	r30, 0xB0	; 176
+ 1d6:	f0 e0       	ldi	r31, 0x00	; 0
+ 1d8:	80 81       	ld	r24, Z
+ 1da:	80 68       	ori	r24, 0x80	; 128
+ 1dc:	80 83       	st	Z, r24
+	}
+	// Configurando modo FAST PWM2 TOP 0XFF
+	TCCR2A |= (1<<WGM21)|(1<<WGM20);
+ 1de:	e0 eb       	ldi	r30, 0xB0	; 176
+ 1e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e2:	80 81       	ld	r24, Z
+ 1e4:	83 60       	ori	r24, 0x03	; 3
+ 1e6:	80 83       	st	Z, r24
+	// Configurando prescaler de 1024
+	if (prescaler==1024){
+ 1e8:	61 15       	cp	r22, r1
+ 1ea:	74 40       	sbci	r23, 0x04	; 4
+ 1ec:	29 f4       	brne	.+10     	; 0x1f8 <initPWM2FastA+0x42>
+		TCCR2B |= (1<<CS22)|(1<<CS21)|(1<<CS20);
+ 1ee:	e1 eb       	ldi	r30, 0xB1	; 177
+ 1f0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f2:	80 81       	ld	r24, Z
+ 1f4:	87 60       	ori	r24, 0x07	; 7
+ 1f6:	80 83       	st	Z, r24
+ 1f8:	08 95       	ret
+
+000001fa <updateDutyCyclePWM2A>:
+	}
+	
 }
 
-void updateDutyCyclePWM1A(uint8_t duty){
-	mapeado = (duty * 13) + 3277;
- 198:	9d e0       	ldi	r25, 0x0D	; 13
- 19a:	89 9f       	mul	r24, r25
- 19c:	90 01       	movw	r18, r0
- 19e:	11 24       	eor	r1, r1
- 1a0:	23 53       	subi	r18, 0x33	; 51
- 1a2:	33 4f       	sbci	r19, 0xF3	; 243
- 1a4:	30 93 04 01 	sts	0x0104, r19	; 0x800104 <mapeado+0x1>
- 1a8:	20 93 03 01 	sts	0x0103, r18	; 0x800103 <mapeado>
-	mapeadoH = mapeado & 0xFF00;
- 1ac:	a9 01       	movw	r20, r18
- 1ae:	44 27       	eor	r20, r20
- 1b0:	50 93 02 01 	sts	0x0102, r21	; 0x800102 <mapeadoH+0x1>
- 1b4:	40 93 01 01 	sts	0x0101, r20	; 0x800101 <mapeadoH>
-	mapeadodH = mapeadoH >>8;
- 1b8:	50 93 05 01 	sts	0x0105, r21	; 0x800105 <mapeadodH>
-	mapeadoL = mapeado & 0x00FF;
- 1bc:	20 93 00 01 	sts	0x0100, r18	; 0x800100 <__DATA_REGION_ORIGIN__>
-	OCR1AH = 0;
- 1c0:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
-	OCR1AL = duty;
- 1c4:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
- 1c8:	08 95       	ret
+void updateDutyCyclePWM2A(uint8_t duty2){
+	OCR2A = duty2/6;
+ 1fa:	9b ea       	ldi	r25, 0xAB	; 171
+ 1fc:	89 9f       	mul	r24, r25
+ 1fe:	81 2d       	mov	r24, r1
+ 200:	11 24       	eor	r1, r1
+ 202:	86 95       	lsr	r24
+ 204:	86 95       	lsr	r24
+ 206:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7f80b3>
+ 20a:	08 95       	ret
 
-000001ca <_exit>:
- 1ca:	f8 94       	cli
+0000020c <_exit>:
+ 20c:	f8 94       	cli
 
-000001cc <__stop_program>:
- 1cc:	ff cf       	rjmp	.-2      	; 0x1cc <__stop_program>
+0000020e <__stop_program>:
+ 20e:	ff cf       	rjmp	.-2      	; 0x20e <__stop_program>

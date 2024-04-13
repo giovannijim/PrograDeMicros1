@@ -13,6 +13,8 @@
 #include "ADC/initADC.h"
 #include "PWM1/PWM1.h"
 
+uint8_t varad;
+
 // Prototipos
 void setup(void);
 
@@ -21,16 +23,24 @@ int main(void)
 	
     cli();								// Deshabilitar interrupciones globales
     setup();							// Dirigirse a la subrutina setup
-	initADC(6);
+	
 	initPWM1FastA(invertido, 1024);
+	initPWM2FastA(no_invertido, 1024);
     sei();								// Habilitar interrupciones globales
 	
     while (1)
     {
 	    _delay_ms(20);					// Delay de 20 ms
 	    // Se comienza la conversion en ADC
+		initADC(6);
 	    ADCSRA |= (1<< ADSC);
-		updateDutyCyclePWM1A(ADCH);
+		while(ADCSRA&(1<<ADSC));
+		updateDutyCyclePWM1A(ADCH);	
+		initADC(5);
+		ADCSRA |= (1<< ADSC);
+		varad ++;
+		while(ADCSRA&(1<<ADSC));
+		updateDutyCyclePWM2A(ADCH);
     }
 }
 
@@ -38,6 +48,7 @@ int main(void)
 void setup(void){
 	// Se apaga tx y rx
 	UCSR0B = 0;
+	varad =0;
 }
 
 // Vector de interrupcion ADC -------------------------------------------------

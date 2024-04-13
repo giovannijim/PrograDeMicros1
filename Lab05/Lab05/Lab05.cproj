@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>Prelab05</AssemblyName>
-    <Name>Prelab05</Name>
-    <RootNamespace>Prelab05</RootNamespace>
+    <AssemblyName>Lab05</AssemblyName>
+    <Name>Lab05</Name>
+    <RootNamespace>Lab05</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -120,39 +120,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ADC\initADC.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ADC\initADC.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PWM0\PWM0.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="PWM0\PWM0.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="PWM1\PWM1.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="PWM1\PWM1.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="PWM2\PWM2.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="PWM2\PWM2.h">
-      <SubType>compile</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ADC" />
-    <Folder Include="PWM2" />
-    <Folder Include="PWM1" />
-    <Folder Include="PWM0" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
