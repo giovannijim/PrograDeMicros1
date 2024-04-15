@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 void initADC(uint8_t puertoADC){
-	
+	ADMUX = 0;
 	// Se selecciona un canal
 	ADMUX = puertoADC;
 	

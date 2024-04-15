@@ -147,9 +147,23 @@
     <Compile Include="PWM2\PWM2.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Timer0\Timer0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer0\Timer0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer1\Timer1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer1\Timer1.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ADC" />
+    <Folder Include="Timer0" />
+    <Folder Include="Timer1" />
     <Folder Include="PWM2" />
     <Folder Include="PWM1" />
     <Folder Include="PWM0" />
