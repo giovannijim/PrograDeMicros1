@@ -32,21 +32,29 @@ int main(void)
 	
     while (1)
     {
-	    				// Delay de 20 ms
-	    // Se comienza la conversion en ADC
-		initADC(5);
+	    			
+		initADC(5);		 // Se comienza la conversion en ADC5
 		ADCSRA |= (1<< ADSC);
 		while(ADCSRA&(1<<ADSC));
 		updateDutyCyclePWM2A(ADCH);
-		_delay_ms(20);	
-		initADC(6);
+		
+		//_delay_ms(20);	 // Delay de 20 ms
+		initADC(6);		// Se comienza la conversion en ADC6
 	    ADCSRA |= (1<< ADSC);
 		while(ADCSRA&(1<<ADSC));
 		updateDutyCyclePWM1A(ADCH);	
+			
+		//_delay_ms(20);  // Delay de 20 ms
+		initADC(7);		// Se comienza la conversion en ADC7
+		ADCSRA |= (1<< ADSC);
+		while(ADCSRA&(1<<ADSC));
+		contador = 0;
+		revisar(contador, ADCH);
 		
-		
-		
-		
+		/*_delay_us(255);
+		PORTD |= (1<<PORTD1);
+		_delay_us(254);
+		PORTD &= ~(1<<PORTD1);*/
 		
     }
 }
@@ -55,6 +63,8 @@ int main(void)
 void setup(void){
 	// Se apaga tx y rx
 	UCSR0B = 0;
+	
+	DDRD |= (1<<DDD1);
 }
 
 // Vector de interrupcion ADC -------------------------------------------------
@@ -64,15 +74,12 @@ ISR(ADC_vect)
 	ADCSRA |= (1<<ADIF);
 }
 
-// Vector de interrupcion TIMER1 -------------------------------------------------
+// Vector de interrupcion TIMER0 -------------------------------------------------
 ISR(TIMER0_OVF_vect)
 {
 	contador ++;
-	//initADC(7);
-	//ADCSRA |= (1<< ADSC);
-	revisar(contador, ADCH);
 	// Se carga el valor inicial
-	TCNT0 = 255;
+	TCNT0 = 1;
 	// Se escribe con un 1 lógico la bandera para apagarla
 	TIFR0 |= (1<<TOV0);
 }
