@@ -1,7 +1,7 @@
 /*
  * PWM2.h
  * Created: 4/12/2024 5:42:29 PM
- *  Author: alesa
+ *  Author: Giovanni Jimenez
  */ 
 
 

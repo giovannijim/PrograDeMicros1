@@ -12,8 +12,8 @@
 //Inicializar Timer 0
 void initTimer0(void);
 
-//Revisar
-void revisar(uint8_t counter, uint8_t CounterADCH);
+//Realizar el toggle en ADCH con un periodo de 255uS
+void manualPWM(uint8_t counter, uint8_t CounterADCH);
 
 
 #endif /* TIMER0_H_ */
