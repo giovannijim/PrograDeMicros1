@@ -4,7 +4,7 @@
  *  Author: Giovanni Jimenez
  */ 
 
-// Incluyir variables
+// Incluyir librerias
 #include <avr/io.h>
 #include <stdint.h>
 

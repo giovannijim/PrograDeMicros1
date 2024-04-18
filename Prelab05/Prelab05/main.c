@@ -44,7 +44,7 @@ int main(void)
 	    ADCSRA |= (1<< ADSC);	// Comenzar conversion
 	    while(ADCSRA&(1<<ADSC));// Revisar si la conversion ya termino
 		updateDutyCyclePWM1A(ADCH);		// Se llama la funcion de la libreria
-
+		
 		initADC(7);				// Se comienza la conversion en ADC7
 		ADCSRA |= (1<< ADSC);	// Comenzar conversion
 		while(ADCSRA&(1<<ADSC));// Revisar si la conversion ya termino
