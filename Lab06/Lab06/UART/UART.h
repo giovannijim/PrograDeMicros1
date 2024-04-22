@@ -16,5 +16,7 @@ void initUART9600(void);
 // Escribir UART
 void writeUART(char Caracter);
 
+//Enviar una cadena
+void cadena (char* texto);
 
 #endif /* UART_H_ */

@@ -28,13 +28,15 @@ int main(void)
     
     sei(); //Activar interrupciones
    // writeUART('\n');
-    
+    cadena("HOLA MUNDO");
+	
     while (1)
     {
-		initADC(7);
-	    ADCSRA |= (1 << ADSC);   //Leer puerto de ADC
-		writeUART(ADCH);
+		//initADC(7);
+	    //ADCSRA |= (1 << ADSC);   //Leer puerto de ADC
+		//writeUART(ADCH);
 	    _delay_ms(10); 
+		
     }
 }
 
