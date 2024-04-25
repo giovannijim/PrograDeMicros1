@@ -96,7 +96,10 @@ ISR(USART_RX_vect)
 		Menu("\n Ingrese el ASCII a enviar \n");
 	}
 	else if (bufferRX == 0x33) {
+		estado = 3;
 		Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
+		PORTB = 0x00;
+		PORTC = 0x00;
 	}
 	//PORTB = bufferTX;
 	//PORTC |= bufferTX>> 6;

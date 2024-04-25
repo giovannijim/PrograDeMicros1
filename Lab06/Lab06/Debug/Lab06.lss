@@ -3,31 +3,31 @@ Lab06.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000066  00800100  00000380  00000414  2**0
+  0 .data         00000066  00800100  0000038a  0000041e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000380  00000000  00000000  00000094  2**1
+  1 .text         0000038a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000045  00800166  00800166  0000047a  2**0
+  2 .bss          00000045  00800166  00800166  00000484  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000047a  2**0
+  3 .comment      00000030  00000000  00000000  00000484  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000004ac  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000004b4  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000090  00000000  00000000  000004ec  2**0
+  5 .debug_aranges 00000090  00000000  00000000  000004f4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a8e  00000000  00000000  0000057c  2**0
+  6 .debug_info   00000a8e  00000000  00000000  00000584  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000832  00000000  00000000  0000100a  2**0
+  7 .debug_abbrev 00000832  00000000  00000000  00001012  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000005dd  00000000  00000000  0000183c  2**0
+  8 .debug_line   000005ef  00000000  00000000  00001844  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000130  00000000  00000000  00001e1c  2**2
+  9 .debug_frame  00000130  00000000  00000000  00001e34  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000459  00000000  00000000  00001f4c  2**0
+ 10 .debug_str    0000046c  00000000  00000000  00001f64  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000209  00000000  00000000  000023a5  2**0
+ 11 .debug_loc    00000209  00000000  00000000  000023d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000060  00000000  00000000  000025ae  2**0
+ 12 .debug_ranges 00000060  00000000  00000000  000025d9  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -72,7 +72,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e0 e8       	ldi	r30, 0x80	; 128
+  7a:	ea e8       	ldi	r30, 0x8A	; 138
   7c:	f3 e0       	ldi	r31, 0x03	; 3
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -95,7 +95,7 @@ Disassembly of section .text:
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
   9a:	0e 94 6c 00 	call	0xd8	; 0xd8 <main>
-  9e:	0c 94 be 01 	jmp	0x37c	; 0x37c <_exit>
+  9e:	0c 94 c3 01 	jmp	0x386	; 0x386 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -165,7 +165,7 @@ int main(void)
   e2:	18 b8       	out	0x08, r1	; 8
     
     initUART9600();
-  e4:	0e 94 78 01 	call	0x2f0	; 0x2f0 <initUART9600>
+  e4:	0e 94 7d 01 	call	0x2fa	; 0x2fa <initUART9600>
     
     sei(); //Activar interrupciones
   e8:	78 94       	sei
@@ -175,7 +175,7 @@ int main(void)
 	Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
   ea:	80 e0       	ldi	r24, 0x00	; 0
   ec:	91 e0       	ldi	r25, 0x01	; 1
-  ee:	0e 94 a4 01 	call	0x348	; 0x348 <Menu>
+  ee:	0e 94 a9 01 	call	0x352	; 0x352 <Menu>
 	
     while (1)
     {
@@ -203,7 +203,7 @@ int main(void)
  116:	21 f4       	brne	.+8      	; 0x120 <main+0x48>
 		Respuesta(bufferRX);	//Registrar la respuesta proveniente del buffer
  118:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
- 11c:	0e 94 b5 01 	call	0x36a	; 0x36a <Respuesta>
+ 11c:	0e 94 ba 01 	call	0x374	; 0x374 <Respuesta>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
@@ -424,8 +424,8 @@ ISR(USART_RX_vect)
 		cadena(USB_In_Buffer);
  298:	86 e6       	ldi	r24, 0x66	; 102
  29a:	91 e0       	ldi	r25, 0x01	; 1
- 29c:	0e 94 93 01 	call	0x326	; 0x326 <cadena>
- 2a0:	16 c0       	rjmp	.+44     	; 0x2ce <__vector_18+0x176>
+ 29c:	0e 94 98 01 	call	0x330	; 0x330 <cadena>
+ 2a0:	1b c0       	rjmp	.+54     	; 0x2d8 <__vector_18+0x180>
 	}
 	else if (bufferRX == 0x32) {
  2a2:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
@@ -440,161 +440,168 @@ ISR(USART_RX_vect)
 		Menu("\n Ingrese el ASCII a enviar \n");
  2b4:	87 e4       	ldi	r24, 0x47	; 71
  2b6:	91 e0       	ldi	r25, 0x01	; 1
- 2b8:	0e 94 a4 01 	call	0x348	; 0x348 <Menu>
- 2bc:	08 c0       	rjmp	.+16     	; 0x2ce <__vector_18+0x176>
+ 2b8:	0e 94 a9 01 	call	0x352	; 0x352 <Menu>
+ 2bc:	0d c0       	rjmp	.+26     	; 0x2d8 <__vector_18+0x180>
 	}
 	else if (bufferRX == 0x33) {
  2be:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
  2c2:	83 33       	cpi	r24, 0x33	; 51
- 2c4:	21 f4       	brne	.+8      	; 0x2ce <__vector_18+0x176>
+ 2c4:	49 f4       	brne	.+18     	; 0x2d8 <__vector_18+0x180>
+		estado = 3;
+ 2c6:	83 e0       	ldi	r24, 0x03	; 3
+ 2c8:	80 93 a6 01 	sts	0x01A6, r24	; 0x8001a6 <estado>
 		Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
- 2c6:	80 e0       	ldi	r24, 0x00	; 0
- 2c8:	91 e0       	ldi	r25, 0x01	; 1
- 2ca:	0e 94 a4 01 	call	0x348	; 0x348 <Menu>
+ 2cc:	80 e0       	ldi	r24, 0x00	; 0
+ 2ce:	91 e0       	ldi	r25, 0x01	; 1
+ 2d0:	0e 94 a9 01 	call	0x352	; 0x352 <Menu>
+		PORTB = 0x00;
+ 2d4:	15 b8       	out	0x05, r1	; 5
+		PORTC = 0x00;
+ 2d6:	18 b8       	out	0x08, r1	; 8
 	}
 	//PORTB = bufferTX;
 	//PORTC |= bufferTX>> 6;
 	//	while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
 	//UDR0 = bufferTX;	
- 2ce:	ff 91       	pop	r31
- 2d0:	ef 91       	pop	r30
- 2d2:	bf 91       	pop	r27
- 2d4:	af 91       	pop	r26
- 2d6:	9f 91       	pop	r25
- 2d8:	8f 91       	pop	r24
- 2da:	7f 91       	pop	r23
- 2dc:	6f 91       	pop	r22
- 2de:	5f 91       	pop	r21
- 2e0:	4f 91       	pop	r20
- 2e2:	3f 91       	pop	r19
- 2e4:	2f 91       	pop	r18
- 2e6:	0f 90       	pop	r0
- 2e8:	0f be       	out	0x3f, r0	; 63
- 2ea:	0f 90       	pop	r0
- 2ec:	1f 90       	pop	r1
- 2ee:	18 95       	reti
+ 2d8:	ff 91       	pop	r31
+ 2da:	ef 91       	pop	r30
+ 2dc:	bf 91       	pop	r27
+ 2de:	af 91       	pop	r26
+ 2e0:	9f 91       	pop	r25
+ 2e2:	8f 91       	pop	r24
+ 2e4:	7f 91       	pop	r23
+ 2e6:	6f 91       	pop	r22
+ 2e8:	5f 91       	pop	r21
+ 2ea:	4f 91       	pop	r20
+ 2ec:	3f 91       	pop	r19
+ 2ee:	2f 91       	pop	r18
+ 2f0:	0f 90       	pop	r0
+ 2f2:	0f be       	out	0x3f, r0	; 63
+ 2f4:	0f 90       	pop	r0
+ 2f6:	1f 90       	pop	r1
+ 2f8:	18 95       	reti
 
-000002f0 <initUART9600>:
+000002fa <initUART9600>:
 }
 
 void writeUART(char Caracter)
 {
 	while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
 	UDR0 = Caracter;
- 2f0:	8a b1       	in	r24, 0x0a	; 10
- 2f2:	8e 7f       	andi	r24, 0xFE	; 254
- 2f4:	8a b9       	out	0x0a, r24	; 10
- 2f6:	8a b1       	in	r24, 0x0a	; 10
- 2f8:	82 60       	ori	r24, 0x02	; 2
- 2fa:	8a b9       	out	0x0a, r24	; 10
- 2fc:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 300:	e1 ec       	ldi	r30, 0xC1	; 193
- 302:	f0 e0       	ldi	r31, 0x00	; 0
- 304:	10 82       	st	Z, r1
- 306:	80 81       	ld	r24, Z
- 308:	88 69       	ori	r24, 0x98	; 152
- 30a:	80 83       	st	Z, r24
- 30c:	e2 ec       	ldi	r30, 0xC2	; 194
- 30e:	f0 e0       	ldi	r31, 0x00	; 0
- 310:	10 82       	st	Z, r1
- 312:	80 81       	ld	r24, Z
- 314:	86 60       	ori	r24, 0x06	; 6
- 316:	80 83       	st	Z, r24
- 318:	87 e6       	ldi	r24, 0x67	; 103
- 31a:	90 e0       	ldi	r25, 0x00	; 0
- 31c:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
- 320:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
- 324:	08 95       	ret
+ 2fa:	8a b1       	in	r24, 0x0a	; 10
+ 2fc:	8e 7f       	andi	r24, 0xFE	; 254
+ 2fe:	8a b9       	out	0x0a, r24	; 10
+ 300:	8a b1       	in	r24, 0x0a	; 10
+ 302:	82 60       	ori	r24, 0x02	; 2
+ 304:	8a b9       	out	0x0a, r24	; 10
+ 306:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 30a:	e1 ec       	ldi	r30, 0xC1	; 193
+ 30c:	f0 e0       	ldi	r31, 0x00	; 0
+ 30e:	10 82       	st	Z, r1
+ 310:	80 81       	ld	r24, Z
+ 312:	88 69       	ori	r24, 0x98	; 152
+ 314:	80 83       	st	Z, r24
+ 316:	e2 ec       	ldi	r30, 0xC2	; 194
+ 318:	f0 e0       	ldi	r31, 0x00	; 0
+ 31a:	10 82       	st	Z, r1
+ 31c:	80 81       	ld	r24, Z
+ 31e:	86 60       	ori	r24, 0x06	; 6
+ 320:	80 83       	st	Z, r24
+ 322:	87 e6       	ldi	r24, 0x67	; 103
+ 324:	90 e0       	ldi	r25, 0x00	; 0
+ 326:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+ 32a:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ 32e:	08 95       	ret
 
-00000326 <cadena>:
+00000330 <cadena>:
 	
 }
 
 void cadena (unsigned char* texto){
- 326:	ac 01       	movw	r20, r24
+ 330:	ac 01       	movw	r20, r24
 	uint8_t i;
 	for(i=0; texto[i]!='\0'; i++){
- 328:	20 e0       	ldi	r18, 0x00	; 0
- 32a:	07 c0       	rjmp	.+14     	; 0x33a <cadena+0x14>
+ 332:	20 e0       	ldi	r18, 0x00	; 0
+ 334:	07 c0       	rjmp	.+14     	; 0x344 <cadena+0x14>
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
- 32c:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 330:	95 ff       	sbrs	r25, 5
- 332:	fc cf       	rjmp	.-8      	; 0x32c <cadena+0x6>
+ 336:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 33a:	95 ff       	sbrs	r25, 5
+ 33c:	fc cf       	rjmp	.-8      	; 0x336 <cadena+0x6>
 		UDR0 = texto[i];
- 334:	30 93 c6 00 	sts	0x00C6, r19	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 33e:	30 93 c6 00 	sts	0x00C6, r19	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
 	
 }
 
 void cadena (unsigned char* texto){
 	uint8_t i;
 	for(i=0; texto[i]!='\0'; i++){
- 338:	2f 5f       	subi	r18, 0xFF	; 255
- 33a:	fa 01       	movw	r30, r20
- 33c:	e2 0f       	add	r30, r18
- 33e:	f1 1d       	adc	r31, r1
- 340:	30 81       	ld	r19, Z
- 342:	31 11       	cpse	r19, r1
- 344:	f3 cf       	rjmp	.-26     	; 0x32c <cadena+0x6>
+ 342:	2f 5f       	subi	r18, 0xFF	; 255
+ 344:	fa 01       	movw	r30, r20
+ 346:	e2 0f       	add	r30, r18
+ 348:	f1 1d       	adc	r31, r1
+ 34a:	30 81       	ld	r19, Z
+ 34c:	31 11       	cpse	r19, r1
+ 34e:	f3 cf       	rjmp	.-26     	; 0x336 <cadena+0x6>
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
 		UDR0 = texto[i];
 		//_delay_ms(1000);
 	}
 	
 }
- 346:	08 95       	ret
+ 350:	08 95       	ret
 
-00000348 <Menu>:
+00000352 <Menu>:
 
 void Menu (char* text){
- 348:	ac 01       	movw	r20, r24
+ 352:	ac 01       	movw	r20, r24
 	uint8_t i;
 	for(i=0; text[i]!='\0'; i++){
- 34a:	20 e0       	ldi	r18, 0x00	; 0
- 34c:	07 c0       	rjmp	.+14     	; 0x35c <Menu+0x14>
+ 354:	20 e0       	ldi	r18, 0x00	; 0
+ 356:	07 c0       	rjmp	.+14     	; 0x366 <Menu+0x14>
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
- 34e:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
- 352:	95 ff       	sbrs	r25, 5
- 354:	fc cf       	rjmp	.-8      	; 0x34e <Menu+0x6>
+ 358:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 35c:	95 ff       	sbrs	r25, 5
+ 35e:	fc cf       	rjmp	.-8      	; 0x358 <Menu+0x6>
 		UDR0 = text[i];
- 356:	30 93 c6 00 	sts	0x00C6, r19	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 360:	30 93 c6 00 	sts	0x00C6, r19	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
 	
 }
 
 void Menu (char* text){
 	uint8_t i;
 	for(i=0; text[i]!='\0'; i++){
- 35a:	2f 5f       	subi	r18, 0xFF	; 255
- 35c:	fa 01       	movw	r30, r20
- 35e:	e2 0f       	add	r30, r18
- 360:	f1 1d       	adc	r31, r1
- 362:	30 81       	ld	r19, Z
- 364:	31 11       	cpse	r19, r1
- 366:	f3 cf       	rjmp	.-26     	; 0x34e <Menu+0x6>
+ 364:	2f 5f       	subi	r18, 0xFF	; 255
+ 366:	fa 01       	movw	r30, r20
+ 368:	e2 0f       	add	r30, r18
+ 36a:	f1 1d       	adc	r31, r1
+ 36c:	30 81       	ld	r19, Z
+ 36e:	31 11       	cpse	r19, r1
+ 370:	f3 cf       	rjmp	.-26     	; 0x358 <Menu+0x6>
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
 		UDR0 = text[i];
 	}
 	
 }
- 368:	08 95       	ret
+ 372:	08 95       	ret
 
-0000036a <Respuesta>:
+00000374 <Respuesta>:
 
 void Respuesta (uint8_t response){
 	//uint8_t respuesta1 = response && 0x03;
 	PORTB = response;
- 36a:	85 b9       	out	0x05, r24	; 5
+ 374:	85 b9       	out	0x05, r24	; 5
 	PORTC |= response>> 6;
- 36c:	98 b1       	in	r25, 0x08	; 8
- 36e:	82 95       	swap	r24
- 370:	86 95       	lsr	r24
- 372:	86 95       	lsr	r24
- 374:	83 70       	andi	r24, 0x03	; 3
- 376:	89 2b       	or	r24, r25
- 378:	88 b9       	out	0x08, r24	; 8
- 37a:	08 95       	ret
+ 376:	98 b1       	in	r25, 0x08	; 8
+ 378:	82 95       	swap	r24
+ 37a:	86 95       	lsr	r24
+ 37c:	86 95       	lsr	r24
+ 37e:	83 70       	andi	r24, 0x03	; 3
+ 380:	89 2b       	or	r24, r25
+ 382:	88 b9       	out	0x08, r24	; 8
+ 384:	08 95       	ret
 
-0000037c <_exit>:
- 37c:	f8 94       	cli
+00000386 <_exit>:
+ 386:	f8 94       	cli
 
-0000037e <__stop_program>:
- 37e:	ff cf       	rjmp	.-2      	; 0x37e <__stop_program>
+00000388 <__stop_program>:
+ 388:	ff cf       	rjmp	.-2      	; 0x388 <__stop_program>
