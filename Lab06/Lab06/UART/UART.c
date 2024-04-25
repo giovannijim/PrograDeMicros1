@@ -8,6 +8,8 @@
 #include <avr/io.h>
 #include <stdint.h>
 
+
+
 void initUART9600(void){
 	
 	//Paso 1: RX y TX como salida
@@ -45,4 +47,19 @@ void cadena (char* texto){
 		//_delay_ms(1000);
 	}
 	
+}
+
+void Menu (char* text){
+	uint8_t i;
+	for(i=0; text[i]!='\0'; i++){
+		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
+		UDR0 = text[i];
+	}
+	
+}
+
+void Respuesta (uint8_t response){
+	//uint8_t respuesta1 = response && 0x03;
+	PORTB = response;
+	PORTC |= response>> 6;
 }

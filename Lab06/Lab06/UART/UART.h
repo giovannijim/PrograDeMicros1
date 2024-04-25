@@ -19,4 +19,11 @@ void writeUART(char Caracter);
 //Enviar una cadena
 void cadena (char* texto);
 
+//Menu de trabajo
+void Menu (char* text);
+
+//Menu de trabajo
+void Respuesta (uint8_t response);
+
+
 #endif /* UART_H_ */
