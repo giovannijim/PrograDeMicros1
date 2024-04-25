@@ -12,8 +12,8 @@ Common symbol       size              file
 
 USB_In_Buffer       0x40              main.o
 estado              0x1               main.o
+bufferRX            0x1               main.o
 ADCONvalue          0x1               main.o
-bufferTX            0x1               main.o
 res                 0x1               main.o
 CharADCH            0x1               main.o
 
@@ -364,8 +364,8 @@ END GROUP
  COMMON         0x00800166       0x45 main.o
                 0x00800166                USB_In_Buffer
                 0x008001a6                estado
-                0x008001a7                ADCONvalue
-                0x008001a8                bufferTX
+                0x008001a7                bufferRX
+                0x008001a8                ADCONvalue
                 0x008001a9                res
                 0x008001aa                CharADCH
                 0x008001ab                PROVIDE (__bss_end, .)
@@ -455,12 +455,12 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xa88
+.debug_info     0x00000000      0xa8e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 D:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4       0x93 ADC/initADC.o
  .debug_info    0x00000687      0x2aa main.o
- .debug_info    0x00000931      0x157 UART/UART.o
+ .debug_info    0x00000931      0x15d UART/UART.o
 
 .debug_abbrev   0x00000000      0x832
  *(.debug_abbrev)

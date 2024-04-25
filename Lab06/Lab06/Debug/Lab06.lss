@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000090  00000000  00000000  000004ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a88  00000000  00000000  0000057c  2**0
+  6 .debug_info   00000a8e  00000000  00000000  0000057c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000832  00000000  00000000  00001004  2**0
+  7 .debug_abbrev 00000832  00000000  00000000  0000100a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000005dd  00000000  00000000  00001836  2**0
+  8 .debug_line   000005dd  00000000  00000000  0000183c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000130  00000000  00000000  00001e14  2**2
+  9 .debug_frame  00000130  00000000  00000000  00001e1c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000459  00000000  00000000  00001f44  2**0
+ 10 .debug_str    00000459  00000000  00000000  00001f4c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000209  00000000  00000000  0000239d  2**0
+ 11 .debug_loc    00000209  00000000  00000000  000023a5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000060  00000000  00000000  000025a6  2**0
+ 12 .debug_ranges 00000060  00000000  00000000  000025ae  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -192,17 +192,17 @@ int main(void)
  104:	80 81       	ld	r24, Z
  106:	80 64       	ori	r24, 0x40	; 64
  108:	80 83       	st	Z, r24
-		ADCONvalue = ADCH;
+		ADCONvalue = ADCH;		// Guardar el valor de ADCH en la variable uint ADCONvalue
  10a:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7f8079>
- 10e:	80 93 a7 01 	sts	0x01A7, r24	; 0x8001a7 <ADCONvalue>
+ 10e:	80 93 a8 01 	sts	0x01A8, r24	; 0x8001a8 <ADCONvalue>
  112:	06 c0       	rjmp	.+12     	; 0x120 <main+0x48>
 		}
 		
 		else if (estado==2){
  114:	82 30       	cpi	r24, 0x02	; 2
  116:	21 f4       	brne	.+8      	; 0x120 <main+0x48>
-		Respuesta(bufferTX);
- 118:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <bufferTX>
+		Respuesta(bufferRX);	//Registrar la respuesta proveniente del buffer
+ 118:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
  11c:	0e 94 b5 01 	call	0x36a	; 0x36a <Respuesta>
 	#else
 		//round up by default
@@ -271,12 +271,12 @@ ISR(USART_RX_vect)
  174:	bf 93       	push	r27
  176:	ef 93       	push	r30
  178:	ff 93       	push	r31
-	 bufferTX = UDR0;
+	 bufferRX = UDR0;
  17a:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
- 17e:	80 93 a8 01 	sts	0x01A8, r24	; 0x8001a8 <bufferTX>
+ 17e:	80 93 a7 01 	sts	0x01A7, r24	; 0x8001a7 <bufferRX>
 
-	if (bufferTX == 0x31){
- 182:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <bufferTX>
+	if (bufferRX == 0x31){
+ 182:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
  186:	81 33       	cpi	r24, 0x31	; 49
  188:	09 f0       	breq	.+2      	; 0x18c <__vector_18+0x34>
  18a:	8b c0       	rjmp	.+278    	; 0x2a2 <__vector_18+0x14a>
@@ -284,7 +284,7 @@ ISR(USART_RX_vect)
  18c:	81 e0       	ldi	r24, 0x01	; 1
  18e:	80 93 a6 01 	sts	0x01A6, r24	; 0x8001a6 <estado>
 		if(ADCONvalue/100 != 0){
- 192:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <ADCONvalue>
+ 192:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <ADCONvalue>
  196:	84 36       	cpi	r24, 0x64	; 100
  198:	70 f0       	brcs	.+28     	; 0x1b6 <__vector_18+0x5e>
 			res++;
@@ -427,8 +427,8 @@ ISR(USART_RX_vect)
  29c:	0e 94 93 01 	call	0x326	; 0x326 <cadena>
  2a0:	16 c0       	rjmp	.+44     	; 0x2ce <__vector_18+0x176>
 	}
-	else if (bufferTX == 0x32) {
- 2a2:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <bufferTX>
+	else if (bufferRX == 0x32) {
+ 2a2:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
  2a6:	82 33       	cpi	r24, 0x32	; 50
  2a8:	51 f4       	brne	.+20     	; 0x2be <__vector_18+0x166>
 		PORTB &= !(1<<PORTB1);
@@ -443,8 +443,8 @@ ISR(USART_RX_vect)
  2b8:	0e 94 a4 01 	call	0x348	; 0x348 <Menu>
  2bc:	08 c0       	rjmp	.+16     	; 0x2ce <__vector_18+0x176>
 	}
-	else if (bufferTX == 0x33) {
- 2be:	80 91 a8 01 	lds	r24, 0x01A8	; 0x8001a8 <bufferTX>
+	else if (bufferRX == 0x33) {
+ 2be:	80 91 a7 01 	lds	r24, 0x01A7	; 0x8001a7 <bufferRX>
  2c2:	83 33       	cpi	r24, 0x33	; 51
  2c4:	21 f4       	brne	.+8      	; 0x2ce <__vector_18+0x176>
 		Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
@@ -510,7 +510,7 @@ void writeUART(char Caracter)
 	
 }
 
-void cadena (char* texto){
+void cadena (unsigned char* texto){
  326:	ac 01       	movw	r20, r24
 	uint8_t i;
 	for(i=0; texto[i]!='\0'; i++){
@@ -525,7 +525,7 @@ void cadena (char* texto){
 	
 }
 
-void cadena (char* texto){
+void cadena (unsigned char* texto){
 	uint8_t i;
 	for(i=0; texto[i]!='\0'; i++){
  338:	2f 5f       	subi	r18, 0xFF	; 255

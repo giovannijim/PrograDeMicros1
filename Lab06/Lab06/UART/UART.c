@@ -39,7 +39,7 @@ void writeUART(char Caracter)
 	
 }
 
-void cadena (char* texto){
+void cadena (unsigned char* texto){
 	uint8_t i;
 	for(i=0; texto[i]!='\0'; i++){
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1

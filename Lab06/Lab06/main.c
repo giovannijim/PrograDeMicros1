@@ -19,7 +19,7 @@ volatile uint8_t  bufferRX;
 uint8_t estado;
 volatile char CharADCH;
 uint8_t ADCONvalue;
-char USB_In_Buffer[64];
+unsigned char USB_In_Buffer[64];
 uint8_t res;
 
 int main(void)

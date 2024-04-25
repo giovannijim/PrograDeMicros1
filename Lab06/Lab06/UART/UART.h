@@ -17,7 +17,7 @@ void initUART9600(void);
 void writeUART(char Caracter);
 
 //Enviar una cadena
-void cadena (char* texto);
+void cadena (unsigned char* texto);
 
 //Menu de trabajo
 void Menu (char* text);
