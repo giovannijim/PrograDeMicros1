@@ -13,7 +13,7 @@
 #include "ADC/initADC.h"
 #include "UART/UART.h"
 
-// Prototipos de funciones
+// Se establecen las variables y su tipos
 
 volatile uint8_t  bufferRX;
 uint8_t estado;
@@ -30,27 +30,25 @@ int main(void)
 	DDRC = 0x03; // Salida de PC0 Y PC1
 	PORTC = 0; // Apagar el puerto C
     
-    initUART9600();
+    initUART9600();		// Se inicia UART con un baudrate de 9600
     
     sei(); //Activar interrupciones
-   // writeUART('\n');
-    //cadena("HOLA MUNDO");
 	
-	Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
+	Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n"); // Se utiliza la funcion de la libreria para enviar la cadena
 	
     while (1)
     {
+		//Verificar en que estado se encuentan
 		if (estado==1){
-		initADC(7);
+		initADC(7);				// Inicializar ADC7
 		ADCSRA |= (1 << ADSC);   //Leer puerto de ADC
 		ADCONvalue = ADCH;		// Guardar el valor de ADCH en la variable uint ADCONvalue
 		}
-		
 		else if (estado==2){
 		Respuesta(bufferRX);	//Registrar la respuesta proveniente del buffer
 		}
 		 
-	    _delay_ms(10); 
+	    _delay_ms(10);			// Delay de 10 ms
 		
     }
 }
@@ -64,14 +62,17 @@ ISR(ADC_vect)
 
 ISR(USART_RX_vect)
 {
+	//Se almacena en la variable lo que se recibe de UDR0
 	 bufferRX = UDR0;
-
+	// Conversion de ASCII
 	if (bufferRX == 0x31){
-		estado = 1;
+		estado = 1; // Se establece estado 1
+		// Se obtienen las centenas
 		if(ADCONvalue/100 != 0){
 			res++;
 			USB_In_Buffer[0] = (ADCONvalue / 100) + 0x30;
 		}
+		// Aqui se obtendran las unidades y decenas
 		if(ADCONvalue/10 != 0){
 			res++;
 			if(res == 1){
@@ -82,24 +83,23 @@ ISR(USART_RX_vect)
 		}
 		res++;
 		if(res == 1){
-			USB_In_Buffer[0] = ADCONvalue % 10 + 0x30;
+			USB_In_Buffer[0] = ADCONvalue % 10 + 0x30;		// Se almacenan las unidades
 			}else if(res == 2){
-			USB_In_Buffer[1] = ADCONvalue % 10 + 0x30;
+			USB_In_Buffer[1] = ADCONvalue % 10 + 0x30;		// Se almacenan las Decenas
 			}else{
-			USB_In_Buffer[2] = ADCONvalue % 10 + 0x30;
+			USB_In_Buffer[2] = ADCONvalue % 10 + 0x30;		// Se almacenan las Centenas
 		}
-		cadena(USB_In_Buffer);
+		cadena(USB_In_Buffer); // Se utiliza la funcion de la libreria para enviar la cadena
 	}
 	else if (bufferRX == 0x32) {
-		PORTB &= !(1<<PORTB1);
-		estado = 2;
-		Menu("\n Ingrese el ASCII a enviar \n");
+		estado = 2;			// Se establece estado 2
+		Menu("\n Ingrese el ASCII a enviar \n"); // Se utiliza la funcion de la libreria para enviar la cadena
 	}
 	else if (bufferRX == 0x33) {
-		estado = 3;
-		Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n");
-		PORTB = 0x00;
-		PORTC = 0x00;
+		estado = 3;			// Se establece estado 3
+		Menu("\n Que desea realizar? \n 1. Leer Pot \n 2. Enviar ASCII \n 3. Reiniciar \n"); // Se utiliza la funcion de la libreria para enviar la cadena
+		PORTB = 0x00;	// Se limpia el puerto B
+		PORTC = 0x00;	// Se limpia el puerto C
 	}
 	//PORTB = bufferTX;
 	//PORTC |= bufferTX>> 6;

@@ -34,32 +34,33 @@ void initUART9600(void){
 
 void writeUART(char Caracter)
 {
-	while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
-	UDR0 = Caracter;
+	while(!(UCSR0A & (1<<UDRE0)));  // hasta que la bandera este en 1
+	UDR0 = Caracter;				// Enviar el caracter al arduino
 	
 }
 
 void cadena (unsigned char* texto){
 	uint8_t i;
+	// Se realiza un ciclo for para recorrer la cadena
 	for(i=0; texto[i]!='\0'; i++){
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
-		UDR0 = texto[i];
-		//_delay_ms(1000);
+		UDR0 = texto[i];				// Enviando caracter por caracter
 	}
 	
 }
 
 void Menu (char* text){
+	// Se realiza un ciclo for para recorrer la cadena
 	uint8_t i;
 	for(i=0; text[i]!='\0'; i++){
 		while(!(UCSR0A & (1<<UDRE0)));  //hasta que la bandera este en 1
-		UDR0 = text[i];
+		UDR0 = text[i];					 // Enviando caracter por caracter
 	}
 	
 }
 
 void Respuesta (uint8_t response){
-	//uint8_t respuesta1 = response && 0x03;
+	// Se carga el valor del ASCII dentro de los respectivos puesrtos
 	PORTB = response;
 	PORTC |= response>> 6;
 }
