@@ -34,8 +34,6 @@ LINKER_SCRIPT_DEP:=
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
 ../ADC \
-../PWM1 \
-../PWM2 \
 ../PWM0
 
 
@@ -43,9 +41,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../ADC/initADC.c \
 ../main.c \
-../PWM0/PWM0.c \
-../PWM1/PWM1.c \
-../PWM2/PWM2.c
+../PWM0/PWM0.c
 
 
 PREPROCESSING_SRCS += 
@@ -57,34 +53,26 @@ ASM_SRCS +=
 OBJS +=  \
 ADC/initADC.o \
 main.o \
-PWM0/PWM0.o \
-PWM1/PWM1.o \
-PWM2/PWM2.o
+PWM0/PWM0.o
 
 OBJS_AS_ARGS +=  \
 ADC/initADC.o \
 main.o \
-PWM0/PWM0.o \
-PWM1/PWM1.o \
-PWM2/PWM2.o
+PWM0/PWM0.o
 
 C_DEPS +=  \
 ADC/initADC.d \
 main.d \
-PWM0/PWM0.d \
-PWM1/PWM1.d \
-PWM2/PWM2.d
+PWM0/PWM0.d
 
 C_DEPS_AS_ARGS +=  \
 ADC/initADC.d \
 main.d \
-PWM0/PWM0.d \
-PWM1/PWM1.d \
-PWM2/PWM2.d
+PWM0/PWM0.d
 
-OUTPUT_FILE_PATH +=Proyecto2.elf
+OUTPUT_FILE_PATH +=PruebaPWM0.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=Proyecto2.elf
+OUTPUT_FILE_PATH_AS_ARGS +=PruebaPWM0.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -117,20 +105,6 @@ PWM0/PWM0.o: ../PWM0/PWM0.c
 	@echo Finished building: $<
 	
 
-PWM1/PWM1.o: ../PWM1/PWM1.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-PWM2/PWM2.o: ../PWM2/PWM2.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
 
 
 
@@ -157,13 +131,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 5.4.0
-	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="Proyecto2.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mmcu=atmega328p -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p"  
+	$(QUOTE)D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="PruebaPWM0.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mmcu=atmega328p -B "D:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p"  
 	@echo Finished building target: $@
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "Proyecto2.elf" "Proyecto2.hex"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "Proyecto2.elf" "Proyecto2.eep" || exit 0
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "Proyecto2.elf" > "Proyecto2.lss"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "Proyecto2.elf" "Proyecto2.srec"
-	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "Proyecto2.elf"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "PruebaPWM0.elf" "PruebaPWM0.hex"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "PruebaPWM0.elf" "PruebaPWM0.eep" || exit 0
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "PruebaPWM0.elf" > "PruebaPWM0.lss"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "PruebaPWM0.elf" "PruebaPWM0.srec"
+	"D:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "PruebaPWM0.elf"
 	
 	
 
@@ -175,5 +149,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "Proyecto2.elf" "Proyecto2.a" "Proyecto2.hex" "Proyecto2.lss" "Proyecto2.eep" "Proyecto2.map" "Proyecto2.srec" "Proyecto2.usersignatures"
+	rm -rf "PruebaPWM0.elf" "PruebaPWM0.a" "PruebaPWM0.hex" "PruebaPWM0.lss" "PruebaPWM0.eep" "PruebaPWM0.map" "PruebaPWM0.srec" "PruebaPWM0.usersignatures"
 	

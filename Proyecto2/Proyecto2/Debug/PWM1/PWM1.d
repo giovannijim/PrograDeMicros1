@@ -1,4 +1,4 @@
-ADC/initADC.d ADC/initADC.o: ../ADC/initADC.c \
+PWM1/PWM1.d PWM1/PWM1.o: ../PWM1/PWM1.c \
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \

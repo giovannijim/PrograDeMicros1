@@ -21,9 +21,9 @@ void initPWM2FastA(uint8_t inverted, uint16_t prescaler);
 void initPWM2FastB(uint8_t inverted, uint16_t prescaler);
 
 // Funcion para actualizar el duty Cycle de PWM2A
-void updateDutyCyclePWM2A(uint8_t duty2);
+void updateDutyCyclePWM2A(uint8_t duty2A);
 
 // Funcion para actualizar el duty Cycle de PWM2B
-void updateDutyCyclePWM2B(uint8_t duty2);
+void updateDutyCyclePWM2B(uint8_t duty2B);
 
 #endif /* PWM2_H_ */
