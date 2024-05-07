@@ -14,6 +14,7 @@
 #include "PWM0/PWM0.h"
 #include "PWM2/PWM2.h"
 #include "PWM1/PWM1.h"
+#include "UART/UART.h"
 
 uint8_t varADCH;
 uint8_t duty;

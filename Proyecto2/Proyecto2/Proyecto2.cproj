@@ -147,9 +147,16 @@
     <Compile Include="PWM2\PWM2.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="UART\UART.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UART\UART.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ADC" />
+    <Folder Include="UART" />
     <Folder Include="PWM1" />
     <Folder Include="PWM2" />
     <Folder Include="PWM0" />
