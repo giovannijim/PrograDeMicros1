@@ -16,14 +16,11 @@
 #include "PWM1/PWM1.h"
 #include "UART/UART.h"
 
-uint8_t varADCH;
-uint8_t duty;
+volatile uint8_t  bufferRX;
 
 int main(void)
 {
-	// Se apaga tx y rx
-	UCSR0B = 0;
-	duty =0;
+	initUART9600();
 	cli();
 	initPWM0FastA(no_invertido, 1024);
 	initPWM0FastB(no_invertido, 1024);
@@ -33,12 +30,11 @@ int main(void)
 	
     while (1) 
     {
-
+	/*
  		//inicializar ADC7
  		initADC(7);
  		ADCSRA |= (1<< ADSC);				// Comenzar conversion
  		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		varADCH = ADCH;
  		updateDutyCyclePWM2A(ADCH);			// Se llama la función de la librería
 		
 
@@ -59,6 +55,7 @@ int main(void)
  		ADCSRA |= (1<< ADSC);				// Comenzar conversion
  		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
  		updateDutyCyclePWM0B(ADCH);			// Se llama la función de la librería
+		 */
     }
 }
 
@@ -68,3 +65,11 @@ ISR(ADC_vect)
 	// Se escribe con un 1 lógico la bandera para apagarla
 	ADCSRA |= (1<<ADIF);
 }
+
+
+ISR(USART_RX_vect)
+{
+	//Se almacena en la variable lo que se recibe de UDR0
+	bufferRX = UDR0;
+	updateDutyCyclePWM2A(bufferRX);
+	}
