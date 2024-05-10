@@ -16,12 +16,15 @@
 #include "PWM1/PWM1.h"
 #include "UART/UART.h"
 
+void setup(void);
+
 volatile uint8_t  bufferRX;
 
 int main(void)
 {
 	initUART9600();
 	cli();
+	setup();
 	initPWM0FastA(no_invertido, 1024);
 	initPWM0FastB(no_invertido, 1024);
 	initPWM2FastA(no_invertido, 1024);
@@ -30,7 +33,6 @@ int main(void)
 	
     while (1) 
     {
-	/*
  		//inicializar ADC7
  		initADC(7);
  		ADCSRA |= (1<< ADSC);				// Comenzar conversion
@@ -55,8 +57,18 @@ int main(void)
  		ADCSRA |= (1<< ADSC);				// Comenzar conversion
  		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
  		updateDutyCyclePWM0B(ADCH);			// Se llama la función de la librería
-		 */
     }
+}
+
+void setup(void)
+{
+	//ESTABLECER PUERTO C1, C2 Y C3 COMO ENTRADA
+	DDRC &= ~(1<<PORTC1)|~(1<<PORTC2)|~(1<<PORTC3);
+	//Habilitar la interrupción puerto C
+	PCICR |= (1<<PCIE1);
+	// Habilitar mascara para pines PC1 PC2, PC3
+	PCMSK1 |= 0b00001110;
+	
 }
 
 // Vector de interrupcion ADC -------------------------------------------------
@@ -73,3 +85,13 @@ ISR(USART_RX_vect)
 	bufferRX = UDR0;
 	updateDutyCyclePWM2A(bufferRX);
 	}
+	
+ISR(PCINT1_vect)
+{
+	if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado ejecutar instrucción
+	{
+		PORTB |= (1<<PORTB5);
+		Menu("LED2\n");
+	}
+	PCIFR |= (1<<PCIF1); // Apagar la bandera de interrupción
+}	
