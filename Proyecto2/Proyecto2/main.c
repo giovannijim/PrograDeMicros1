@@ -39,49 +39,73 @@ int main(void)
 	initPWM2FastA(no_invertido, 1024);
 	initPWM1FastA(no_invertido, 1024);
 	sei();
-	
     while (1) 
     {
 		// Modo MANUAL
 		if (estado == 0){
 			PORTB &= ~(1<<PORTB5);
- 		//inicializar ADC7
- 		initADC(7);
- 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
- 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
- 		updateDutyCyclePWM2A(ADCH);			// Se llama la función de la librería
+ 			//inicializar ADC7
+ 			initADC(7);
+ 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
+ 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+ 			updateDutyCyclePWM2A(ADCH);			// Se llama la función de la librería
 
- 		//inicializar ADC6
- 		initADC(6);
- 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
- 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
- 		updateDutyCyclePWM1A(ADCH);			// Se llama la función de la librería
+ 			//inicializar ADC6
+ 			initADC(6);
+ 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
+ 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+ 			updateDutyCyclePWM1A(ADCH);			// Se llama la función de la librería
 		
- 		//inicializar ADC5
- 		initADC(5);
- 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
- 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
- 		updateDutyCyclePWM0A(ADCH);			// Se llama la función de la librería
+ 			//inicializar ADC5
+ 			initADC(5);
+ 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
+ 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+ 			updateDutyCyclePWM0A(ADCH);			// Se llama la función de la librería
  		
- 		//inicializar ADC4
- 		initADC(4);
- 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
- 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
- 		updateDutyCyclePWM0B(ADCH);			// Se llama la función de la librería
+ 			//inicializar ADC4
+ 			initADC(4);
+ 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
+ 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+ 			updateDutyCyclePWM0B(ADCH);			// Se llama la función de la librería
+			 
+			 if (position == 0){
+			 PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
+			 else if(position==1){
+				 PORTD &= ~(1<<PORTD3);
+			 PORTD |= (1<<PORTD4);}
+			 else if(position==2){
+				 PORTD &= ~(1<<PORTD4);
+			 PORTD |= (1<<PORTD3);}
+			 else if(position==3){
+				 PORTD |= (1<<PORTD3)|(1<<PORTD4);
+			 }
 		}
 		
 		// Modo MEMORIA
 		else if ( estado == 1)
 		{
+			
 			PORTB |= (1<<PORTB5);
-			memoria1 =  eeprom_read_byte((uint8_t*)(0+(4*position)));
-			memoria2 =  eeprom_read_byte((uint8_t*)(1+(4*position)));
-			memoria3 =  eeprom_read_byte((uint8_t*)(2+(4*position)));
-			memoria4 =  eeprom_read_byte((uint8_t*)(3+(4*position)));
+			
+			memoria1 = eeprom_read_byte((uint8_t*)(0+(4*position))) ;
+			memoria2 = eeprom_read_byte((uint8_t*)(1+(4*position))) ;
+			memoria3 = eeprom_read_byte((uint8_t*)(2+(4*position))) ;
+			memoria4 = eeprom_read_byte((uint8_t*)(3+(4*position))) ;
 			updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
-			updateDutyCyclePWM2B(memoria2);			// Actualizar el DutyCycle
+			updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
 			updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
 			updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
+			if (position == 0){
+				PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
+			else if(position==1){
+				PORTD &= ~(1<<PORTD3);
+				PORTD |= (1<<PORTD4);}
+			else if(position==2){
+				PORTD &= ~(1<<PORTD4);
+				PORTD |= (1<<PORTD3);}
+			else if(position==3){
+				PORTD |= (1<<PORTD3)|(1<<PORTD4);
+				 }
 		}	
 		
     }
@@ -91,9 +115,9 @@ void setup(void)
 {
 	estado = 0;
 	position = 0;
-	
+	DDRD |= (1<<DDD2)|(1<<DDD3)|(1<<DDD4);
 	//ESTABLECER PUERTO C1, C2 Y C3 COMO ENTRADA
-	DDRC &= ~(1<<PORTC1)|~(1<<PORTC2)|~(1<<PORTC3);
+	DDRC &= ~((1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3));
 	//Habilitar la interrupción puerto C
 	PCICR |= (1<<PCIE1);
 	// Habilitar mascara para pines PC1 PC2, PC3
@@ -120,15 +144,20 @@ ISR(PCINT1_vect)
 {
 	if(!(PINC&(1<<PINC3))) // Si PINC3 se encuentra apagado ejecutar instrucción
 	{
-		if(estado < 2){estado ++;}
-			else{estado=0;}
+		if(estado <= 2){estado ++;}
+			else{estado=0; }
 	}
-	else if(!(PINC&(1<<PINC2))) // Si PINC3 se encuentra apagado ejecutar instrucción
+	else if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado ejecutar instrucción
 	{
-		if(position < 3){position ++;}
-			else{position=0;}
+		
+		if (position <= 2){
+			position ++;	
+		}
+		else{
+			position = 0;
+		}
 	}
-	else if(!(PINC&(1<<PINC1))) // Si PINC3 se encuentra apagado ejecutar instrucción
+	else if(!(PINC&(1<<PINC1))) // Si PINC1 se encuentra apagado ejecutar instrucción
 	{
 		//inicializar ADC7
 		initADC(7);

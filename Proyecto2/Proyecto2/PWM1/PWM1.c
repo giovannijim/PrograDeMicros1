@@ -69,7 +69,6 @@ void updateDutyCyclePWM1A(uint8_t duty){
 	ICR1L= 0x58;
 	// Se carga el valor de OCR1A
 	OCR1A = 0.139 * duty;
-	
 }
 
 void updateDutyCyclePWM1b(uint8_t duty){

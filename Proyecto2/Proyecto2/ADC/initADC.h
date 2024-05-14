@@ -14,4 +14,7 @@
 // Funcion para indicar que puerto ADC desea activar 
 void initADC(uint8_t puerto);
 
+//Funcion para mapear
+long map(long x, long in_min, long in_max, long out_min, long out_max);
+
 #endif /* INITADC_H_ */
