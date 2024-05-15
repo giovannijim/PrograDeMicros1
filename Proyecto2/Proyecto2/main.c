@@ -68,15 +68,15 @@ int main(void)
  			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
  			updateDutyCyclePWM0B(ADCH);			// Se llama la función de la librería
 			 
-			 if (position == 0){
+			 if (position == 1){
 			 PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
-			 else if(position==1){
+			 else if(position==2){
 				 PORTD &= ~(1<<PORTD3);
 			 PORTD |= (1<<PORTD4);}
-			 else if(position==2){
+			 else if(position==3){
 				 PORTD &= ~(1<<PORTD4);
 			 PORTD |= (1<<PORTD3);}
-			 else if(position==3){
+			 else if(position==4){
 				 PORTD |= (1<<PORTD3)|(1<<PORTD4);
 			 }
 		}
@@ -87,23 +87,23 @@ int main(void)
 			
 			PORTB |= (1<<PORTB5);
 			
-			memoria1 = eeprom_read_byte((uint8_t*)(0+(4*position))) ;
-			memoria2 = eeprom_read_byte((uint8_t*)(1+(4*position))) ;
-			memoria3 = eeprom_read_byte((uint8_t*)(2+(4*position))) ;
-			memoria4 = eeprom_read_byte((uint8_t*)(3+(4*position))) ;
+			memoria1 = eeprom_read_byte((uint8_t*)(0+(5*position))) ;
+			memoria2 = eeprom_read_byte((uint8_t*)(1+(5*position))) ;
+			memoria3 = eeprom_read_byte((uint8_t*)(2+(5*position))) ;
+			memoria4 = eeprom_read_byte((uint8_t*)(3+(5*position))) ;
 			updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
 			updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
 			updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
 			updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
-			if (position == 0){
+			if (position == 1){
 				PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
-			else if(position==1){
+			else if(position==2){
 				PORTD &= ~(1<<PORTD3);
 				PORTD |= (1<<PORTD4);}
-			else if(position==2){
+			else if(position==3){
 				PORTD &= ~(1<<PORTD4);
 				PORTD |= (1<<PORTD3);}
-			else if(position==3){
+			else if(position==4){
 				PORTD |= (1<<PORTD3)|(1<<PORTD4);
 				 }
 		}	
@@ -150,11 +150,11 @@ ISR(PCINT1_vect)
 	else if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado ejecutar instrucción
 	{
 		
-		if (position <= 2){
+		if (position <= 3){
 			position ++;	
 		}
 		else{
-			position = 0;
+			position = 1;
 		}
 	}
 	else if(!(PINC&(1<<PINC1))) // Si PINC1 se encuentra apagado ejecutar instrucción
@@ -163,25 +163,25 @@ ISR(PCINT1_vect)
 		initADC(7);
 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((unsigned char*)(0+(position*4)), ADCH);
+		eeprom_write_byte((unsigned char*)(0+(position*5)), ADCH);
 
 		//inicializar ADC6
 		initADC(6);
 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((unsigned char*)(1+(position*4)), ADCH);
+		eeprom_write_byte((unsigned char*)(1+(position*5)), ADCH);
 		
 		//inicializar ADC5
 		initADC(5);
 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((unsigned char*)(2+(position*4)), ADCH);
+		eeprom_write_byte((unsigned char*)(2+(position*5)), ADCH);
 		
 		//inicializar ADC4
 		initADC(4);
 		ADCSRA |= (1<< ADSC);				// Comenzar conversion
 		while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((unsigned char*)(3+(position*4)), ADCH);
+		eeprom_write_byte((unsigned char*)(3+(position*5)), ADCH);
 	}
 	
 	PCIFR |= (1<<PCIF1); // Apagar la bandera de interrupción
