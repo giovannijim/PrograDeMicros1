@@ -57,9 +57,9 @@ void initPWM0FastB(uint8_t inverted, uint16_t prescaler){
 }
 
 void updateDutyCyclePWM0A(uint8_t duty){
-	OCR0A = duty * 0.15 + 0x000A;
+	OCR0A = duty * 0.15 ;
 }
 
 void updateDutyCyclePWM0B(uint8_t duty){
-	OCR0B = duty * 0.15 + 0x000A;
+	OCR0B = duty * 0.15;
 }
