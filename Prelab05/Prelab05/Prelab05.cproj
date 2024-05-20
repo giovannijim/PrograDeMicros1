@@ -159,9 +159,16 @@
     <Compile Include="Timer1\Timer1.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="UART\UART.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UART\UART.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ADC" />
+    <Folder Include="UART" />
     <Folder Include="Timer0" />
     <Folder Include="Timer1" />
     <Folder Include="PWM2" />

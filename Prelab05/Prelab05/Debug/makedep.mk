@@ -16,3 +16,5 @@ Timer0\Timer0.c
 
 Timer1\Timer1.c
 
+UART\UART.c
+

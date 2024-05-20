@@ -49,7 +49,7 @@ void cadena (unsigned char* texto){
 	
 }
 
-void Menu (char* text){
+void SendChain (char* text){
 	// Se realiza un ciclo for para recorrer la cadena
 	uint8_t i;
 	for(i=0; text[i]!='\0'; i++){
@@ -63,4 +63,9 @@ void Respuesta (uint8_t response){
 	// Se carga el valor del ASCII dentro de los respectivos puesrtos
 	PORTB = response;
 	PORTC |= response>> 6;
+}
+
+uint8_t ValorRecibido(void){
+	while (!(UCSR0A & (1 << RXC0)));
+	return UDR0;
 }

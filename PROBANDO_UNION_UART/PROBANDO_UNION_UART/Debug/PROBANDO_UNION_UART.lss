@@ -1,0 +1,342 @@
+
+PROBANDO_UNION_UART.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000000e  00800100  0000025a  000002ee  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000025a  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000000d  0080010e  0080010e  000002fc  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000002fc  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000032c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000078  00000000  00000000  0000036c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000a50  00000000  00000000  000003e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000761  00000000  00000000  00000e34  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000004b2  00000000  00000000  00001595  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000b8  00000000  00000000  00001a48  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000040f  00000000  00000000  00001b00  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000128  00000000  00000000  00001f0f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000058  00000000  00000000  00002037  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  2c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  40:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  54:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  64:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	ea e5       	ldi	r30, 0x5A	; 90
+  7c:	f2 e0       	ldi	r31, 0x02	; 2
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	ae 30       	cpi	r26, 0x0E	; 14
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+
+0000008a <__do_clear_bss>:
+  8a:	21 e0       	ldi	r18, 0x01	; 1
+  8c:	ae e0       	ldi	r26, 0x0E	; 14
+  8e:	b1 e0       	ldi	r27, 0x01	; 1
+  90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
+
+00000092 <.do_clear_bss_loop>:
+  92:	1d 92       	st	X+, r1
+
+00000094 <.do_clear_bss_start>:
+  94:	ab 31       	cpi	r26, 0x1B	; 27
+  96:	b2 07       	cpc	r27, r18
+  98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
+  9a:	0e 94 6d 00 	call	0xda	; 0xda <main>
+  9e:	0c 94 2b 01 	jmp	0x256	; 0x256 <_exit>
+
+000000a2 <__bad_interrupt>:
+  a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a6 <CharToInt>:
+
+int digit1, digit2, digit3;
+
+int ValueReceived;
+
+int CharToInt(char num){return num - '0';}
+  a6:	90 e0       	ldi	r25, 0x00	; 0
+  a8:	c0 97       	sbiw	r24, 0x30	; 48
+  aa:	08 95       	ret
+
+000000ac <MakeOneNumber>:
+
+int MakeOneNumber(int digit1, int digit2, int digit3){return ((digit1*100) + (digit2*10) + digit3);}
+  ac:	e4 e6       	ldi	r30, 0x64	; 100
+  ae:	e8 9f       	mul	r30, r24
+  b0:	90 01       	movw	r18, r0
+  b2:	e9 9f       	mul	r30, r25
+  b4:	30 0d       	add	r19, r0
+  b6:	11 24       	eor	r1, r1
+  b8:	cb 01       	movw	r24, r22
+  ba:	88 0f       	add	r24, r24
+  bc:	99 1f       	adc	r25, r25
+  be:	66 0f       	add	r22, r22
+  c0:	77 1f       	adc	r23, r23
+  c2:	66 0f       	add	r22, r22
+  c4:	77 1f       	adc	r23, r23
+  c6:	66 0f       	add	r22, r22
+  c8:	77 1f       	adc	r23, r23
+  ca:	68 0f       	add	r22, r24
+  cc:	79 1f       	adc	r23, r25
+  ce:	c9 01       	movw	r24, r18
+  d0:	86 0f       	add	r24, r22
+  d2:	97 1f       	adc	r25, r23
+  d4:	84 0f       	add	r24, r20
+  d6:	95 1f       	adc	r25, r21
+  d8:	08 95       	ret
+
+000000da <main>:
+
+int main(void)
+{
+
+	initUART9600();
+  da:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <initUART9600>
+	DDRB = 0xFF; 
+  de:	8f ef       	ldi	r24, 0xFF	; 255
+  e0:	84 b9       	out	0x04, r24	; 4
+    DDRC = 0x03;
+  e2:	83 e0       	ldi	r24, 0x03	; 3
+  e4:	87 b9       	out	0x07, r24	; 7
+	PORTB = 0;
+  e6:	15 b8       	out	0x05, r1	; 5
+	PORTC = 0;
+  e8:	18 b8       	out	0x08, r1	; 8
+
+    while (1) 
+    {
+		Menu("servo1");
+  ea:	80 e0       	ldi	r24, 0x00	; 0
+  ec:	91 e0       	ldi	r25, 0x01	; 1
+  ee:	0e 94 13 01 	call	0x226	; 0x226 <Menu>
+		Rv1 = ValorRecibido();
+  f2:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+  f6:	80 93 18 01 	sts	0x0118, r24	; 0x800118 <Rv1>
+		Rv2 = ValorRecibido();
+  fa:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+  fe:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <Rv2>
+		Rv3 = ValorRecibido();
+ 102:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+ 106:	f8 2e       	mov	r15, r24
+ 108:	80 93 11 01 	sts	0x0111, r24	; 0x800111 <Rv3>
+		 
+		digit1=CharToInt(Rv1);
+ 10c:	80 91 18 01 	lds	r24, 0x0118	; 0x800118 <Rv1>
+ 110:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 114:	ec 01       	movw	r28, r24
+ 116:	90 93 1a 01 	sts	0x011A, r25	; 0x80011a <digit1+0x1>
+ 11a:	80 93 19 01 	sts	0x0119, r24	; 0x800119 <digit1>
+		digit2=CharToInt(Rv2);
+ 11e:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Rv2>
+ 122:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 126:	8c 01       	movw	r16, r24
+ 128:	90 93 14 01 	sts	0x0114, r25	; 0x800114 <digit2+0x1>
+ 12c:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <digit2>
+		digit3=CharToInt(Rv3);
+ 130:	8f 2d       	mov	r24, r15
+ 132:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 136:	90 93 16 01 	sts	0x0116, r25	; 0x800116 <digit3+0x1>
+ 13a:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <digit3>
+		 
+		ValueReceived = MakeOneNumber(digit1,digit2, digit3);
+ 13e:	ac 01       	movw	r20, r24
+ 140:	b8 01       	movw	r22, r16
+ 142:	ce 01       	movw	r24, r28
+ 144:	0e 94 56 00 	call	0xac	; 0xac <MakeOneNumber>
+ 148:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <__data_end>
+ 14c:	90 93 0f 01 	sts	0x010F, r25	; 0x80010f <__data_end+0x1>
+		 
+		//writeUART(ValueReceived);
+		PORTB = ValueReceived;
+ 150:	85 b9       	out	0x05, r24	; 5
+		PORTC = ValueReceived >> 6;
+ 152:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <__data_end>
+ 156:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <__data_end+0x1>
+ 15a:	08 2e       	mov	r0, r24
+ 15c:	89 2f       	mov	r24, r25
+ 15e:	00 0c       	add	r0, r0
+ 160:	88 1f       	adc	r24, r24
+ 162:	99 0b       	sbc	r25, r25
+ 164:	00 0c       	add	r0, r0
+ 166:	88 1f       	adc	r24, r24
+ 168:	99 1f       	adc	r25, r25
+ 16a:	88 b9       	out	0x08, r24	; 8
+		
+		Menu("servo2");
+ 16c:	87 e0       	ldi	r24, 0x07	; 7
+ 16e:	91 e0       	ldi	r25, 0x01	; 1
+ 170:	0e 94 13 01 	call	0x226	; 0x226 <Menu>
+		Rv1 = ValorRecibido();
+ 174:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+ 178:	80 93 18 01 	sts	0x0118, r24	; 0x800118 <Rv1>
+		Rv2 = ValorRecibido();
+ 17c:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+ 180:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <Rv2>
+		Rv3 = ValorRecibido();
+ 184:	0e 94 24 01 	call	0x248	; 0x248 <ValorRecibido>
+ 188:	f8 2e       	mov	r15, r24
+ 18a:	80 93 11 01 	sts	0x0111, r24	; 0x800111 <Rv3>
+		
+		digit1=CharToInt(Rv1);
+ 18e:	80 91 18 01 	lds	r24, 0x0118	; 0x800118 <Rv1>
+ 192:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 196:	ec 01       	movw	r28, r24
+ 198:	90 93 1a 01 	sts	0x011A, r25	; 0x80011a <digit1+0x1>
+ 19c:	80 93 19 01 	sts	0x0119, r24	; 0x800119 <digit1>
+		digit2=CharToInt(Rv2);
+ 1a0:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <Rv2>
+ 1a4:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 1a8:	8c 01       	movw	r16, r24
+ 1aa:	90 93 14 01 	sts	0x0114, r25	; 0x800114 <digit2+0x1>
+ 1ae:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <digit2>
+		digit3=CharToInt(Rv3);
+ 1b2:	8f 2d       	mov	r24, r15
+ 1b4:	0e 94 53 00 	call	0xa6	; 0xa6 <CharToInt>
+ 1b8:	90 93 16 01 	sts	0x0116, r25	; 0x800116 <digit3+0x1>
+ 1bc:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <digit3>
+		
+		ValueReceived = MakeOneNumber(digit1,digit2, digit3);
+ 1c0:	ac 01       	movw	r20, r24
+ 1c2:	b8 01       	movw	r22, r16
+ 1c4:	ce 01       	movw	r24, r28
+ 1c6:	0e 94 56 00 	call	0xac	; 0xac <MakeOneNumber>
+ 1ca:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <__data_end>
+ 1ce:	90 93 0f 01 	sts	0x010F, r25	; 0x80010f <__data_end+0x1>
+		
+		//writeUART(ValueReceived);
+		PORTB = ValueReceived;
+ 1d2:	85 b9       	out	0x05, r24	; 5
+		PORTC = ValueReceived >> 6;
+ 1d4:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <__data_end>
+ 1d8:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <__data_end+0x1>
+ 1dc:	08 2e       	mov	r0, r24
+ 1de:	89 2f       	mov	r24, r25
+ 1e0:	00 0c       	add	r0, r0
+ 1e2:	88 1f       	adc	r24, r24
+ 1e4:	99 0b       	sbc	r25, r25
+ 1e6:	00 0c       	add	r0, r0
+ 1e8:	88 1f       	adc	r24, r24
+ 1ea:	99 1f       	adc	r25, r25
+ 1ec:	88 b9       	out	0x08, r24	; 8
+ 1ee:	7d cf       	rjmp	.-262    	; 0xea <main+0x10>
+
+000001f0 <initUART9600>:
+}
+
+void Respuesta (uint8_t response){
+	// Se carga el valor del ASCII dentro de los respectivos puesrtos
+	PORTB = response;
+	PORTC |= response>> 6;
+ 1f0:	8a b1       	in	r24, 0x0a	; 10
+ 1f2:	8e 7f       	andi	r24, 0xFE	; 254
+ 1f4:	8a b9       	out	0x0a, r24	; 10
+ 1f6:	8a b1       	in	r24, 0x0a	; 10
+ 1f8:	82 60       	ori	r24, 0x02	; 2
+ 1fa:	8a b9       	out	0x0a, r24	; 10
+ 1fc:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 200:	e1 ec       	ldi	r30, 0xC1	; 193
+ 202:	f0 e0       	ldi	r31, 0x00	; 0
+ 204:	10 82       	st	Z, r1
+ 206:	80 81       	ld	r24, Z
+ 208:	88 69       	ori	r24, 0x98	; 152
+ 20a:	80 83       	st	Z, r24
+ 20c:	e2 ec       	ldi	r30, 0xC2	; 194
+ 20e:	f0 e0       	ldi	r31, 0x00	; 0
+ 210:	10 82       	st	Z, r1
+ 212:	80 81       	ld	r24, Z
+ 214:	86 60       	ori	r24, 0x06	; 6
+ 216:	80 83       	st	Z, r24
+ 218:	87 e6       	ldi	r24, 0x67	; 103
+ 21a:	90 e0       	ldi	r25, 0x00	; 0
+ 21c:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+ 220:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ 224:	08 95       	ret
+
+00000226 <Menu>:
+ 226:	ac 01       	movw	r20, r24
+ 228:	20 e0       	ldi	r18, 0x00	; 0
+ 22a:	07 c0       	rjmp	.+14     	; 0x23a <Menu+0x14>
+ 22c:	90 91 c0 00 	lds	r25, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 230:	95 ff       	sbrs	r25, 5
+ 232:	fc cf       	rjmp	.-8      	; 0x22c <Menu+0x6>
+ 234:	30 93 c6 00 	sts	0x00C6, r19	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+ 238:	2f 5f       	subi	r18, 0xFF	; 255
+ 23a:	fa 01       	movw	r30, r20
+ 23c:	e2 0f       	add	r30, r18
+ 23e:	f1 1d       	adc	r31, r1
+ 240:	30 81       	ld	r19, Z
+ 242:	31 11       	cpse	r19, r1
+ 244:	f3 cf       	rjmp	.-26     	; 0x22c <Menu+0x6>
+ 246:	08 95       	ret
+
+00000248 <ValorRecibido>:
+}
+
+uint8_t ValorRecibido(void){
+	while (!(UCSR0A & (1 << RXC0)));
+ 248:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+ 24c:	88 23       	and	r24, r24
+ 24e:	e4 f7       	brge	.-8      	; 0x248 <ValorRecibido>
+	return UDR0;
+ 250:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7f80c6>
+}
+ 254:	08 95       	ret
+
+00000256 <_exit>:
+ 256:	f8 94       	cli
+
+00000258 <__stop_program>:
+ 258:	ff cf       	rjmp	.-2      	; 0x258 <__stop_program>

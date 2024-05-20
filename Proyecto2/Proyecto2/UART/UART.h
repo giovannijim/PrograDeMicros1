@@ -20,10 +20,12 @@ void writeUART(char Caracter);
 void cadena (unsigned char* texto);
 
 //Menu de trabajo
-void Menu (char* text);
+void SendChain (char* text);
 
 //Menu de trabajo
 void Respuesta (uint8_t response);
 
+//Para recibir un valor
+uint8_t ValorRecibido(void);
 
 #endif /* UART_H_ */

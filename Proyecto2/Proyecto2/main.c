@@ -17,8 +17,7 @@
 #include "UART/UART.h"
 #include <avr/eeprom.h>
 
-void setup(void);
-uint16_t  bufferRX;
+volatile uint8_t  bufferRX;
 uint8_t estado;
 uint8_t position;
 uint8_t ADC_ADA;
@@ -26,12 +25,51 @@ uint8_t memoria1;
 uint8_t memoria2;
 uint8_t memoria3;
 uint8_t memoria4;
+uint8_t contador_valor_recibido;
+uint8_t servo_controlado;
+char servo_cont;
+char Rv1, Rv2, Rv3, Rv4;
+int digit1, digit2, digit3, digit4;
+uint8_t ValueReceived;
+
+int CharToInt(char num){return num - '0';}
+
+int MakeOneNumber(int digit1, int digit2, int digit3){return ((digit1*100) + (digit2*10) + digit3);}
+
+void setup(void);
+void save(void){
+	if(position==0){}
+	//inicializar ADC7
+	//initADC(7);
+	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
+	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+	eeprom_write_byte((uint8_t*)(0+(position*4)), OCR2A);
+
+	//inicializar ADC6
+	//initADC(6);
+	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
+	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+	eeprom_write_byte((uint8_t*)(1+(position*4)), OCR1A);
+	
+	//inicializar ADC5
+	//initADC(5);
+	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
+	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+	eeprom_write_byte((uint8_t*)(2+(position*4)), OCR0A);
+	
+	//inicializar ADC4
+	//initADC(4);
+	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
+	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+	eeprom_write_byte((uint8_t*)(3+(position*4)), OCR0B);
+}
+
 
 
 int main(void)
 {
-	initUART9600();
 	cli();
+	initUART9600();
 	setup();
 	initPWM0FastA(no_invertido, 1024);
 	initPWM0FastB(no_invertido, 1024);
@@ -83,7 +121,7 @@ int main(void)
 		// Modo MEMORIA
 		else if ( estado == 1)
 		{
-			
+			/*
 			PORTB |= (1<<PORTB5);
 			
 			memoria1 = eeprom_read_byte((uint8_t*)(0+(4*position))) ;
@@ -104,10 +142,36 @@ int main(void)
 				PORTD |= (1<<PORTD3); }
 			else if(position==3){
 				PORTD |= (1<<PORTD3)|(1<<PORTD4); }
+				*/
 		}	
 		else if (estado == 2){
+			PORTB |= (1<<PORTB5);
 			
-			updateDutyCyclePWM1A(bufferRX);
+			digit1=CharToInt(Rv1);
+			digit2=CharToInt(Rv2);
+			digit3=CharToInt(Rv3);
+			digit4=CharToInt(Rv4);
+			ValueReceived = MakeOneNumber(digit2,digit3, digit4);
+			ValueReceived = map(ValueReceived, 0, 255, 6, 41);
+			
+			if (digit1 == 1)
+			{
+				OCR2A = ValueReceived;
+			} else if (digit1 == 2)
+			{
+				OCR1A = ValueReceived;
+			}
+			else if (digit1 == 3)
+			{
+				OCR0A = ValueReceived;
+			}
+			else if (digit1 == 4)
+			{
+				OCR0B = ValueReceived;
+			}
+			
+			
+			
 			
 		}
     }
@@ -116,7 +180,9 @@ int main(void)
 void setup(void)
 {
 	estado = 0;
+	servo_controlado = 0;
 	position = 0;
+	contador_valor_recibido = 0;
 	DDRD |= (1<<DDD2)|(1<<DDD3)|(1<<DDD4);
 	//ESTABLECER PUERTO C1, C2 Y C3 COMO ENTRADA
 	DDRC &= ~((1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3));
@@ -137,10 +203,19 @@ ISR(ADC_vect)
 
 ISR(USART_RX_vect)
 {
-	//Se almacena en la variable lo que se recibe de UDR0
-	bufferRX = UDR0;
-	//updateDutyCyclePWM2A(bufferRX);
-	writeUART(bufferRX);
+	contador_valor_recibido ++;
+	if(contador_valor_recibido==1){
+		Rv1 = UDR0;
+	} else if (contador_valor_recibido==2)
+	{
+		Rv2 = UDR0;
+	} else if (contador_valor_recibido == 3){
+		Rv3 = UDR0;	
+	}
+	else {
+		Rv4 = UDR0;	
+		contador_valor_recibido = 0;
+	}
 	}
 	
 ISR(PCINT1_vect)
@@ -162,29 +237,7 @@ ISR(PCINT1_vect)
 	}
 	else if(!(PINC&(1<<PINC1))) // Si PINC1 se encuentra apagado ejecutar instrucción
 	{
-		//inicializar ADC7
-		//initADC(7);
-		//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-		//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((uint8_t*)(0+(position*4)), OCR2A);
-
-		//inicializar ADC6
-		//initADC(6);
-		//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-		//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((uint8_t*)(1+(position*4)), OCR1A);
-		
-		//inicializar ADC5
-		//initADC(5);
-		//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-		//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((uint8_t*)(2+(position*4)), OCR0A);
-		
-		//inicializar ADC4
-		//initADC(4);
-		//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-		//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-		eeprom_write_byte((uint8_t*)(3+(position*4)), OCR0B);
+		save();
 	}
 	
 	PCIFR |= (1<<PCIF1); // Apagar la bandera de interrupción
