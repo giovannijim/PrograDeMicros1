@@ -32,39 +32,55 @@ char Rv1, Rv2, Rv3, Rv4;
 int digit1, digit2, digit3, digit4;
 uint8_t ValueReceived;
 
+// Convertir una variable de tipo Char a una de tipo INT
 int CharToInt(char num){return num - '0';}
-
+	
+// Convertir 3 digitos en un solo numero 
 int MakeOneNumber(int digit1, int digit2, int digit3){return ((digit1*100) + (digit2*10) + digit3);}
 
 void setup(void);
 void save(void){
-	if(position==0){}
-	//inicializar ADC7
-	//initADC(7);
-	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-	eeprom_write_byte((uint8_t*)(0+(position*4)), OCR2A);
-
-	//inicializar ADC6
-	//initADC(6);
-	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-	eeprom_write_byte((uint8_t*)(1+(position*4)), OCR1A);
-	
-	//inicializar ADC5
-	//initADC(5);
-	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-	eeprom_write_byte((uint8_t*)(2+(position*4)), OCR0A);
-	
-	//inicializar ADC4
-	//initADC(4);
-	//ADCSRA |= (1<< ADSC);				// Comenzar conversion
-	//while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-	eeprom_write_byte((uint8_t*)(3+(position*4)), OCR0B);
+	// Guardar en su respectiva posicion y espacio de memoria EEPROM cada valor de OCRnA/B
+	if(position==0){
+		eeprom_write_byte((uint8_t*)0, OCR2A);
+		eeprom_write_byte((uint8_t*)1, OCR1A);
+		eeprom_write_byte((uint8_t*)2, OCR0A);
+		eeprom_write_byte((uint8_t*)3, OCR0B);
+	} else if (position==1){
+		eeprom_write_byte((uint8_t*)4, OCR2A);
+		eeprom_write_byte((uint8_t*)5, OCR1A);
+		eeprom_write_byte((uint8_t*)6, OCR0A);
+		eeprom_write_byte((uint8_t*)7, OCR0B);
+	} else if (position==2){
+		eeprom_write_byte((uint8_t*)8, OCR2A);
+		eeprom_write_byte((uint8_t*)9, OCR1A);
+		eeprom_write_byte((uint8_t*)10, OCR0A);
+		eeprom_write_byte((uint8_t*)11, OCR0B);
+	} else if (position==3){
+		eeprom_write_byte((uint8_t*)12, OCR2A);
+		eeprom_write_byte((uint8_t*)13, OCR1A);
+		eeprom_write_byte((uint8_t*)14, OCR0A);
+		eeprom_write_byte((uint8_t*)15, OCR0B);
+	}
 }
-
-
+void tercer_led(void){
+	PORTD |=  (1<<PORTD2);
+	_delay_ms(50);
+	PORTD &= ~ (1<<PORTD2);
+	_delay_ms(50);
+}
+void leds(void){
+	if (position == 0){
+	PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
+	else if(position==1){
+		PORTD &= ~(1<<PORTD3);
+	PORTD |= (1<<PORTD4);}
+	else if(position==2){
+		PORTD &= ~(1<<PORTD4);
+	PORTD |= (1<<PORTD3); }
+	else if(position==3){
+	PORTD |= (1<<PORTD3)|(1<<PORTD4); }
+}
 
 int main(void)
 {
@@ -80,7 +96,7 @@ int main(void)
     {
 		// Modo MANUAL
 		if (estado == 0){
-			PORTB &= ~(1<<PORTB5);
+			
  			//inicializar ADC7
  			initADC(7);
  			ADCSRA |= (1<< ADSC);				// Comenzar conversion
@@ -121,31 +137,51 @@ int main(void)
 		// Modo MEMORIA
 		else if ( estado == 1)
 		{
-			/*
-			PORTB |= (1<<PORTB5);
+			PORTD |=  (1<<PORTD2);
+			leds();
+			if (position==1)
+			{
+				memoria1 = eeprom_read_byte((uint8_t*)0) ;
+				memoria2 = eeprom_read_byte((uint8_t*)1) ;
+				memoria3 = eeprom_read_byte((uint8_t*)2) ;
+				memoria4 = eeprom_read_byte((uint8_t*)3) ;
+				updateDutyCyclePWM2A(memoria1/0.166);			// Actualizar el DutyCycle
+				updateDutyCyclePWM1A(memoria2/0.139);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0A(memoria3/0.15);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0B(memoria4/0.15);			// Actualizar el DutyCycle
+			} else if (position==2){
+				memoria1 = eeprom_read_byte((uint8_t*)4) ;
+				memoria2 = eeprom_read_byte((uint8_t*)5) ;
+				memoria3 = eeprom_read_byte((uint8_t*)6) ;
+				memoria4 = eeprom_read_byte((uint8_t*)7) ;
+				updateDutyCyclePWM2A(memoria1/0.166);			// Actualizar el DutyCycle
+				updateDutyCyclePWM1A(memoria2/0.139);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0A(memoria3/0.15);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0B(memoria4/0.15);			// Actualizar el DutyCycle
+			} else if (position==3){
+				memoria1 = eeprom_read_byte((uint8_t*)8) ;
+				memoria2 = eeprom_read_byte((uint8_t*)9) ;
+				memoria3 = eeprom_read_byte((uint8_t*)10) ;
+				memoria4 = eeprom_read_byte((uint8_t*)11) ;
+				updateDutyCyclePWM2A(memoria1/0.166);			// Actualizar el DutyCycle
+				updateDutyCyclePWM1A(memoria2/0.139);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0A(memoria3/0.15);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0B(memoria4/0.15);			// Actualizar el DutyCycle
+			} else if (position==4){
+				memoria1 = eeprom_read_byte((uint8_t*)12) ;
+				memoria2 = eeprom_read_byte((uint8_t*)13) ;
+				memoria3 = eeprom_read_byte((uint8_t*)14) ;
+				memoria4 = eeprom_read_byte((uint8_t*)15) ;
+				updateDutyCyclePWM2A(memoria1/0.166);			// Actualizar el DutyCycle
+				updateDutyCyclePWM1A(memoria2/0.139);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0A(memoria3/0.15);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0B(memoria4/0.15);			// Actualizar el DutyCycle
+			}
 			
-			memoria1 = eeprom_read_byte((uint8_t*)(0+(4*position))) ;
-			memoria2 = eeprom_read_byte((uint8_t*)(1+(4*position))) ;
-			memoria3 = eeprom_read_byte((uint8_t*)(2+(4*position))) ;
-			memoria4 = eeprom_read_byte((uint8_t*)(3+(4*position))) ;
-			updateDutyCyclePWM2A(memoria1/0.166);			// Actualizar el DutyCycle
-			updateDutyCyclePWM1A(memoria2/0.139);			// Actualizar el DutyCycle
-			updateDutyCyclePWM0A(memoria3/0.15);			// Actualizar el DutyCycle
-			updateDutyCyclePWM0B(memoria4/0.15);			// Actualizar el DutyCycle
-			if (position == 0){
-				PORTD &= ~((1<<PORTD4)|(1<<PORTD3));}
-			else if(position==1){
-				PORTD &= ~(1<<PORTD3);
-				PORTD |= (1<<PORTD4);}
-			else if(position==2){
-				PORTD &= ~(1<<PORTD4);
-				PORTD |= (1<<PORTD3); }
-			else if(position==3){
-				PORTD |= (1<<PORTD3)|(1<<PORTD4); }
-				*/
+			
 		}	
 		else if (estado == 2){
-			PORTB |= (1<<PORTB5);
+			tercer_led();
 			
 			digit1=CharToInt(Rv1);
 			digit2=CharToInt(Rv2);
@@ -169,9 +205,6 @@ int main(void)
 			{
 				OCR0B = ValueReceived;
 			}
-			
-			
-			
 			
 		}
     }
@@ -222,7 +255,7 @@ ISR(PCINT1_vect)
 {
 	if(!(PINC&(1<<PINC3))) // Si PINC3 se encuentra apagado ejecutar instrucción
 	{
-		if(estado <= 2){estado ++;}
+		if(estado < 2){estado ++;}
 			else{estado=0; }
 	}
 	else if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado ejecutar instrucción
