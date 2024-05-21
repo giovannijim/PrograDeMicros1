@@ -60,7 +60,7 @@ void initPWM2FastB(uint8_t inverted, uint16_t prescaler){
 
 void updateDutyCyclePWM2A(uint8_t duty2A){
 	// Se carga el valor de OCR2A con un factor de mapeado
-	OCR2A = duty2A * 0.15 ;
+	OCR2A = duty2A * 0.075 ;
 }
 
 void updateDutyCyclePWM2B(uint8_t duty2B){
