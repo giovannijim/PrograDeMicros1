@@ -15,7 +15,7 @@
 #include "PWM2/PWM2.h"
 #include "PWM1/PWM1.h"
 #include "UART/UART.h"
-#include <avr/eeprom.h>
+#include "EEPROM/EEPROM.h"
 
 volatile uint8_t  bufferRX;
 uint8_t estado;
@@ -73,7 +73,7 @@ int main(void)
     {
 		// Modo MANUAL --------------------------------------------------------
 		if (estado == 0){
-			
+			PORTD &= ~(1<<PORTD2);
  			//inicializar ADC7
  			initADC(7);
  			ADCSRA |= (1<< ADSC);				// Comenzar conversion
@@ -128,6 +128,83 @@ int main(void)
 					//SendChain("Mode3\n");
 				}
 			}
+			else if ((digit1 == 7)){
+				if ((digit4==1)){
+					if(position==0){
+						initADC(7);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(0, ADCH);
+						initADC(6);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(1, ADCH);
+						initADC(5);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(2, ADCH);
+						initADC(4);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(3, ADCH);
+					}
+					else if (position==1){
+						initADC(7);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(4, ADCH);
+						initADC(6);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(5, ADCH);
+						initADC(5);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(6, ADCH);
+						initADC(4);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(7, ADCH);
+					}
+					else if (position==2){
+						initADC(7);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(8, ADCH);
+						initADC(6);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(9, ADCH);
+						initADC(5);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(10, ADCH);
+						initADC(4);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(11, ADCH);
+					}
+					else if (position==3){
+						initADC(7);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(12, ADCH);
+						initADC(6);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(13, ADCH);
+						initADC(5);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(14, ADCH);
+						initADC(4);
+						ADCSRA |= (1<< ADSC);				// Comenzar conversion
+						while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
+						EEPROM_write(15, ADCH);
+					}
+				}
+				else{	}
+			}
 		
 		}
 		
@@ -135,47 +212,46 @@ int main(void)
 		else if ( estado == 1)
 		{
 			PORTD |=  (1<<PORTD2);
-			/*
 			leds();
-			if (position==1)
+			if (position==0)
 			{
-				memoria1 = eeprom_read_byte((uint8_t*)0) ;
-				memoria2 = eeprom_read_byte((uint8_t*)1) ;
-				memoria3 = eeprom_read_byte((uint8_t*)2) ;
-				memoria4 = eeprom_read_byte((uint8_t*)3) ;
+				memoria1 = EEPROM_read(0) ;
+				memoria2 = EEPROM_read(1) ;
+				memoria3 = EEPROM_read(2) ;
+				memoria4 = EEPROM_read(3) ;
+				updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
+				updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
+				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
+			} else if (position==1){
+				memoria1 = EEPROM_read(4) ;
+				memoria2 = EEPROM_read(5) ;
+				memoria3 = EEPROM_read(6) ;
+				memoria4 = EEPROM_read(7) ;
 				updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
 				updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
 			} else if (position==2){
-				memoria1 = eeprom_read_byte((uint8_t*)4) ;
-				memoria2 = eeprom_read_byte((uint8_t*)5) ;
-				memoria3 = eeprom_read_byte((uint8_t*)6) ;
-				memoria4 = eeprom_read_byte((uint8_t*)7) ;
+				memoria1 = EEPROM_read(8) ;
+				memoria2 = EEPROM_read(9) ;
+				memoria3 = EEPROM_read(10) ;
+				memoria4 = EEPROM_read(11) ;
 				updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
 				updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
 			} else if (position==3){
-				memoria1 = eeprom_read_byte((uint8_t*)8) ;
-				memoria2 = eeprom_read_byte((uint8_t*)9) ;
-				memoria3 = eeprom_read_byte((uint8_t*)10) ;
-				memoria4 = eeprom_read_byte((uint8_t*)11) ;
-				updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
-				updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
-				updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
-				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
-			} else if (position==4){
-				memoria1 = eeprom_read_byte((uint8_t*)12) ;
-				memoria2 = eeprom_read_byte((uint8_t*)13) ;
-				memoria3 = eeprom_read_byte((uint8_t*)14) ;
-				memoria4 = eeprom_read_byte((uint8_t*)15) ;
+				memoria1 = EEPROM_read(12) ;
+				memoria2 = EEPROM_read(13) ;
+				memoria3 = EEPROM_read(14) ;
+				memoria4 = EEPROM_read(15) ;
 				updateDutyCyclePWM2A(memoria1);			// Actualizar el DutyCycle
 				updateDutyCyclePWM1A(memoria2);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0A(memoria3);			// Actualizar el DutyCycle
 				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
 			}
-			*/
+			
 			digit1=CharToInt(Rv1);
 			digit2=CharToInt(Rv2);
 			digit3=CharToInt(Rv3);
@@ -256,17 +332,22 @@ int main(void)
 			else if ((digit1 == 6)){
 				if ((digit4==1)){
 					estado = 0;
+					SendChain("st1\n");
+					_delay_ms(300);
 				}
 				else if ((digit4==2)){
 					estado = 1;
+					SendChain("st2\n");
+					_delay_ms(300);
 				}
 				else if ((digit4==3)){
 					estado = 2;
+					SendChain("st3\n");
+					_delay_ms(300);
 				}
 			}
 			
-		}
-		
+		}	
     }
 }
 
@@ -337,74 +418,73 @@ ISR(PCINT1_vect)
 			initADC(7);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)0, ADCH);
+			EEPROM_write(0, ADCH);
 			initADC(6);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)1, ADCH);
+			EEPROM_write(1, ADCH);
 			initADC(5);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)2, ADCH);
+			EEPROM_write(2, ADCH);
 			initADC(4);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)3, ADCH);
+			EEPROM_write(3, ADCH);
 			} 
 			else if (position==1){
 			initADC(7);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)4, ADCH);
+			EEPROM_write(4, ADCH);
 			initADC(6);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)5, ADCH);
+			EEPROM_write(5, ADCH);
 			initADC(5);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)6, ADCH);
+			EEPROM_write(6, ADCH);
 			initADC(4);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)7, ADCH);
+			EEPROM_write(7, ADCH);
 			} 
 			else if (position==2){
 			initADC(7);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)8, ADCH);
+			EEPROM_write(8, ADCH);
 			initADC(6);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)9, ADCH);
+			EEPROM_write(9, ADCH);
 			initADC(5);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)10, ADCH);
+			EEPROM_write(10, ADCH);
 			initADC(4);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)11, ADCH);
+			EEPROM_write(11, ADCH);
 			} 
 			else if (position==3){
 			initADC(7);
-			initADC(7);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)12, ADCH);
+			EEPROM_write(12, ADCH);
 			initADC(6);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)13, ADCH);
+			EEPROM_write(13, ADCH);
 			initADC(5);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)14, ADCH);
+			EEPROM_write(14, ADCH);
 			initADC(4);
 			ADCSRA |= (1<< ADSC);				// Comenzar conversion
 			while(ADCSRA&(1<<ADSC));			// Revisar si la conversion ya termino
-			eeprom_write_byte((uint8_t*)15, ADCH);
+			EEPROM_write(15, ADCH);
 		}
 		
 	}

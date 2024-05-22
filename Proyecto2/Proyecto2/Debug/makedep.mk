@@ -4,6 +4,8 @@
 
 ADC\initADC.c
 
+EEPROM\EEPROM.c
+
 main.c
 
 PWM0\PWM0.c
