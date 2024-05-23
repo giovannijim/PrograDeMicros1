@@ -4,7 +4,7 @@
  * Hardware: ATMEGA328P
  * Author : Giovanni Jimenez
  */ 
-
+// Definir librerías
 #define F_CPU 16000000
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -17,6 +17,7 @@
 #include "UART/UART.h"
 #include "EEPROM/EEPROM.h"
 
+//Definir variables
 volatile uint8_t  bufferRX;
 uint8_t estado;
 uint8_t position;
@@ -34,9 +35,7 @@ int CharToInt(char num){return num - '0';}
 int MakeOneNumber(int digit1, int digit2, int digit3){return ((digit1*100) + (digit2*10) + digit3);}
 
 void setup(void);
-//void save(void){
-	// Guardar en su respectiva posicion y espacio de memoria EEPROM cada valor de OCRnA/B
-//}
+
 // Blink Leds
 void tercer_led(void){
 	PORTD |=  (1<<PORTD2);
@@ -44,6 +43,7 @@ void tercer_led(void){
 	PORTD &= ~ (1<<PORTD2);
 	_delay_ms(150);
 }
+
 // Funcion para indicar Posicion con Leds
 void leds(void){
 	if (position == 0){
@@ -252,11 +252,13 @@ int main(void)
 				updateDutyCyclePWM0B(memoria4);			// Actualizar el DutyCycle
 			}
 			
+			// Convertir los digitos de Char a INT
 			digit1=CharToInt(Rv1);
 			digit2=CharToInt(Rv2);
 			digit3=CharToInt(Rv3);
 			digit4=CharToInt(Rv4);
 			
+			// Verificar si el digito 1 = 6 y digito 4 = 1,2 o 3
 			if ((digit1 == 6)){
 				if ((digit4==1)){
 					estado = 0;
@@ -307,6 +309,7 @@ int main(void)
 				OCR0B = ValueReceived;
 				//updateDutyCyclePWM0B(ValueReceived);
 			} 
+			// Verificar si el digito 1 = 5 y digito 4 = 1, 2, 3, o 4
 			else if ((digit1 == 5)){
 				if ((digit4==1)){
 					position = 0;
@@ -329,6 +332,7 @@ int main(void)
 					_delay_ms(300);
 					}
 			} 
+			// Verificar si el digito 1 = 6 y digito 4 = 1, 2 o 3
 			else if ((digit1 == 6)){
 				if ((digit4==1)){
 					estado = 0;
@@ -378,8 +382,10 @@ ISR(ADC_vect)
 
 ISR(USART_RX_vect)
 {
+	// Aumentar dicho contador
 	contador_valor_recibido ++;
 	
+	// Si es la primera recepciton almacenarlo en el Rv1, si es la segunda en Rv2.
 	if(contador_valor_recibido==1){
 		Rv1 = UDR0;
 	} else if (contador_valor_recibido==2)
@@ -399,12 +405,13 @@ ISR(PCINT1_vect)
 {
 	if(!(PINC&(1<<PINC3))) // Si PINC3 se encuentra apagado aumentar el contadro estado
 	{
+		// Si la posicion es < 2 aumentar estado, sino estado = 0
 		if(estado < 2){estado ++;}
 			else{estado=0; }
 	}
 	else if(!(PINC&(1<<PINC2))) // Si PINC2 se encuentra apagado aumentar el contador posicion
 	{
-		
+		// Si la posicion es < 3 aumentar posicion, sino posicion = 0
 		if (position < 3){
 			position ++;	
 		}
